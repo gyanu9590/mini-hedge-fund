@@ -1,0 +1,13 @@
+pandas
+polars
+pyarrow
+duckdb
+numpy
+scikit-learn
+statsmodels
+mlflow
+cvxpy
+arch
+matplotlib
+backtrader
+empyrical

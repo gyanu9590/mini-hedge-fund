@@ -1,0 +1,7 @@
+symbols: ["NSE:TCS", "NSE:INFY"]
+bar_interval: "1D"
+features:
+  lookbacks: [5, 10, 20]
+limits:
+  gross: 1.0
+  single_name: 0.15

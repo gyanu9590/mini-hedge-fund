@@ -1,0 +1,103 @@
+# scripts/run_orders.py
+from pathlib import Path
+import pandas as pd
+import numpy as np
+
+from src.portfolio.optimizer import size_from_signal
+
+DATA_SIGNALS = Path("data/signals/signals.parquet")
+DATA_FEATURES = Path("data/features")
+OUT_ORDERS = Path("data/orders")
+OUT_ORDERS.mkdir(parents=True, exist_ok=True)
+
+# Config
+PORTFOLIO_VALUE = 1_000_000      # change to your capital (e.g., 1000000 = 10 lakh)
+PER_NAME_CAP = 0.20              # max 20% per name
+MIN_SIGNAL_ABS = 0.03            # ignore tiny signals below this absolute value
+ROUND_LOT = 1                    # if instruments require lot-size, change appropriately
+
+# Read signals
+df = pd.read_parquet(DATA_SIGNALS)
+if 'signal' not in df.columns:
+    # try some common alternatives
+    alt = [c for c in df.columns if 'signal' in c or 'score' in c or 'signal_raw' in c]
+    if alt:
+        df = df.rename(columns={alt[0]: 'signal'})
+    else:
+        raise SystemExit("No 'signal' column found in signals parquet. Columns: " + str(df.columns.tolist()))
+
+# Pick latest date
+latest_date = df['date'].max()
+last = df[df['date'] == latest_date].copy().set_index('symbol')
+
+# Apply min-threshold to avoid tiny noise
+last['signal'] = last['signal'].where(last['signal'].abs() >= MIN_SIGNAL_ABS, 0.0)
+
+# If signals are all zero, fallback to previous non-zero date (optional)
+if last['signal'].abs().sum() == 0:
+    print(f"No signals >= {MIN_SIGNAL_ABS} on {latest_date}. Trying previous dates...")
+    # find previous non-zero date
+    dates = sorted(df['date'].unique(), reverse=True)
+    fallback = None
+    for d in dates[1:]:
+        tmp = df[df['date'] == d].set_index('symbol')
+        tmp_signal = tmp['signal'].where(tmp['signal'].abs() >= MIN_SIGNAL_ABS, 0.0)
+        if tmp_signal.abs().sum() > 0:
+            fallback = (d, tmp_signal)
+            break
+    if fallback:
+        print(f"Using signals from previous date {fallback[0]}")
+        last = fallback[1].to_frame('signal')
+    else:
+        print("No non-zero signals found in history. Exiting without orders.")
+        # Save an empty orders file for auditing
+        pd.DataFrame(columns=['date','symbol','side','qty','price','weight','target_value']).to_parquet(OUT_ORDERS / f"orders_{latest_date}.parquet", index=False)
+        raise SystemExit("No valid signals anywhere in history.")
+
+# Build signals series for sizing (ensure order)
+signals_series = last['signal'].astype(float)
+
+# Compute weights
+weights = size_from_signal(signals_series, cap=PER_NAME_CAP)
+
+# Load latest prices from feature parquet files or use last['close'] if present
+# Prefer last['close'] if present
+if 'close' in last.columns:
+    prices = last['close']
+else:
+    # fallback: try to read feature files
+    prices = {}
+    for sym in weights.index:
+        f = Path(f"data/features/{sym.replace(':','_')}_features.parquet")
+        if f.exists():
+            pdf = pd.read_parquet(f)
+            prices[sym] = float(pdf['close'].iloc[-1])
+        else:
+            prices[sym] = np.nan
+    prices = pd.Series(prices)
+
+# Convert weights -> target notional -> qty
+orders = []
+for sym, w in weights.items():
+    if pd.isna(prices.get(sym, np.nan)) or prices[sym] == 0 or w == 0:
+        continue
+    target_value = PORTFOLIO_VALUE * float(w)
+    qty = int(np.floor(abs(target_value) / prices[sym] / ROUND_LOT) * ROUND_LOT)
+    if qty == 0:
+        continue
+    side = "BUY" if w > 0 else "SELL"
+    orders.append({
+        "date": str(latest_date),
+        "symbol": sym,
+        "side": side,
+        "qty": qty,
+        "price": float(prices[sym]),
+        "weight": float(w),
+        "target_value": float(np.sign(w) * target_value)
+    })
+
+orders_df = pd.DataFrame(orders)
+orders_file = OUT_ORDERS / f"orders_{latest_date}.parquet"
+orders_df.to_parquet(orders_file, index=False)
+print(f"Saved {len(orders_df)} orders to {orders_file}")
+print(orders_df)

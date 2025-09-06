@@ -1,6 +1,16 @@
+# .gitignore (paste into file)
 .venv/
 __pycache__/
-.ipynb_checkpoints/
-data/
-*.log
-.env
+*.pyc
+*.pyo
+*.pyd
+env/
+ENV/
+venv/
+.idea/
+.vscode/
+.DS_Store
+dist/
+build/
+*.egg-info/
+
