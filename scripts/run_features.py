@@ -7,7 +7,7 @@ DATA_DIR = Path("data/prices")
 OUT_DIR = Path("data/features")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Read all parquet into one DataFrame (symbol inferred from filename)
+
 rows = []
 for f in DATA_DIR.glob("*.parquet"):
     sym = f.stem.replace("_", ":")
@@ -16,8 +16,7 @@ for f in DATA_DIR.glob("*.parquet"):
     rows.append(df)
 prices = pd.concat(rows).sort_values(["symbol","date"]).reset_index(drop=True)
 
-# Add features per symbol
-# inside scripts/run_features.py where you compute features
+
 features = (
     prices
     .groupby("symbol", group_keys=False, sort=False)
@@ -27,7 +26,7 @@ features = (
 
 
 
-# Save per symbol for fast loading
+
 for sym, g in features.groupby("symbol"):
     out = OUT_DIR / f"{sym.replace(':','_')}_features.parquet"
     g.to_parquet(out)
