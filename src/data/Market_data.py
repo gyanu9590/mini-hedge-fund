@@ -5,7 +5,7 @@ import yfinance as yf
 import pandas as pd
 
 
-def fetch_yahoo_prices(symbols, start="2022-01-01", end=None, out_dir="data/prices"):
+def fetch_yahoo_prices(symbols, start="2025-01-01", end=None, out_dir="data/prices"):
     """
     Fetch real historical price data from Yahoo Finance
     and save as parquet per symbol.

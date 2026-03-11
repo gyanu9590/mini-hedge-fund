@@ -10,4 +10,5 @@ cvxpy
 arch
 matplotlib
 backtrader
-empyrical
+empyrical 
+textblob 

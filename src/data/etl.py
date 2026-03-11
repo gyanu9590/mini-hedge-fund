@@ -1,12 +1,50 @@
-from pathlib import Path
+import yfinance as yf
+import yaml
 import pandas as pd
-import duckdb
+import os
 
-def ingest_prices(symbols, out_dir):
-    out = Path(out_dir)
-    out.mkdir(parents=True, exist_ok=True)
-    # TODO: replace with real source
-    for s in symbols:
-        df = pd.DataFrame({'date': pd.date_range('2024-01-01', periods=10), 'close': range(10)})
-        df.to_parquet(out / f"{s.replace(':','_')}.parquet")
-    duckdb.query("CREATE OR REPLACE VIEW prices AS SELECT * FROM read_parquet('{}/*.parquet');".format(out)).execute()
+def run_etl():
+
+    os.makedirs("data/prices", exist_ok=True)
+
+    with open("configs/settings.yaml", "r") as f:
+        config = yaml.safe_load(f)
+
+    symbols = config["universe"]
+    start_date = config["data"]["start_date"]
+    end_date = config["data"]["end_date"]
+
+    for symbol in symbols:
+
+        yf_symbol = symbol.replace("NSE:", "") + ".NS"
+
+        print("Downloading:", yf_symbol)
+
+        df = yf.download(yf_symbol, start=start_date, end=end_date)
+
+        if df.empty:
+            print("No data:", symbol)
+            continue
+
+        df = df.reset_index()
+
+        df = df.rename(columns={
+            "Date": "date",
+            "Open": "open",
+            "High": "high",
+            "Low": "low",
+            "Close": "close",
+            "Volume": "volume"
+        })
+
+        df["symbol"] = symbol
+
+        df = df[["date","symbol","open","high","low","close","volume"]]
+
+        path = f"data/prices/{symbol.replace(':','_')}.parquet"
+
+        df.to_parquet(path, index=False)
+
+        print("Saved:", path)
+
+    print("ETL finished")
