@@ -1,5 +1,7 @@
 from pathlib import Path
+from importlib_metadata import files
 import pandas as pd
+from src.model.ml_model import train_model, generate_predictions # type: ignore
 
 DATA_FEATURES = Path("data/features")
 OUT_SIGNALS = Path("data/signals/signals.parquet")
@@ -15,21 +17,19 @@ def main():
     frames = []
 
     for f in files:
+
         df = pd.read_parquet(f)
 
+        model = train_model(df)
+
+        df = generate_predictions(df, model)
+
         df["signal"] = 0
-        df.loc[df["momentum_5"] > 0, "signal"] = 1
-        df.loc[df["momentum_5"] < 0, "signal"] = -1
+        df.loc[df["prediction"] == 1, "signal"] = 1
+        df.loc[df["prediction"] == 0, "signal"] = -1
 
         frames.append(df)
 
-    signals = pd.concat(frames)
 
-    OUT_SIGNALS.parent.mkdir(parents=True, exist_ok=True)
-    signals.to_parquet(OUT_SIGNALS, index=False)
-
-    print("Signals generated")
-
-
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()

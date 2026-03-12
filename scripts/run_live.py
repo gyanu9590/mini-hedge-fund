@@ -8,4 +8,4 @@ while True:
 
     print("Waiting 5 minutes")
 
-    time.sleep(300)
+    time.sleep(30)
