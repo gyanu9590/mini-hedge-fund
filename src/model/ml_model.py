@@ -6,12 +6,13 @@ from sklearn.model_selection import train_test_split
 def train_model(df):
 
     features = [
-        "momentum_5",
-        "momentum_10",
-        "ma_10",
-        "ma_50",
-        "volatility_10"
-    ]
+"momentum_3","momentum_5","momentum_10","momentum_20","momentum_50",
+"ma_10","ma_20","ma_50","ma_100","ma_ratio",
+"volatility_5","volatility_10","volatility_20",
+"bollinger_upper","bollinger_lower",
+"zscore","price_ma_distance",
+"volume_change","volume_ma","volume_ratio"
+]
 
     df = df.dropna()
 
