@@ -1,49 +1,80 @@
 import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 
+def generate_signals(df):
 
-def train_model(df):
+    features = []
 
-    features = [
-"momentum_3","momentum_5","momentum_10","momentum_20","momentum_50",
-"ma_10","ma_20","ma_50","ma_100","ma_ratio",
-"volatility_5","volatility_10","volatility_20",
-"bollinger_upper","bollinger_lower",
-"zscore","price_ma_distance",
-"volume_change","volume_ma","volume_ratio"
+    possible_features = [
+    "returns",
+    "momentum_5",
+    "momentum_10",
+    "ma_5",
+    "ma_10",
+    "sma_5",
+    "sma_10"
 ]
+
+    for f in possible_features:
+        if f in df.columns:
+            features.append(f)
+
+    print("Using features:", features)
+
+    X = df[features]
+
+    df = df.dropna()
+
+    # -----------------------
+    # CREATE TARGET
+    # -----------------------
+
+    df["future_return"] = df["returns"].shift(-1)
+
+    df["target"] = np.where(
+        df["future_return"] > 0,
+        1,
+        0
+    )
 
     df = df.dropna()
 
     X = df[features]
-
-    # target = future price movement
-    df["target"] = (df["close"].shift(-5) > df["close"]).astype(int)
-
     y = df["target"]
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, shuffle=False
+    # -----------------------
+    # TRAIN MODEL
+    # -----------------------
+
+    model = RandomForestClassifier(
+        n_estimators=200,
+        max_depth=6,
+        random_state=42
     )
 
-    model = RandomForestClassifier(n_estimators=200)
+    model.fit(X, y)
 
-    model.fit(X_train, y_train)
+    # -----------------------
+    # PREDICT
+    # -----------------------
 
-    return model
-def generate_predictions(df, model):
+    probs = model.predict_proba(X)[:,1]
 
-    features = [
-        "momentum_5",
-        "momentum_10",
-        "ma_10",
-        "ma_50",
-        "volatility_10"
-    ]
+    df["probability"] = probs
 
-    df = df.dropna()
+    # -----------------------
+    # SIGNAL RULE
+    # -----------------------
 
-    df["prediction"] = model.predict(df[features])
+    df["signal"] = np.where(
+        df["probability"] > 0.6,
+        1,
+        np.where(
+            df["probability"] < 0.4,
+            -1,
+            0
+        )
+    )
 
     return df

@@ -1,35 +1,65 @@
-from pathlib import Path
-from importlib_metadata import files
 import pandas as pd
-from src.model.ml_model import train_model, generate_predictions # type: ignore
+import os
+import glob
+import datetime
+from src.model.ml_model import generate_signals
 
-DATA_FEATURES = Path("data/features")
-OUT_SIGNALS = Path("data/signals/signals.parquet")
+FEATURE_DIR = "data/features"
+OUTPUT_DIR = "data/signals"
 
-def main():
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    files = list(DATA_FEATURES.glob("*_features.parquet"))
+# ---------------------------------------
+# LOAD ALL FEATURE FILES
+# ---------------------------------------
 
-    if len(files) == 0:
-        print("No feature files found; no signals written.")
-        return
+files = glob.glob(f"{FEATURE_DIR}/*.parquet")
 
-    frames = []
+if len(files) == 0:
+    raise Exception("No feature files found. Run feature pipeline first.")
 
-    for f in files:
+dfs = []
 
-        df = pd.read_parquet(f)
+for f in files:
+    df = pd.read_parquet(f)
+    dfs.append(df)
 
-        model = train_model(df)
+df = pd.concat(dfs)
 
-        df = generate_predictions(df, model)
+print("Loaded feature data:", df.shape)
 
-        df["signal"] = 0
-        df.loc[df["prediction"] == 1, "signal"] = 1
-        df.loc[df["prediction"] == 0, "signal"] = -1
+# ---------------------------------------
+# APPLY ML MODEL
+# ---------------------------------------
 
-        frames.append(df)
+df = generate_signals(df)
 
+print("ML predictions generated")
 
-    if __name__ == "__main__":
-        main()
+# ---------------------------------------
+# CLEAN SIGNAL TABLE
+# ---------------------------------------
+
+signals = df[[
+    "date",
+    "symbol",
+    "probability",
+    "signal"
+]].copy()
+
+signals = signals.sort_values("date")
+
+signals = signals.groupby("symbol").tail(1)
+
+# ---------------------------------------
+# SAVE SIGNAL FILE
+# ---------------------------------------
+
+today = datetime.date.today()
+
+file = f"{OUTPUT_DIR}/signals_{today}.parquet"
+
+signals.to_parquet(file)
+
+print("Signals saved to:", file)
+print(signals)

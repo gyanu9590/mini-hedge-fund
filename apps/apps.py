@@ -8,6 +8,7 @@ import os
 import yaml
 import datetime
 import yfinance as yf
+import glob
 from streamlit_autorefresh import st_autorefresh
 
 # ---------------------------------------------------
@@ -18,6 +19,30 @@ st.set_page_config(page_title="Mini Hedge Fund Terminal", layout="wide")
 st_autorefresh(interval=60000, key="market_refresh")
 
 st.title("📈 Mini Hedge Fund Quant Trading Terminal")
+
+# ---------------------------------------------------
+# LOAD LATEST PARQUET UTILITY
+# ---------------------------------------------------
+
+def load_latest_parquet(folder_path):
+
+    files = glob.glob(os.path.join(folder_path, "*.parquet"))
+
+    if len(files) == 0:
+        return None
+
+    latest_file = max(files, key=os.path.getmtime)
+
+    try:
+        df = pd.read_parquet(latest_file)
+        return df
+    except:
+        return None
+
+
+# ---------------------------------------------------
+# LIVE MARKET DATA
+# ---------------------------------------------------
 
 def get_live_market_data():
 
@@ -55,8 +80,6 @@ def get_live_market_data():
 
     return data
 
-# auto refresh every 10 seconds
-st_autorefresh(interval=10000, key="refresh")
 
 # ---------------------------------------------------
 # MARKET OVERVIEW
@@ -94,12 +117,12 @@ symbols = st.sidebar.multiselect(
 
 start_date = st.sidebar.date_input(
     "Start Date",
-    datetime.date(2023, 1, 1)
+    datetime.date(2023,1,1)
 )
 
 end_date = st.sidebar.date_input(
     "End Date",
-    datetime.date(2024, 1, 10)
+    datetime.date(2024,1,10)
 )
 
 initial_capital = st.sidebar.number_input(
@@ -109,12 +132,12 @@ initial_capital = st.sidebar.number_input(
 
 signal_threshold = st.sidebar.slider(
     "Signal Threshold",
-    0.5, 0.9, 0.6
+    0.5,0.9,0.6
 )
 
 max_position = st.sidebar.slider(
     "Max Position %",
-    1, 30, 10
+    1,30,10
 )
 
 # ---------------------------------------------------
@@ -124,22 +147,23 @@ max_position = st.sidebar.slider(
 if st.sidebar.button("Update Config"):
 
     config = {
-        "data": {
-            "start_date": str(start_date),
-            "end_date": str(end_date)
+        "data":{
+            "start_date":str(start_date),
+            "end_date":str(end_date)
         },
-        "universe": symbols,
-        "portfolio": {
-            "initial_capital": initial_capital
+        "universe":symbols,
+        "portfolio":{
+            "initial_capital":initial_capital
         }
     }
 
-    os.makedirs("configs", exist_ok=True)
+    os.makedirs("configs",exist_ok=True)
 
-    with open("configs/settings.yaml", "w") as f:
-        yaml.dump(config, f)
+    with open("configs/settings.yaml","w") as f:
+        yaml.dump(config,f)
 
     st.sidebar.success("Config Updated")
+
 
 # ---------------------------------------------------
 # PIPELINE RUNNER
@@ -148,7 +172,7 @@ if st.sidebar.button("Update Config"):
 def run_script(script):
 
     result = subprocess.run(
-        ["python", "-m", script],
+        ["python","-m",script],
         capture_output=True,
         text=True
     )
@@ -157,6 +181,7 @@ def run_script(script):
         st.error(f"{script} failed")
         st.code(result.stderr)
         st.stop()
+
 
 st.sidebar.header("🚀 Pipeline")
 
@@ -181,37 +206,43 @@ if st.sidebar.button("Run Pipeline"):
 
     st.success("Pipeline Completed")
 
+
 # ---------------------------------------------------
 # LOAD EQUITY
 # ---------------------------------------------------
 
 equity_file = "reports/equity_curve.csv"
 
-if not os.path.exists(equity_file):
+if os.path.exists(equity_file):
 
-    st.warning("Run pipeline first")
+    df = pd.read_csv(equity_file)
+
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date")
+
+else:
+
+    st.warning("Run pipeline first to generate backtest results")
     st.stop()
 
-df = pd.read_csv(equity_file)
-
-df["date"] = pd.to_datetime(df["date"])
-df = df.sort_values("date")
 
 df["returns"] = df["equity"].pct_change().fillna(0)
 
 initial_capital = df["equity"].iloc[0]
 final_equity = df["equity"].iloc[-1]
 
-years = len(df) / 252
+years = len(df)/252
 
-cagr = (final_equity / initial_capital) ** (1 / years) - 1
+cagr = (final_equity/initial_capital)**(1/years)-1
 
-volatility = df["returns"].std() * np.sqrt(252)
+volatility = df["returns"].std()*np.sqrt(252)
 
-sharpe = (df["returns"].mean() * 252) / volatility if volatility != 0 else 0
+sharpe = (df["returns"].mean()*252)/volatility if volatility!=0 else 0
 
 rolling_max = df["equity"].cummax()
-drawdown = (df["equity"] - rolling_max) / rolling_max
+
+drawdown = (df["equity"]-rolling_max)/rolling_max
+
 max_dd = drawdown.min()
 
 # ---------------------------------------------------
@@ -220,17 +251,17 @@ max_dd = drawdown.min()
 
 st.subheader("📊 Strategy Performance")
 
-c1, c2, c3, c4 = st.columns(4)
+c1,c2,c3,c4 = st.columns(4)
 
-c1.metric("Initial Capital", f"{initial_capital:,.0f}")
-c2.metric("Final Equity", f"{final_equity:,.0f}")
-c3.metric("CAGR", f"{cagr:.2%}")
-c4.metric("Sharpe", f"{sharpe:.2f}")
+c1.metric("Initial Capital",f"{initial_capital:,.0f}")
+c2.metric("Final Equity",f"{final_equity:,.0f}")
+c3.metric("CAGR",f"{cagr:.2%}")
+c4.metric("Sharpe",f"{sharpe:.2f}")
 
-c5, c6 = st.columns(2)
+c5,c6 = st.columns(2)
 
-c5.metric("Volatility", f"{volatility:.2%}")
-c6.metric("Max Drawdown", f"{max_dd:.2%}")
+c5.metric("Volatility",f"{volatility:.2%}")
+c6.metric("Max Drawdown",f"{max_dd:.2%}")
 
 # ---------------------------------------------------
 # TABS
@@ -254,15 +285,13 @@ with tabs[0]:
 
     st.subheader("Equity Curve")
 
-    fig = px.line(df, x="date", y="equity")
-
-    st.plotly_chart(fig, use_container_width=True)
+    fig = px.line(df,x="date",y="equity")
+    st.plotly_chart(fig,use_container_width=True)
 
     st.subheader("Drawdown")
 
-    fig2 = px.area(x=df["date"], y=drawdown)
-
-    st.plotly_chart(fig2, use_container_width=True)
+    fig2 = px.area(x=df["date"],y=drawdown)
+    st.plotly_chart(fig2,use_container_width=True)
 
 # ---------------------------------------------------
 # SIGNALS
@@ -272,23 +301,22 @@ with tabs[1]:
 
     st.subheader("Top Signals")
 
-    file = "data/signals/signals_latest.parquet"
+    signals = load_latest_parquet("data/signals")
 
-    if os.path.exists(file):
+    if signals is not None:
 
-        signals = pd.read_parquet(file)
-
-        signals = signals.sort_values("probability", ascending=False)
+        if "probability" in signals.columns:
+            signals = signals.sort_values("probability",ascending=False)
 
         st.dataframe(signals)
 
         st.subheader("Top Opportunities")
-
         st.dataframe(signals.head(5))
 
     else:
 
-        st.warning("No signals generated yet")
+        st.warning("No signals generated yet. Run pipeline.")
+
 
 # ---------------------------------------------------
 # TRADES
@@ -298,29 +326,31 @@ with tabs[2]:
 
     st.subheader("Trade Blotter")
 
-    file = "data/orders/orders_latest.parquet"
+    orders = load_latest_parquet("data/orders")
 
-    if os.path.exists(file):
-
-        orders = pd.read_parquet(file)
+    if orders is not None:
 
         st.dataframe(orders)
 
-        if "pnl" in orders.columns:
+        if "pnl" in orders.columns and len(orders)>0:
 
-            wins = orders[orders["pnl"] > 0]
-            losses = orders[orders["pnl"] < 0]
+            wins = orders[orders["pnl"]>0]
+            losses = orders[orders["pnl"]<0]
 
-            win_rate = len(wins) / len(orders)
+            win_rate = len(wins)/len(orders)
 
-            profit_factor = wins["pnl"].sum() / abs(losses["pnl"].sum())
+            profit_factor = 0
 
-            st.metric("Win Rate", f"{win_rate:.2%}")
-            st.metric("Profit Factor", f"{profit_factor:.2f}")
+            if len(losses)>0:
+                profit_factor = wins["pnl"].sum()/abs(losses["pnl"].sum())
+
+            st.metric("Win Rate",f"{win_rate:.2%}")
+            st.metric("Profit Factor",f"{profit_factor:.2f}")
 
     else:
 
-        st.warning("No trades yet")
+        st.warning("No trades generated yet. Run pipeline.")
+
 
 # ---------------------------------------------------
 # PORTFOLIO
@@ -330,24 +360,22 @@ with tabs[3]:
 
     assets = [s.split(":")[1] for s in symbols]
 
-    weights = np.repeat(1 / len(assets), len(assets))
+    weights = np.repeat(1/len(assets),len(assets))
 
     portfolio_df = pd.DataFrame({
-        "Asset": assets,
-        "Weight": weights
+        "Asset":assets,
+        "Weight":weights
     })
 
     st.subheader("Portfolio Allocation")
 
-    fig = px.pie(portfolio_df, values="Weight", names="Asset")
-
-    st.plotly_chart(fig, use_container_width=True)
+    fig = px.pie(portfolio_df,values="Weight",names="Asset")
+    st.plotly_chart(fig,use_container_width=True)
 
     st.subheader("Exposure")
 
-    fig2 = px.bar(portfolio_df, x="Asset", y="Weight")
-
-    st.plotly_chart(fig2, use_container_width=True)
+    fig2 = px.bar(portfolio_df,x="Asset",y="Weight")
+    st.plotly_chart(fig2,use_container_width=True)
 
 # ---------------------------------------------------
 # RISK
@@ -357,18 +385,17 @@ with tabs[4]:
 
     st.subheader("Returns Distribution")
 
-    fig = px.histogram(df, x="returns", nbins=50)
-
-    st.plotly_chart(fig, use_container_width=True)
+    fig = px.histogram(df,x="returns",nbins=50)
+    st.plotly_chart(fig,use_container_width=True)
 
     st.subheader("Value at Risk")
 
-    var95 = np.percentile(df["returns"], 5)
+    var95 = np.percentile(df["returns"],5)
 
-    st.metric("Daily VaR 95%", f"{var95:.2%}")
+    st.metric("Daily VaR 95%",f"{var95:.2%}")
 
 # ---------------------------------------------------
-# MARKET
+# MARKET TERMINAL
 # ---------------------------------------------------
 
 with tabs[5]:
@@ -377,7 +404,7 @@ with tabs[5]:
 
     stock = st.selectbox(
         "Select Stock",
-        ["TCS", "INFY", "RELIANCE", "HDFCBANK", "ICICIBANK"]
+        ["TCS","INFY","RELIANCE","HDFCBANK","ICICIBANK"]
     )
 
     price_file = f"data/prices/{stock}.csv"
@@ -396,31 +423,26 @@ with tabs[5]:
             close=price["close"]
         )])
 
-        fig.update_layout(
-            title=f"{stock} Live Price",
-            xaxis_title="Time",
-            yaxis_title="Price"
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig,use_container_width=True)
 
     else:
 
         st.warning("Price data not available. Run ETL first.")
 
+
 # ---------------------------------------------------
-# SYSTEM
+# SYSTEM STATUS
 # ---------------------------------------------------
 
 with tabs[6]:
 
     st.subheader("System Status")
 
-    c1, c2, c3 = st.columns(3)
+    c1,c2,c3 = st.columns(3)
 
     c1.success("ETL Engine Running")
     c2.success("Signal Engine Running")
-    c3.info("Last Update " + str(datetime.datetime.now()))
+    c3.info("Last Update "+str(datetime.datetime.now()))
 
     st.subheader("Logs")
 
@@ -429,7 +451,6 @@ with tabs[6]:
     if os.path.exists(log_file):
 
         with open(log_file) as f:
-
             logs = f.readlines()
 
         st.code("".join(logs[-20:]))
@@ -437,6 +458,7 @@ with tabs[6]:
     else:
 
         st.warning("No logs yet")
+
 
 # ---------------------------------------------------
 # STRATEGY COMPARISON
@@ -446,17 +468,18 @@ st.subheader("Strategy Comparison")
 
 strategy_df = pd.DataFrame({
 
-    "Strategy": ["ML Momentum", "Mean Reversion", "Hybrid"],
+    "Strategy":["ML Momentum","Mean Reversion","Hybrid"],
 
-    "CAGR": [0.35, 0.22, 0.38],
+    "CAGR":[0.35,0.22,0.38],
 
-    "Sharpe": [2.1, 1.6, 2.4],
+    "Sharpe":[2.1,1.6,2.4],
 
-    "Drawdown": [-0.08, -0.06, -0.09]
+    "Drawdown":[-0.08,-0.06,-0.09]
 
 })
 
 st.dataframe(strategy_df)
+
 
 # ---------------------------------------------------
 # AI MARKET SENTIMENT
@@ -469,10 +492,8 @@ sentiment_score = 0.42
 fig = go.Figure(go.Indicator(
     mode="gauge+number",
     value=sentiment_score,
-    title={"text": "Sentiment Score"},
-    gauge={
-        "axis": {"range": [-1, 1]}
-    }
+    title={"text":"Sentiment Score"},
+    gauge={"axis":{"range":[-1,1]}}
 ))
 
 st.plotly_chart(fig)
