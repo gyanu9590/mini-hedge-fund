@@ -29,15 +29,21 @@ def get_market_data(symbol: str):
 @router.get("/signals")
 def get_signals():
 
-    file = "data/signals/signals_latest.parquet"
+    folder = "data/signals"
 
-    if os.path.exists(file):
+    if not os.path.exists(folder):
+        return {"error": "no signals folder"}
 
-        df = pd.read_parquet(file)
+    files = sorted(os.listdir(folder))
 
-        return df.to_dict(orient="records")
+    if not files:
+        return {"error": "no signals"}
 
-    return {"error": "no signals found"}
+    latest = os.path.join(folder, files[-1])
+
+    df = pd.read_parquet(latest)
+
+    return df.to_dict(orient="records")
 
 
 # -----------------------------
@@ -82,3 +88,62 @@ def get_performance():
     df = pd.read_csv(file)
 
     return df.tail(50).to_dict(orient="records")
+
+@router.get("/metrics")
+def get_metrics():
+
+    import pandas as pd
+    import numpy as np
+
+    df = pd.read_csv("reports/equity_curve.csv")
+
+    equity = df["equity"]
+
+    returns = equity.pct_change().dropna()
+
+    cagr = (equity.iloc[-1] / equity.iloc[0]) ** (252/len(equity)) - 1
+
+    sharpe = np.sqrt(252) * returns.mean() / returns.std()
+
+    drawdown = (equity / equity.cummax() - 1).min()
+
+    win_rate = (returns > 0).sum() / len(returns)
+
+    return {
+        "portfolio_value": round(equity.iloc[-1],2),
+        "cagr": round(cagr*100,2),
+        "sharpe": round(sharpe,2),
+        "drawdown": round(drawdown*100,2),
+        "win_rate": round(win_rate*100,2)
+    }
+import yfinance as yf
+
+@router.get("/live-prices")
+def get_live_prices():
+
+    symbols = [
+        "TCS.NS",
+        "RELIANCE.NS",
+        "ICICIBANK.NS",
+        "HDFCBANK.NS",
+        "INFY.NS"
+    ]
+
+    data = []
+
+    for s in symbols:
+
+        ticker = yf.Ticker(s)
+
+        price = ticker.history(period="1d")
+
+        if not price.empty:
+
+            last_price = float(price["Close"].iloc[-1])
+
+            data.append({
+                "symbol": s.replace(".NS",""),
+                "price": round(last_price,2)
+            })
+
+    return data
