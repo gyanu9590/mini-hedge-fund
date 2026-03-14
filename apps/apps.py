@@ -18,7 +18,7 @@ from streamlit_autorefresh import st_autorefresh
 st.set_page_config(page_title="Mini Hedge Fund Terminal", layout="wide")
 st_autorefresh(interval=60000, key="market_refresh")
 
-st.title("📈 Mini Hedge Fund Quant Trading Terminal")
+st.title("QuantEdge Machine Learning Based Trading System")
 
 # ---------------------------------------------------
 # LOAD LATEST PARQUET UTILITY
