@@ -352,31 +352,58 @@ with tabs[2]:
         st.warning("No trades generated yet. Run pipeline.")
 
 
+
+from pathlib import Path
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+
 # ---------------------------------------------------
-# PORTFOLIO
+# PORTFOLIO (LIVE FROM ORDERS)
 # ---------------------------------------------------
 
 with tabs[3]:
 
-    assets = [s.split(":")[1] for s in symbols]
+    st.subheader("Live Portfolio Allocation")
 
-    weights = np.repeat(1/len(assets),len(assets))
+    orders = load_latest_parquet("data/orders")
 
-    portfolio_df = pd.DataFrame({
-        "Asset":assets,
-        "Weight":weights
-    })
+    if orders is not None and len(orders) > 0:
 
-    st.subheader("Portfolio Allocation")
+        orders["Asset"] = orders["symbol"].str.split(":").str[1]
 
-    fig = px.pie(portfolio_df,values="Weight",names="Asset")
-    st.plotly_chart(fig,use_container_width=True)
+        # pie chart uses absolute exposure
+        alloc_df = orders.copy()
+        alloc_df["Weight"] = alloc_df["weight"].abs()
 
-    st.subheader("Exposure")
+        fig = px.pie(
+            alloc_df,
+            values="Weight",
+            names="Asset",
+            title="Portfolio Allocation"
+        )
 
-    fig2 = px.bar(portfolio_df,x="Asset",y="Weight")
-    st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
 
+        st.subheader("Long / Short Exposure")
+
+        fig2 = px.bar(
+            orders,
+            x="Asset",
+            y="weight",
+            color="side",
+            title="Portfolio Exposure"
+        )
+
+        st.plotly_chart(fig2, use_container_width=True)
+
+        st.subheader("Positions")
+
+        st.dataframe(orders)
+
+    else:
+
+        st.warning("No portfolio positions available. Run pipeline.")
 # ---------------------------------------------------
 # RISK
 # ---------------------------------------------------

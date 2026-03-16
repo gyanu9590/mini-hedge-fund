@@ -1,66 +1,69 @@
 import pandas as pd
+import numpy as np
 
 
-def add_features(df):
+def add_features(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.sort_values("date").copy()
 
-    df = df.sort_values("date")
-
-    # returns
+    # -------------------------
+    # Basic Returns
+    # -------------------------
     df["returns"] = df["close"].pct_change()
 
-    # ---------------------
-    # MOMENTUM FEATURES
-    # ---------------------
+    # -------------------------
+    # Momentum
+    # -------------------------
+    df["momentum_5"] = df["close"] / df["close"].shift(5) - 1
+    df["momentum_10"] = df["close"] / df["close"].shift(10) - 1
+    df["momentum_20"] = df["close"] / df["close"].shift(20) - 1
 
-    df["momentum_3"] = df["close"].pct_change(3)
-    df["momentum_5"] = df["close"].pct_change(5)
-    df["momentum_10"] = df["close"].pct_change(10)
-    df["momentum_20"] = df["close"].pct_change(20)
-    df["momentum_50"] = df["close"].pct_change(50)
-
-    # ---------------------
-    # TREND FEATURES
-    # ---------------------
-
+    # -------------------------
+    # Moving Averages
+    # -------------------------
+    df["ma_5"] = df["close"].rolling(5).mean()
     df["ma_10"] = df["close"].rolling(10).mean()
     df["ma_20"] = df["close"].rolling(20).mean()
     df["ma_50"] = df["close"].rolling(50).mean()
-    df["ma_100"] = df["close"].rolling(100).mean()
 
-    df["ma_ratio"] = df["close"] / df["ma_50"]
+    # -------------------------
+    # Price / MA ratios
+    # -------------------------
+    df["price_ma10_ratio"] = df["close"] / df["ma_10"]
+    df["price_ma20_ratio"] = df["close"] / df["ma_20"]
 
-    # ---------------------
-    # VOLATILITY FEATURES
-    # ---------------------
-
-    df["volatility_5"] = df["returns"].rolling(5).std()
+    # -------------------------
+    # Volatility
+    # -------------------------
     df["volatility_10"] = df["returns"].rolling(10).std()
     df["volatility_20"] = df["returns"].rolling(20).std()
 
-    # ---------------------
-    # MEAN REVERSION FEATURES
-    # ---------------------
+    # -------------------------
+    # RSI
+    # -------------------------
+    delta = df["close"].diff()
 
-    mean20 = df["close"].rolling(20).mean()
-    std20 = df["close"].rolling(20).std()
+    gain = (delta.where(delta > 0, 0)).rolling(14).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
 
-    df["bollinger_upper"] = mean20 + 2 * std20
-    df["bollinger_lower"] = mean20 - 2 * std20
+    rs = gain / loss
+    df["rsi"] = 100 - (100 / (1 + rs))
 
-    df["zscore"] = (df["close"] - mean20) / std20
-    df["price_ma_distance"] = df["close"] - mean20
+    # -------------------------
+    # MACD
+    # -------------------------
+    ema12 = df["close"].ewm(span=12, adjust=False).mean()
+    ema26 = df["close"].ewm(span=26, adjust=False).mean()
 
-    # ---------------------
-    # VOLUME FEATURES
-    # ---------------------
+    df["macd"] = ema12 - ema26
+    df["macd_signal"] = df["macd"].ewm(span=9, adjust=False).mean()
 
+    # -------------------------
+    # Volume features (only if exists)
+    # -------------------------
     if "volume" in df.columns:
+        df["volume_ma10"] = df["volume"].rolling(10).mean()
+        df["volume_ratio"] = df["volume"] / df["volume_ma10"]
 
-        df["volume_change"] = df["volume"].pct_change()
-        df["volume_ma"] = df["volume"].rolling(10).mean()
-        df["volume_ratio"] = df["volume"] / df["volume_ma"]
-
-    # drop missing values
     df = df.dropna()
 
     return df
