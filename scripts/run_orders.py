@@ -1,12 +1,10 @@
-# scripts/run_orders.py
-
 from pathlib import Path
 import pandas as pd
 import numpy as np
 
-# -----------------------------
-# LOAD LATEST SIGNALS FILE
-# -----------------------------
+# -----------------------
+# LOAD LATEST SIGNAL FILE
+# -----------------------
 
 signals_dir = Path("data/signals")
 signal_files = sorted(signals_dir.glob("signals_*.parquet"))
@@ -19,68 +17,68 @@ DATA_SIGNALS = signal_files[-1]
 OUT_ORDERS = Path("data/orders")
 OUT_ORDERS.mkdir(parents=True, exist_ok=True)
 
-PRICES_DIR = Path("data/prices")
-
-
-# -----------------------------
+# -----------------------
 # CONFIG
-# -----------------------------
+# -----------------------
 
 PORTFOLIO_VALUE = 1_000_000
 PER_NAME_CAP = 0.25
 ROUND_LOT = 1
 
-
-# -----------------------------
-# LOAD SIGNALS
-# -----------------------------
+# -----------------------
+# LOAD DATA
+# -----------------------
 
 df = pd.read_parquet(DATA_SIGNALS)
 
-latest_date = df["date"].max()
+# 🔥 CLEAN SYMBOLS
+df["symbol"] = (
+    df["symbol"]
+    .astype(str)
+    .str.replace("NSE_", "")
+    .str.replace("NSE:", "")
+)
+
+latest_date = pd.to_datetime(df["date"]).max()
+df["date"] = pd.to_datetime(df["date"])
 
 latest = df[df["date"] == latest_date].copy()
 
-signals = latest[latest["signal"] != 0].copy()
+# remove zero signals
+latest = latest[latest["signal"] != 0]
 
-if signals.empty:
+# 🔥 REMOVE DUPLICATES (CRITICAL)
+latest = latest.drop_duplicates(subset=["symbol"])
+
+if latest.empty:
     print("No active signals today.")
     exit()
 
+# -----------------------
+# POSITION SIZING
+# -----------------------
 
-# -----------------------------
-# PORTFOLIO WEIGHTS
-# -----------------------------
+n = len(latest)
 
-n = len(signals)
+latest["weight"] = latest["signal"] / n
 
-signals["weight"] = signals["signal"] / n
+latest["weight"] = latest["weight"].clip(-PER_NAME_CAP, PER_NAME_CAP)
 
-signals["weight"] = signals["weight"].clip(-PER_NAME_CAP, PER_NAME_CAP)
-
-
-# -----------------------------
-# ORDER GENERATION
-# -----------------------------
+# -----------------------
+# ORDERS
+# -----------------------
 
 orders = []
 
-for _, row in signals.iterrows():
+for _, row in latest.iterrows():
 
     symbol = row["symbol"]
     weight = row["weight"]
 
-    # convert symbol name to file name
-    price_file = PRICES_DIR / f"{symbol.replace(':', '_')}.parquet"
-
-    if not price_file.exists():
+    if "close" not in row or pd.isna(row["close"]):
         continue
 
-    price_df = pd.read_parquet(price_file)
-
-    latest_price = price_df.iloc[-1]["close"]
-
-    price = float(latest_price)
+    price = float(row["close"])
 
     if price <= 0:
         continue
@@ -104,18 +102,19 @@ for _, row in signals.iterrows():
         "target_value": float(np.sign(weight) * target_value)
     })
 
-
-# -----------------------------
-# SAVE ORDERS
-# -----------------------------
+# -----------------------
+# SAVE
+# -----------------------
 
 orders_df = pd.DataFrame(orders)
+
+date_str = pd.to_datetime(latest_date).date()
 
 orders_file = OUT_ORDERS / f"orders_{latest_date.date()}.parquet"
 
 orders_df.to_parquet(orders_file, index=False)
 
-print(f"Saved {len(orders_df)} orders to {orders_file}")
+print(f"✅ Saved {len(orders_df)} orders to {orders_file}")
 
 if not orders_df.empty:
     print(orders_df)

@@ -11,7 +11,10 @@ def fetch_live_prices(symbols):
 
     for symbol in symbols:
 
-        ticker = symbol.split(":")[1] + ".NS"
+        if ":" in symbol:
+            ticker = symbol.split(":")[1] + ".NS"
+        else:
+            ticker = symbol + ".NS"
 
         df = yf.download(
             ticker,

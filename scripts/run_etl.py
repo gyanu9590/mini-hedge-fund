@@ -42,12 +42,12 @@ def ingest_prices(symbols):
 def main():
 
     symbols = [
-        "NSE:TCS",
-        "NSE:INFY",
-        "NSE:RELIANCE",
-        "NSE:HDFCBANK",
-        "NSE:ICICIBANK"
-    ]
+"TCS","INFY","RELIANCE","HDFCBANK","ICICIBANK",
+"SBIN","AXISBANK","LT","ITC","HINDUNILVR",
+"MARUTI","BAJFINANCE","ASIANPAINT","WIPRO",
+"TITAN","ULTRACEMCO","POWERGRID","NTPC",
+"ADANIENT","ADANIPORTS"
+]
 
     # Step 1: Download historical data (for backtesting)
     ingest_prices(symbols)

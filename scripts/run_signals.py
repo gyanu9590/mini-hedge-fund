@@ -1,65 +1,84 @@
+from pathlib import Path
 import pandas as pd
+import sys
 import os
-import glob
-import datetime
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(ROOT)
+
 from src.model.ml_model import generate_signals
 
-FEATURE_DIR = "data/features"
-OUTPUT_DIR = "data/signals"
+DATA_DIR = Path("data/features")
+OUT_DIR = Path("data/signals")
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ---------------------------------------
-# LOAD ALL FEATURE FILES
-# ---------------------------------------
 
-files = glob.glob(f"{FEATURE_DIR}/*.parquet")
+def main():
 
-if len(files) == 0:
-    raise Exception("No feature files found. Run feature pipeline first.")
+    rows = []
 
-dfs = []
+    # -----------------------
+    # LOAD FEATURES
+    # -----------------------
 
-for f in files:
-    df = pd.read_parquet(f)
-    dfs.append(df)
+    FEATURE_FILE = Path("data/features/features.parquet")
 
-df = pd.concat(dfs)
+    df = pd.read_parquet(FEATURE_FILE)
 
-print("Loaded feature data:", df.shape)
+    print("Loaded feature data:", df.shape)
 
-# ---------------------------------------
-# APPLY ML MODEL
-# ---------------------------------------
+        # 🔥 CLEAN SYMBOL
+    df["symbol"] = (
+            df["symbol"]
+            .astype(str)
+            .str.replace("NSE_", "")
+            .str.replace("NSE:", "")
+        )
 
-df = generate_signals(df)
+    rows.append(df)
 
-print("ML predictions generated")
+    if not rows:
+        print("❌ No feature files found")
+        return
 
-# ---------------------------------------
-# CLEAN SIGNAL TABLE
-# ---------------------------------------
+    df = pd.concat(rows).sort_values(["symbol", "date"]).reset_index(drop=True)
 
-signals = df[[
-    "date",
-    "symbol",
-    "probability",
-    "signal"
-]].copy()
+    print(f"Loaded feature data: {df.shape}")
 
-signals = signals.sort_values("date")
+    # -----------------------
+    # GENERATE SIGNALS
+    # -----------------------
 
-signals = signals.groupby("symbol").tail(1)
+    df = generate_signals(df)
 
-# ---------------------------------------
-# SAVE SIGNAL FILE
-# ---------------------------------------
+    if df is None:
+        print("❌ Signal generation failed")
+        return
 
-today = datetime.date.today()
+    # 🔥 FINAL CLEAN (important)
+    df["symbol"] = (
+        df["symbol"]
+        .astype(str)
+        .str.replace("NSE_", "")
+        .str.replace("NSE:", "")
+    )
 
-file = f"{OUTPUT_DIR}/signals_{today}.parquet"
+    # -----------------------
+    # SAVE
+    # -----------------------
 
-signals.to_parquet(file)
+    latest_date = df["date"].max()
 
-print("Signals saved to:", file)
-print(signals)
+    date_str = pd.to_datetime(latest_date).date()
+
+    out_file = OUT_DIR / f"signals_{date_str}.parquet"
+
+    df.to_parquet(out_file, index=False)
+
+    print(f"✅ Signals saved to: {out_file}")
+    print(df[["date", "symbol", "probability", "signal"]].tail(20))
+
+
+if __name__ == "__main__":
+    main()
