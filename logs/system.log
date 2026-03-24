@@ -1,0 +1,405 @@
+2026-03-20 22:17:44,523  INFO  ETL complete. Files in data\prices
+2026-03-20 22:17:46,763  INFO  Combined feature file: 18340 rows � 54 columns
+2026-03-20 22:17:46,815  INFO  Loaded feature data: (18340, 54)
+2026-03-20 22:18:05,295  INFO  Walk-forward complete: 28 folds trained.
+2026-03-20 22:18:07,712  INFO  Ensemble predictions on 11500 OOS rows. Prob mean=0.371 std=0.159
+2026-03-20 22:18:07,726  WARNING  No long signals passed the 60% confidence threshold on 2026-03-04 00:00:00. Highest probability: 0.431
+2026-03-20 22:18:07,730  INFO  Signals on 2026-03-04 00:00:00: 0 long, 3 short.
+2026-03-20 22:18:07,895  INFO  Vol-target scalar applied: 0.76
+2026-03-20 22:18:07,897  WARNING  No close price for ASIANPAINT � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for ULTRACEMCO � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for ITC � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for LT � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for MARUTI � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for POWERGRID � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for HINDUNILVR � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for NTPC � skipping.
+2026-03-20 22:18:07,897  WARNING  No close price for TCS � skipping.
+2026-03-20 22:18:07,897  WARNING  All orders filtered out (zero qty or missing prices).
+2026-03-20 22:18:08,159  INFO  Backtest complete: CAGR=-17.2%  Sharpe=-10.23  MaxDD=-0.1%
+2026-03-20 22:18:08,185  INFO  Pipeline finished.
+2026-03-20 22:23:26,382  INFO  === Starting: ETL ===
+2026-03-20 22:23:26,388  INFO  Downloading TCS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:28,323  INFO    ✅ Saved 793 rows → data\prices\TCS.parquet
+2026-03-20 22:23:28,323  INFO  Downloading INFY.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:28,904  INFO    ✅ Saved 793 rows → data\prices\INFY.parquet
+2026-03-20 22:23:28,904  INFO  Downloading RELIANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:29,424  INFO    ✅ Saved 793 rows → data\prices\RELIANCE.parquet
+2026-03-20 22:23:29,427  INFO  Downloading HDFCBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:29,983  INFO    ✅ Saved 793 rows → data\prices\HDFCBANK.parquet
+2026-03-20 22:23:29,983  INFO  Downloading ICICIBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:30,746  INFO    ✅ Saved 793 rows → data\prices\ICICIBANK.parquet
+2026-03-20 22:23:30,746  INFO  Downloading SBIN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:31,299  INFO    ✅ Saved 793 rows → data\prices\SBIN.parquet
+2026-03-20 22:23:31,299  INFO  Downloading AXISBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:31,761  INFO    ✅ Saved 793 rows → data\prices\AXISBANK.parquet
+2026-03-20 22:23:31,761  INFO  Downloading LT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:32,248  INFO    ✅ Saved 793 rows → data\prices\LT.parquet
+2026-03-20 22:23:32,248  INFO  Downloading ITC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:33,089  INFO    ✅ Saved 793 rows → data\prices\ITC.parquet
+2026-03-20 22:23:33,089  INFO  Downloading HINDUNILVR.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:33,497  INFO    ✅ Saved 793 rows → data\prices\HINDUNILVR.parquet
+2026-03-20 22:23:33,497  INFO  Downloading MARUTI.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:34,020  INFO    ✅ Saved 793 rows → data\prices\MARUTI.parquet
+2026-03-20 22:23:34,020  INFO  Downloading BAJFINANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:34,861  INFO    ✅ Saved 793 rows → data\prices\BAJFINANCE.parquet
+2026-03-20 22:23:34,863  INFO  Downloading ASIANPAINT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:35,423  INFO    ✅ Saved 793 rows → data\prices\ASIANPAINT.parquet
+2026-03-20 22:23:35,430  INFO  Downloading WIPRO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:36,038  INFO    ✅ Saved 793 rows → data\prices\WIPRO.parquet
+2026-03-20 22:23:36,038  INFO  Downloading TITAN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:36,612  INFO    ✅ Saved 793 rows → data\prices\TITAN.parquet
+2026-03-20 22:23:36,612  INFO  Downloading ULTRACEMCO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:37,071  INFO    ✅ Saved 793 rows → data\prices\ULTRACEMCO.parquet
+2026-03-20 22:23:37,071  INFO  Downloading POWERGRID.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:37,533  INFO    ✅ Saved 793 rows → data\prices\POWERGRID.parquet
+2026-03-20 22:23:37,533  INFO  Downloading NTPC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:37,989  INFO    ✅ Saved 793 rows → data\prices\NTPC.parquet
+2026-03-20 22:23:37,989  INFO  Downloading ADANIENT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:38,503  INFO    ✅ Saved 793 rows → data\prices\ADANIENT.parquet
+2026-03-20 22:23:38,503  INFO  Downloading ADANIPORTS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:23:38,895  INFO    ✅ Saved 793 rows → data\prices\ADANIPORTS.parquet
+2026-03-20 22:23:38,895  INFO  ETL complete. Files in data\prices
+2026-03-20 22:23:38,895  INFO  === Done:     ETL ===
+2026-03-20 22:23:38,895  INFO  === Starting: Features ===
+2026-03-20 22:23:38,978  INFO  ✅ ADANIENT  →  584 rows, 54 features
+2026-03-20 22:23:39,011  INFO  ✅ ADANIPORTS  →  584 rows, 54 features
+2026-03-20 22:23:39,050  INFO  ✅ ASIANPAINT  →  584 rows, 54 features
+2026-03-20 22:23:39,079  INFO  ✅ AXISBANK  →  584 rows, 54 features
+2026-03-20 22:23:39,113  INFO  ✅ BAJFINANCE  →  584 rows, 54 features
+2026-03-20 22:23:39,150  INFO  ✅ HDFCBANK  →  584 rows, 54 features
+2026-03-20 22:23:39,180  INFO  ✅ HINDUNILVR  →  584 rows, 54 features
+2026-03-20 22:23:39,235  INFO  ✅ ICICIBANK  →  584 rows, 54 features
+2026-03-20 22:23:39,278  INFO  ✅ INFY  →  584 rows, 54 features
+2026-03-20 22:23:39,317  INFO  ✅ ITC  →  584 rows, 54 features
+2026-03-20 22:23:39,346  INFO  ✅ LT  →  584 rows, 54 features
+2026-03-20 22:23:39,386  INFO  ✅ MARUTI  →  584 rows, 54 features
+2026-03-20 22:23:39,412  INFO  ✅ HDFCBANK  →  1332 rows, 45 features
+2026-03-20 22:23:39,435  INFO  ✅ ICICIBANK  →  1332 rows, 45 features
+2026-03-20 22:23:39,467  INFO  ✅ INFY  →  1332 rows, 45 features
+2026-03-20 22:23:39,486  INFO  ✅ RELIANCE  →  1332 rows, 45 features
+2026-03-20 22:23:39,519  INFO  ✅ TCS  →  1332 rows, 45 features
+2026-03-20 22:23:39,553  INFO  ✅ NTPC  →  584 rows, 54 features
+2026-03-20 22:23:39,579  INFO  ✅ POWERGRID  →  584 rows, 54 features
+2026-03-20 22:23:39,621  INFO  ✅ RELIANCE  →  584 rows, 54 features
+2026-03-20 22:23:39,654  INFO  ✅ SBIN  →  584 rows, 54 features
+2026-03-20 22:23:39,734  INFO  ✅ TCS  →  584 rows, 54 features
+2026-03-20 22:23:39,767  INFO  ✅ TITAN  →  584 rows, 54 features
+2026-03-20 22:23:39,799  INFO  ✅ ULTRACEMCO  →  584 rows, 54 features
+2026-03-20 22:23:39,848  INFO  ✅ WIPRO  →  584 rows, 54 features
+2026-03-20 22:23:39,921  INFO  Combined feature file: 18340 rows × 54 columns
+2026-03-20 22:23:39,928  INFO  === Done:     Features ===
+2026-03-20 22:23:39,928  INFO  === Starting: Signals ===
+2026-03-20 22:23:39,963  INFO  Loaded feature data: (18340, 54)
+2026-03-20 22:23:52,813  INFO  Walk-forward complete: 28 folds trained.
+2026-03-20 22:23:55,294  INFO  Ensemble predictions on 11500 OOS rows. Prob mean=0.371 std=0.159
+2026-03-20 22:23:55,303  WARNING  No long signals passed the 60% confidence threshold on 2026-03-04 00:00:00. Highest probability: 0.431
+2026-03-20 22:23:55,305  INFO  Signals on 2026-03-04 00:00:00: 0 long, 3 short.
+2026-03-20 22:23:55,387  INFO  ✅ Signals saved → data\signals\signals_2026-03-04.parquet
+2026-03-20 22:23:55,393  INFO  === Done:     Signals ===
+2026-03-20 22:23:55,393  INFO  === Starting: Orders ===
+2026-03-20 22:23:55,403  INFO  close column missing from signals - merging from features parquet
+2026-03-20 22:23:55,429  INFO  Active signals on 2026-03-05: 9
+2026-03-20 22:23:55,478  INFO  Vol-target scalar applied: 0.76
+2026-03-20 22:23:55,478  WARNING  No close price for ASIANPAINT - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for ULTRACEMCO - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for ITC - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for LT - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for MARUTI - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for POWERGRID - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for HINDUNILVR - skipping.
+2026-03-20 22:23:55,478  WARNING  No close price for NTPC - skipping.
+2026-03-20 22:23:55,478  INFO  Saved 1 orders to data\orders\orders_2026-03-05.parquet
+2026-03-20 22:23:55,490  INFO  === Done:     Orders ===
+2026-03-20 22:23:55,490  INFO  === Starting: Backtest ===
+2026-03-20 22:23:55,745  INFO  Backtest complete: CAGR=-17.2%  Sharpe=-10.23  MaxDD=-0.1%
+2026-03-20 22:23:55,760  INFO  Equity curve → reports/equity_curve.csv
+2026-03-20 22:23:55,760  INFO  Metrics      → reports/metrics.json
+2026-03-20 22:23:55,760  INFO  === Done:     Backtest ===
+2026-03-20 22:23:55,760  INFO  Pipeline finished.
+2026-03-20 22:27:11,045  INFO  === Starting: ETL ===
+2026-03-20 22:27:11,045  INFO  Downloading TCS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:12,689  INFO    ✅ Saved 793 rows → data\prices\TCS.parquet
+2026-03-20 22:27:12,689  INFO  Downloading INFY.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:13,229  INFO    ✅ Saved 793 rows → data\prices\INFY.parquet
+2026-03-20 22:27:13,238  INFO  Downloading RELIANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:13,663  INFO    ✅ Saved 793 rows → data\prices\RELIANCE.parquet
+2026-03-20 22:27:13,663  INFO  Downloading HDFCBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:14,132  INFO    ✅ Saved 793 rows → data\prices\HDFCBANK.parquet
+2026-03-20 22:27:14,132  INFO  Downloading ICICIBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:14,591  INFO    ✅ Saved 793 rows → data\prices\ICICIBANK.parquet
+2026-03-20 22:27:14,591  INFO  Downloading SBIN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:15,188  INFO    ✅ Saved 793 rows → data\prices\SBIN.parquet
+2026-03-20 22:27:15,188  INFO  Downloading AXISBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:15,764  INFO    ✅ Saved 793 rows → data\prices\AXISBANK.parquet
+2026-03-20 22:27:15,764  INFO  Downloading LT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:16,194  INFO    ✅ Saved 793 rows → data\prices\LT.parquet
+2026-03-20 22:27:16,194  INFO  Downloading ITC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:16,673  INFO    ✅ Saved 793 rows → data\prices\ITC.parquet
+2026-03-20 22:27:16,673  INFO  Downloading HINDUNILVR.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:17,227  INFO    ✅ Saved 793 rows → data\prices\HINDUNILVR.parquet
+2026-03-20 22:27:17,227  INFO  Downloading MARUTI.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:17,670  INFO    ✅ Saved 793 rows → data\prices\MARUTI.parquet
+2026-03-20 22:27:17,670  INFO  Downloading BAJFINANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:18,186  INFO    ✅ Saved 793 rows → data\prices\BAJFINANCE.parquet
+2026-03-20 22:27:18,186  INFO  Downloading ASIANPAINT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:18,649  INFO    ✅ Saved 793 rows → data\prices\ASIANPAINT.parquet
+2026-03-20 22:27:18,649  INFO  Downloading WIPRO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:19,152  INFO    ✅ Saved 793 rows → data\prices\WIPRO.parquet
+2026-03-20 22:27:19,152  INFO  Downloading TITAN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:19,705  INFO    ✅ Saved 793 rows → data\prices\TITAN.parquet
+2026-03-20 22:27:19,705  INFO  Downloading ULTRACEMCO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:20,163  INFO    ✅ Saved 793 rows → data\prices\ULTRACEMCO.parquet
+2026-03-20 22:27:20,163  INFO  Downloading POWERGRID.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:20,667  INFO    ✅ Saved 793 rows → data\prices\POWERGRID.parquet
+2026-03-20 22:27:20,667  INFO  Downloading NTPC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:21,183  INFO    ✅ Saved 793 rows → data\prices\NTPC.parquet
+2026-03-20 22:27:21,183  INFO  Downloading ADANIENT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:21,636  INFO    ✅ Saved 793 rows → data\prices\ADANIENT.parquet
+2026-03-20 22:27:21,636  INFO  Downloading ADANIPORTS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:27:22,203  INFO    ✅ Saved 793 rows → data\prices\ADANIPORTS.parquet
+2026-03-20 22:27:22,209  INFO  ETL complete. Files in data\prices
+2026-03-20 22:27:22,209  INFO  === Done:     ETL ===
+2026-03-20 22:27:22,209  INFO  === Starting: Features ===
+2026-03-20 22:27:22,263  INFO  ✅ ADANIENT  →  584 rows, 54 features
+2026-03-20 22:27:22,304  INFO  ✅ ADANIPORTS  →  584 rows, 54 features
+2026-03-20 22:27:22,334  INFO  ✅ ASIANPAINT  →  584 rows, 54 features
+2026-03-20 22:27:22,371  INFO  ✅ AXISBANK  →  584 rows, 54 features
+2026-03-20 22:27:22,399  INFO  ✅ BAJFINANCE  →  584 rows, 54 features
+2026-03-20 22:27:22,435  INFO  ✅ HDFCBANK  →  584 rows, 54 features
+2026-03-20 22:27:22,468  INFO  ✅ HINDUNILVR  →  584 rows, 54 features
+2026-03-20 22:27:22,501  INFO  ✅ ICICIBANK  →  584 rows, 54 features
+2026-03-20 22:27:22,534  INFO  ✅ INFY  →  584 rows, 54 features
+2026-03-20 22:27:22,577  INFO  ✅ ITC  →  584 rows, 54 features
+2026-03-20 22:27:22,609  INFO  ✅ LT  →  584 rows, 54 features
+2026-03-20 22:27:22,641  INFO  ✅ MARUTI  →  584 rows, 54 features
+2026-03-20 22:27:22,668  INFO  ✅ HDFCBANK  →  1332 rows, 45 features
+2026-03-20 22:27:22,691  INFO  ✅ ICICIBANK  →  1332 rows, 45 features
+2026-03-20 22:27:22,718  INFO  ✅ INFY  →  1332 rows, 45 features
+2026-03-20 22:27:22,741  INFO  ✅ RELIANCE  →  1332 rows, 45 features
+2026-03-20 22:27:22,769  INFO  ✅ TCS  →  1332 rows, 45 features
+2026-03-20 22:27:22,802  INFO  ✅ NTPC  →  584 rows, 54 features
+2026-03-20 22:27:22,835  INFO  ✅ POWERGRID  →  584 rows, 54 features
+2026-03-20 22:27:22,868  INFO  ✅ RELIANCE  →  584 rows, 54 features
+2026-03-20 22:27:22,964  INFO  ✅ SBIN  →  584 rows, 54 features
+2026-03-20 22:27:23,038  INFO  ✅ TCS  →  584 rows, 54 features
+2026-03-20 22:27:23,078  INFO  ✅ TITAN  →  584 rows, 54 features
+2026-03-20 22:27:23,102  INFO  ✅ ULTRACEMCO  →  584 rows, 54 features
+2026-03-20 22:27:23,145  INFO  ✅ WIPRO  →  584 rows, 54 features
+2026-03-20 22:27:23,217  INFO  Combined feature file: 18340 rows × 54 columns
+2026-03-20 22:27:23,224  INFO  === Done:     Features ===
+2026-03-20 22:27:23,224  INFO  === Starting: Signals ===
+2026-03-20 22:27:23,253  INFO  Loaded feature data: (18340, 54)
+2026-03-20 22:27:36,391  INFO  Walk-forward complete: 28 folds trained.
+2026-03-20 22:27:38,310  INFO  Ensemble predictions on 11500 OOS rows. Prob mean=0.371 std=0.159
+2026-03-20 22:27:38,317  WARNING  No long signals passed the 60% confidence threshold on 2026-03-04 00:00:00. Highest probability: 0.431
+2026-03-20 22:27:38,321  INFO  Signals on 2026-03-04 00:00:00: 0 long, 3 short.
+2026-03-20 22:27:38,396  INFO  Full signal history saved -> data\signals\signals_history.parquet  (11500 rows)
+2026-03-20 22:27:38,457  INFO  Latest signals saved -> data\signals\signals_2026-03-04.parquet
+2026-03-20 22:27:38,460  INFO  === Done:     Signals ===
+2026-03-20 22:27:38,460  INFO  === Starting: Orders ===
+2026-03-20 22:27:38,476  INFO  Active signals on 2026-03-05: 9
+2026-03-20 22:27:38,518  INFO  Vol-target scalar: 0.76
+2026-03-20 22:27:38,552  INFO  Saved 9 orders to data\orders\orders_2026-03-05.parquet
+2026-03-20 22:27:38,563  INFO  === Done:     Orders ===
+2026-03-20 22:27:38,563  INFO  === Starting: Backtest ===
+2026-03-20 22:27:38,696  INFO  Backtest: 11500 signal rows, 23565 price rows, date range 2023-11-06 to 2026-03-04
+2026-03-20 22:27:38,861  INFO  Backtest complete: CAGR=0.0%  Sharpe=0.00  MaxDD=0.0%
+2026-03-20 22:27:38,880  INFO  Equity curve saved -> reports/equity_curve.csv
+2026-03-20 22:27:38,880  INFO  Metrics saved      -> reports/metrics.json
+2026-03-20 22:27:38,880  INFO  === Done:     Backtest ===
+2026-03-20 22:27:38,880  INFO  Pipeline finished.
+2026-03-20 22:31:19,661  INFO  === Starting: ETL ===
+2026-03-20 22:31:19,679  INFO  Downloading TCS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:21,485  INFO    ✅ Saved 793 rows → data\prices\TCS.parquet
+2026-03-20 22:31:21,485  INFO  Downloading INFY.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:21,949  INFO    ✅ Saved 793 rows → data\prices\INFY.parquet
+2026-03-20 22:31:21,949  INFO  Downloading RELIANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:22,577  INFO    ✅ Saved 793 rows → data\prices\RELIANCE.parquet
+2026-03-20 22:31:22,577  INFO  Downloading HDFCBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:23,056  INFO    ✅ Saved 793 rows → data\prices\HDFCBANK.parquet
+2026-03-20 22:31:23,056  INFO  Downloading ICICIBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:23,910  INFO    ✅ Saved 793 rows → data\prices\ICICIBANK.parquet
+2026-03-20 22:31:23,910  INFO  Downloading SBIN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:24,700  INFO    ✅ Saved 793 rows → data\prices\SBIN.parquet
+2026-03-20 22:31:24,705  INFO  Downloading AXISBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:25,192  INFO    ✅ Saved 793 rows → data\prices\AXISBANK.parquet
+2026-03-20 22:31:25,192  INFO  Downloading LT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:25,604  INFO    ✅ Saved 793 rows → data\prices\LT.parquet
+2026-03-20 22:31:25,604  INFO  Downloading ITC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:26,086  INFO    ✅ Saved 793 rows → data\prices\ITC.parquet
+2026-03-20 22:31:26,093  INFO  Downloading HINDUNILVR.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:26,527  INFO    ✅ Saved 793 rows → data\prices\HINDUNILVR.parquet
+2026-03-20 22:31:26,527  INFO  Downloading MARUTI.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:26,971  INFO    ✅ Saved 793 rows → data\prices\MARUTI.parquet
+2026-03-20 22:31:26,971  INFO  Downloading BAJFINANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:27,412  INFO    ✅ Saved 793 rows → data\prices\BAJFINANCE.parquet
+2026-03-20 22:31:27,412  INFO  Downloading ASIANPAINT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:27,844  INFO    ✅ Saved 793 rows → data\prices\ASIANPAINT.parquet
+2026-03-20 22:31:27,844  INFO  Downloading WIPRO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:28,307  INFO    ✅ Saved 793 rows → data\prices\WIPRO.parquet
+2026-03-20 22:31:28,307  INFO  Downloading TITAN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:28,759  INFO    ✅ Saved 793 rows → data\prices\TITAN.parquet
+2026-03-20 22:31:28,759  INFO  Downloading ULTRACEMCO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:29,273  INFO    ✅ Saved 793 rows → data\prices\ULTRACEMCO.parquet
+2026-03-20 22:31:29,273  INFO  Downloading POWERGRID.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:29,736  INFO    ✅ Saved 793 rows → data\prices\POWERGRID.parquet
+2026-03-20 22:31:29,736  INFO  Downloading NTPC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:30,326  INFO    ✅ Saved 793 rows → data\prices\NTPC.parquet
+2026-03-20 22:31:30,326  INFO  Downloading ADANIENT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:30,797  INFO    ✅ Saved 793 rows → data\prices\ADANIENT.parquet
+2026-03-20 22:31:30,797  INFO  Downloading ADANIPORTS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:31:31,394  INFO    ✅ Saved 793 rows → data\prices\ADANIPORTS.parquet
+2026-03-20 22:31:31,394  INFO  ETL complete. Files in data\prices
+2026-03-20 22:31:31,394  INFO  === Done:     ETL ===
+2026-03-20 22:31:31,394  INFO  === Starting: Features ===
+2026-03-20 22:31:31,464  INFO  ✅ ADANIENT  →  584 rows, 54 features
+2026-03-20 22:31:31,504  INFO  ✅ ADANIPORTS  →  584 rows, 54 features
+2026-03-20 22:31:31,537  INFO  ✅ ASIANPAINT  →  584 rows, 54 features
+2026-03-20 22:31:31,573  INFO  ✅ AXISBANK  →  584 rows, 54 features
+2026-03-20 22:31:31,605  INFO  ✅ BAJFINANCE  →  584 rows, 54 features
+2026-03-20 22:31:31,638  INFO  ✅ HDFCBANK  →  584 rows, 54 features
+2026-03-20 22:31:31,680  INFO  ✅ HINDUNILVR  →  584 rows, 54 features
+2026-03-20 22:31:31,720  INFO  ✅ ICICIBANK  →  584 rows, 54 features
+2026-03-20 22:31:31,746  INFO  ✅ INFY  →  584 rows, 54 features
+2026-03-20 22:31:31,778  INFO  ✅ ITC  →  584 rows, 54 features
+2026-03-20 22:31:31,811  INFO  ✅ LT  →  584 rows, 54 features
+2026-03-20 22:31:31,845  INFO  ✅ MARUTI  →  584 rows, 54 features
+2026-03-20 22:31:31,876  INFO  ✅ HDFCBANK  →  1332 rows, 45 features
+2026-03-20 22:31:31,904  INFO  ✅ ICICIBANK  →  1332 rows, 45 features
+2026-03-20 22:31:31,926  INFO  ✅ INFY  →  1332 rows, 45 features
+2026-03-20 22:31:31,958  INFO  ✅ RELIANCE  →  1332 rows, 45 features
+2026-03-20 22:31:31,979  INFO  ✅ TCS  →  1332 rows, 45 features
+2026-03-20 22:31:32,012  INFO  ✅ NTPC  →  584 rows, 54 features
+2026-03-20 22:31:32,045  INFO  ✅ POWERGRID  →  584 rows, 54 features
+2026-03-20 22:31:32,087  INFO  ✅ RELIANCE  →  584 rows, 54 features
+2026-03-20 22:31:32,111  INFO  ✅ SBIN  →  584 rows, 54 features
+2026-03-20 22:31:32,194  INFO  ✅ TCS  →  584 rows, 54 features
+2026-03-20 22:31:32,221  INFO  ✅ TITAN  →  584 rows, 54 features
+2026-03-20 22:31:32,270  INFO  ✅ ULTRACEMCO  →  584 rows, 54 features
+2026-03-20 22:31:32,300  INFO  ✅ WIPRO  →  584 rows, 54 features
+2026-03-20 22:31:32,380  INFO  Combined feature file: 18340 rows × 54 columns
+2026-03-20 22:31:32,389  INFO  === Done:     Features ===
+2026-03-20 22:31:32,389  INFO  === Starting: Signals ===
+2026-03-20 22:31:32,421  INFO  Loaded feature data: (18340, 54)
+2026-03-20 22:31:45,468  INFO  Walk-forward complete: 28 folds trained.
+2026-03-20 22:31:47,275  INFO  Ensemble predictions on 11500 OOS rows. Prob mean=0.371 std=0.159
+2026-03-20 22:31:48,504  INFO  Signals assigned across 575 dates. Avg per day: 2.9 long, 2.5 short.
+2026-03-20 22:31:48,504  INFO  Signals on latest date 2026-03-04 00:00:00: 2 long, 3 short.
+2026-03-20 22:31:48,570  INFO  Full signal history saved -> data\signals\signals_history.parquet  (11500 rows)
+2026-03-20 22:31:48,634  INFO  Latest signals saved -> data\signals\signals_2026-03-04.parquet
+2026-03-20 22:31:48,641  INFO  === Done:     Signals ===
+2026-03-20 22:31:48,642  INFO  === Starting: Orders ===
+2026-03-20 22:31:48,649  INFO  Active signals on 2026-03-05: 9
+2026-03-20 22:31:48,703  INFO  Vol-target scalar: 0.76
+2026-03-20 22:31:48,742  INFO  Saved 9 orders to data\orders\orders_2026-03-05.parquet
+2026-03-20 22:31:48,742  INFO  === Done:     Orders ===
+2026-03-20 22:31:48,742  INFO  === Starting: Backtest ===
+2026-03-20 22:31:48,859  INFO  Backtest: 11500 signal rows, 23565 price rows, date range 2023-11-06 to 2026-03-04
+2026-03-20 22:31:48,877  INFO  SHORT STOP-LOSS triggered: ADANIENT  entry=2249.88  current=2424.10
+2026-03-20 22:31:48,881  INFO  STOP-LOSS triggered: ADANIENT  entry=2526.90  current=2314.30
+2026-03-20 22:31:48,889  INFO  STOP-LOSS triggered: BAJFINANCE  entry=1085.00  current=1005.20
+2026-03-20 22:31:48,907  INFO  SHORT STOP-LOSS triggered: ICICIBANK  entry=1259.28  current=1347.75
+2026-03-20 22:31:49,025  INFO  Backtest complete: CAGR=-26.8%  Sharpe=-3.11  MaxDD=-52.0%
+2026-03-20 22:31:49,041  INFO  Equity curve saved -> reports/equity_curve.csv
+2026-03-20 22:31:49,041  INFO  Metrics saved      -> reports/metrics.json
+2026-03-20 22:31:49,041  INFO  === Done:     Backtest ===
+2026-03-20 22:31:49,041  INFO  Pipeline finished.
+2026-03-20 22:37:08,832  INFO  === Starting: ETL ===
+2026-03-20 22:37:08,852  INFO  Downloading TCS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:10,584  INFO    ✅ Saved 793 rows → data\prices\TCS.parquet
+2026-03-20 22:37:10,584  INFO  Downloading INFY.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:11,873  INFO    ✅ Saved 793 rows → data\prices\INFY.parquet
+2026-03-20 22:37:11,875  INFO  Downloading RELIANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:12,555  INFO    ✅ Saved 793 rows → data\prices\RELIANCE.parquet
+2026-03-20 22:37:12,555  INFO  Downloading HDFCBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:13,736  INFO    ✅ Saved 793 rows → data\prices\HDFCBANK.parquet
+2026-03-20 22:37:13,736  INFO  Downloading ICICIBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:14,833  INFO    ✅ Saved 793 rows → data\prices\ICICIBANK.parquet
+2026-03-20 22:37:14,833  INFO  Downloading SBIN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:15,953  INFO    ✅ Saved 793 rows → data\prices\SBIN.parquet
+2026-03-20 22:37:15,953  INFO  Downloading AXISBANK.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:17,089  INFO    ✅ Saved 793 rows → data\prices\AXISBANK.parquet
+2026-03-20 22:37:17,089  INFO  Downloading LT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:18,314  INFO    ✅ Saved 793 rows → data\prices\LT.parquet
+2026-03-20 22:37:18,318  INFO  Downloading ITC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:19,447  INFO    ✅ Saved 793 rows → data\prices\ITC.parquet
+2026-03-20 22:37:19,447  INFO  Downloading HINDUNILVR.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:20,503  INFO    ✅ Saved 793 rows → data\prices\HINDUNILVR.parquet
+2026-03-20 22:37:20,505  INFO  Downloading MARUTI.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:21,592  INFO    ✅ Saved 793 rows → data\prices\MARUTI.parquet
+2026-03-20 22:37:21,592  INFO  Downloading BAJFINANCE.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:22,716  INFO    ✅ Saved 793 rows → data\prices\BAJFINANCE.parquet
+2026-03-20 22:37:22,716  INFO  Downloading ASIANPAINT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:23,836  INFO    ✅ Saved 793 rows → data\prices\ASIANPAINT.parquet
+2026-03-20 22:37:23,837  INFO  Downloading WIPRO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:25,016  INFO    ✅ Saved 793 rows → data\prices\WIPRO.parquet
+2026-03-20 22:37:25,016  INFO  Downloading TITAN.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:26,407  INFO    ✅ Saved 793 rows → data\prices\TITAN.parquet
+2026-03-20 22:37:26,407  INFO  Downloading ULTRACEMCO.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:27,412  INFO    ✅ Saved 793 rows → data\prices\ULTRACEMCO.parquet
+2026-03-20 22:37:27,412  INFO  Downloading POWERGRID.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:32,652  INFO    ✅ Saved 793 rows → data\prices\POWERGRID.parquet
+2026-03-20 22:37:32,652  INFO  Downloading NTPC.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:33,689  INFO    ✅ Saved 793 rows → data\prices\NTPC.parquet
+2026-03-20 22:37:33,689  INFO  Downloading ADANIENT.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:34,798  INFO    ✅ Saved 793 rows → data\prices\ADANIENT.parquet
+2026-03-20 22:37:34,798  INFO  Downloading ADANIPORTS.NS  (2023-01-01 → 2026-03-19)…
+2026-03-20 22:37:35,842  INFO    ✅ Saved 793 rows → data\prices\ADANIPORTS.parquet
+2026-03-20 22:37:35,842  INFO  ETL complete. Files in data\prices
+2026-03-20 22:37:35,842  INFO  === Done:     ETL ===
+2026-03-20 22:37:35,842  INFO  === Starting: Features ===
+2026-03-20 22:37:35,903  INFO  ✅ ADANIENT  →  584 rows, 54 features
+2026-03-20 22:37:35,937  INFO  ✅ ADANIPORTS  →  584 rows, 54 features
+2026-03-20 22:37:35,970  INFO  ✅ ASIANPAINT  →  584 rows, 54 features
+2026-03-20 22:37:36,003  INFO  ✅ AXISBANK  →  584 rows, 54 features
+2026-03-20 22:37:36,043  INFO  ✅ BAJFINANCE  →  584 rows, 54 features
+2026-03-20 22:37:36,069  INFO  ✅ HDFCBANK  →  584 rows, 54 features
+2026-03-20 22:37:36,109  INFO  ✅ HINDUNILVR  →  584 rows, 54 features
+2026-03-20 22:37:36,138  INFO  ✅ ICICIBANK  →  584 rows, 54 features
+2026-03-20 22:37:36,175  INFO  ✅ INFY  →  584 rows, 54 features
+2026-03-20 22:37:36,208  INFO  ✅ ITC  →  584 rows, 54 features
+2026-03-20 22:37:36,242  INFO  ✅ LT  →  584 rows, 54 features
+2026-03-20 22:37:36,276  INFO  ✅ MARUTI  →  584 rows, 54 features
+2026-03-20 22:37:36,309  INFO  ✅ HDFCBANK  →  1332 rows, 45 features
+2026-03-20 22:37:36,335  INFO  ✅ ICICIBANK  →  1332 rows, 45 features
+2026-03-20 22:37:36,361  INFO  ✅ INFY  →  1332 rows, 45 features
+2026-03-20 22:37:36,392  INFO  ✅ RELIANCE  →  1332 rows, 45 features
+2026-03-20 22:37:36,420  INFO  ✅ TCS  →  1332 rows, 45 features
+2026-03-20 22:37:36,453  INFO  ✅ NTPC  →  584 rows, 54 features
+2026-03-20 22:37:36,486  INFO  ✅ POWERGRID  →  584 rows, 54 features
+2026-03-20 22:37:36,519  INFO  ✅ RELIANCE  →  584 rows, 54 features
+2026-03-20 22:37:36,553  INFO  ✅ SBIN  →  584 rows, 54 features
+2026-03-20 22:37:36,641  INFO  ✅ TCS  →  584 rows, 54 features
+2026-03-20 22:37:36,685  INFO  ✅ TITAN  →  584 rows, 54 features
+2026-03-20 22:37:36,722  INFO  ✅ ULTRACEMCO  →  584 rows, 54 features
+2026-03-20 22:37:36,754  INFO  ✅ WIPRO  →  584 rows, 54 features
+2026-03-20 22:37:36,843  INFO  Combined feature file: 18340 rows × 54 columns
+2026-03-20 22:37:36,843  INFO  === Done:     Features ===
+2026-03-20 22:37:36,846  INFO  === Starting: Signals ===
+2026-03-20 22:37:36,877  INFO  Loaded feature data: (18340, 54)
+2026-03-20 22:37:49,867  INFO  Walk-forward complete: 28 folds trained.
+2026-03-20 22:37:51,602  INFO  Ensemble predictions on 11500 OOS rows. Prob mean=0.371 std=0.159
+2026-03-20 22:37:52,801  INFO  Signals assigned across 575 dates. Avg per day: 3.0 long, 3.0 short.
+2026-03-20 22:37:52,801  INFO  Signals on latest date 2026-03-04 00:00:00: 3 long, 3 short.
+2026-03-20 22:37:52,869  INFO  Full signal history saved -> data\signals\signals_history.parquet  (11500 rows)
+2026-03-20 22:37:52,941  INFO  Latest signals saved -> data\signals\signals_2026-03-04.parquet
+2026-03-20 22:37:52,950  INFO  === Done:     Signals ===
+2026-03-20 22:37:52,951  INFO  === Starting: Orders ===
+2026-03-20 22:37:52,986  INFO  Active signals on 2026-03-04: 6
+2026-03-20 22:37:53,019  INFO  Vol-target scalar: 0.64
+2026-03-20 22:37:53,051  INFO  Saved 6 orders to data\orders\orders_2026-03-04.parquet
+2026-03-20 22:37:53,052  INFO  === Done:     Orders ===
+2026-03-20 22:37:53,052  INFO  === Starting: Backtest ===
+2026-03-20 22:37:53,213  INFO  Backtest: 11500 signal rows, 23565 price rows, date range 2023-11-06 to 2026-03-04
+2026-03-20 22:37:53,230  INFO  SHORT STOP-LOSS triggered: ADANIENT  entry=3138.17  current=3384.30
+2026-03-20 22:37:53,230  INFO  SHORT STOP-LOSS triggered: ADANIENT  entry=2256.38  current=2435.89
+2026-03-20 22:37:53,234  INFO  SHORT STOP-LOSS triggered: ADANIENT  entry=2249.88  current=2424.10
+2026-03-20 22:37:53,235  INFO  STOP-LOSS triggered: ADANIENT  entry=2526.90  current=2314.30
+2026-03-20 22:37:53,248  INFO  STOP-LOSS triggered: BAJFINANCE  entry=1085.00  current=1005.20
+2026-03-20 22:37:53,262  INFO  SHORT STOP-LOSS triggered: ICICIBANK  entry=1259.28  current=1347.75
+2026-03-20 22:37:53,351  INFO  Backtest complete: CAGR=-26.6%  Sharpe=-3.60  MaxDD=-51.7%
+2026-03-20 22:37:53,351  INFO  Equity curve saved -> reports/equity_curve.csv
+2026-03-20 22:37:53,351  INFO  Metrics saved      -> reports/metrics.json
+2026-03-20 22:37:53,358  INFO  === Done:     Backtest ===
+2026-03-20 22:37:53,358  INFO  Pipeline finished.

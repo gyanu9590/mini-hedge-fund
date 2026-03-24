@@ -1,61 +1,72 @@
-import yfinance as yf
-import pandas as pd
+"""
+scripts/run_etl.py
+
+Downloads OHLCV for every symbol in configs/settings.yaml.
+Reads start_date / end_date from config - does NOT hardcode dates.
+"""
+
+import logging
+import os
+import sys
 from pathlib import Path
-from src.data.live_market import fetch_live_prices
+
+import pandas as pd
+import yaml
+import yfinance as yf
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(ROOT)
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
+logger = logging.getLogger(__name__)
 
 DATA_DIR = Path("data/prices")
-
-
-def ingest_prices(symbols):
-    """
-    Download historical daily data for backtesting
-    """
-
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-    for s in symbols:
-
-        ticker = s.replace("NSE:", "") + ".NS"
-
-        print(f"Downloading historical data for {ticker}")
-
-        df = yf.download(
-            ticker,
-            start="2020-01-01",
-            progress=False
-        )
-
-        if df.empty:
-            print(f"No data for {ticker}")
-            continue
-
-        df = df.reset_index()[["Date", "Close"]]
-        df.columns = ["date", "close"]
-
-        file_path = DATA_DIR / f"{s.replace(':','_')}.parquet"
-
-        df.to_parquet(file_path, index=False)
-
-        print(f"Saved historical data → {file_path}")
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def main():
+    with open("configs/settings.yaml") as f:
+        cfg = yaml.safe_load(f)
 
-    symbols = [
-"TCS","INFY","RELIANCE","HDFCBANK","ICICIBANK",
-"SBIN","AXISBANK","LT","ITC","HINDUNILVR",
-"MARUTI","BAJFINANCE","ASIANPAINT","WIPRO",
-"TITAN","ULTRACEMCO","POWERGRID","NTPC",
-"ADANIENT","ADANIPORTS"
-]
+    symbols    = cfg["universe"]
+    start_date = cfg["data"]["start_date"]
+    end_date   = cfg["data"]["end_date"]
 
-    # Step 1: Download historical data (for backtesting)
-    ingest_prices(symbols)
+    logger.info("ETL: %d symbols from %s to %s", len(symbols), start_date, end_date)
 
-    # Step 2: Fetch latest intraday prices (live update)
-    fetch_live_prices(symbols)
+    for symbol in symbols:
+        clean_sym = symbol.replace("NSE:", "").strip()
+        yf_sym    = clean_sym + ".NS"
 
-    print("ETL completed successfully")
+        logger.info("Downloading %s  (%s to %s)...", yf_sym, start_date, end_date)
+
+        try:
+            df = yf.download(yf_sym, start=start_date, end=end_date, progress=False)
+        except Exception as e:
+            logger.warning("Download failed for %s: %s", yf_sym, e)
+            continue
+
+        if df.empty:
+            logger.warning("No data returned for %s.", yf_sym)
+            continue
+
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        df = df.reset_index().rename(columns={
+            "Date": "date", "Open": "open", "High": "high",
+            "Low": "low", "Close": "close", "Volume": "volume",
+        })
+
+        cols = [c for c in ["date","open","high","low","close","volume"] if c in df.columns]
+        df   = df[cols].copy()
+        df["symbol"] = clean_sym
+
+        out = DATA_DIR / f"{clean_sym}.parquet"
+        df.to_parquet(out, index=False)
+        logger.info("  Saved %d rows -> %s", len(df), out)
+
+    logger.info("ETL complete. Files in %s", DATA_DIR)
 
 
 if __name__ == "__main__":

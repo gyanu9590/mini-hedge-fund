@@ -1,70 +1,74 @@
-from pathlib import Path
-import pandas as pd
+"""
+scripts/run_features.py
+
+Reads per-symbol price parquets, generates features, saves
+data/features/features.parquet and individual data/features/{SYMBOL}_features.parquet.
+"""
+
+import logging
 import sys
 import os
+from pathlib import Path
 
-# -----------------------
-# PATH SETUP
-# -----------------------
+import pandas as pd
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(ROOT)
 
 from src.research.features import add_features
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
+logger = logging.getLogger(__name__)
+
 DATA_DIR = Path("data/prices")
-OUT_DIR = Path("data/features")
+OUT_DIR  = Path("data/features")
 
 
 def main():
-
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    rows = []
+    all_frames = []
 
-    # -----------------------
-    # LOAD PRICE DATA
-    # -----------------------
-
-    for f in DATA_DIR.glob("*.parquet"):
-
-        # 🔥 CLEAN SYMBOL
+    for f in sorted(DATA_DIR.glob("*.parquet")):
         sym = f.stem.replace("NSE_", "").replace("NSE:", "")
 
         df = pd.read_parquet(f)
+
+        # Ensure required columns exist
+        required = {"date", "close"}
+        if not required.issubset(df.columns):
+            logger.warning("Skipping %s — missing columns %s", f.name, required - set(df.columns))
+            continue
+
         df["symbol"] = sym
+        df = df.sort_values("date").reset_index(drop=True)
 
-        rows.append(df)
+        try:
+            feat_df = add_features(df)
+        except Exception as e:
+            logger.warning("Feature generation failed for %s: %s", sym, e)
+            continue
 
-    if not rows:
-        print("❌ No price data found")
+        feat_df["symbol"] = sym  # re-attach after add_features (which drops it)
+
+        # Save per-symbol file
+        sym_out = OUT_DIR / f"{sym}_features.parquet"
+        feat_df.to_parquet(sym_out, index=False)
+
+        all_frames.append(feat_df)
+        logger.info("✅ %s  →  %d rows, %d features", sym, len(feat_df), len(feat_df.columns))
+
+    if not all_frames:
+        logger.error("No feature data generated. Check data/prices/")
         return
 
-    prices = pd.concat(rows).sort_values(["symbol", "date"]).reset_index(drop=True)
+    combined = pd.concat(all_frames, ignore_index=True).sort_values(["symbol", "date"])
+    combined.to_parquet(OUT_DIR / "features.parquet", index=False)
 
-    # -----------------------
-    # FEATURE ENGINEERING
-    # -----------------------
-
-    features = (
-        prices.groupby("symbol", group_keys=False)
-        .apply(lambda g: add_features(g.drop(columns=["symbol"])))
-        .reset_index(drop=True)
+    logger.info(
+        "Combined feature file: %d rows × %d columns",
+        len(combined), len(combined.columns),
     )
-
-    # attach symbol properly
-    features["symbol"] = prices["symbol"].values[:len(features)]
-
-    # -----------------------
-    # SAVE FEATURES
-    # -----------------------
-
-    out = OUT_DIR / "features.parquet"
-    features.to_parquet(out, index=False)
-
-    print("✅ Features saved to single file")
-
-    print("✅ Features generated cleanly")
 
 
 if __name__ == "__main__":

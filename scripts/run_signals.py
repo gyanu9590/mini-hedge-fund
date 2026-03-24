@@ -1,83 +1,74 @@
-from pathlib import Path
-import pandas as pd
-import sys
+"""
+scripts/run_signals.py
+
+Generates ML signals and saves TWO files:
+  - signals_YYYY-MM-DD.parquet  : today's actionable signals (for orders)
+  - signals_history.parquet     : full OOS history (for backtest)
+"""
+
+import logging
 import os
+import sys
+from pathlib import Path
+
+import pandas as pd
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(ROOT)
 
 from src.model.ml_model import generate_signals
 
-DATA_DIR = Path("data/features")
-OUT_DIR = Path("data/signals")
+logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
+logger = logging.getLogger(__name__)
 
+OUT_DIR = Path("data/signals")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def main():
-
-    rows = []
-
-    # -----------------------
-    # LOAD FEATURES
-    # -----------------------
-
-    FEATURE_FILE = Path("data/features/features.parquet")
-
-    df = pd.read_parquet(FEATURE_FILE)
-
-    print("Loaded feature data:", df.shape)
-
-        # 🔥 CLEAN SYMBOL
-    df["symbol"] = (
-            df["symbol"]
-            .astype(str)
-            .str.replace("NSE_", "")
-            .str.replace("NSE:", "")
-        )
-
-    rows.append(df)
-
-    if not rows:
-        print("❌ No feature files found")
+    feature_file = Path("data/features/features.parquet")
+    if not feature_file.exists():
+        logger.error("Feature file not found. Run run_features.py first.")
         return
 
-    df = pd.concat(rows).sort_values(["symbol", "date"]).reset_index(drop=True)
+    df = pd.read_parquet(feature_file)
+    df["symbol"] = (
+        df["symbol"].astype(str)
+        .str.replace("NSE_", "", regex=False)
+        .str.replace("NSE:", "", regex=False)
+    )
 
-    print(f"Loaded feature data: {df.shape}")
-
-    # -----------------------
-    # GENERATE SIGNALS
-    # -----------------------
+    logger.info("Loaded feature data: %s", df.shape)
 
     df = generate_signals(df)
 
     if df is None:
-        print("❌ Signal generation failed")
+        logger.error("Signal generation failed.")
         return
 
-    # 🔥 FINAL CLEAN (important)
     df["symbol"] = (
-        df["symbol"]
-        .astype(str)
-        .str.replace("NSE_", "")
-        .str.replace("NSE:", "")
+        df["symbol"].astype(str)
+        .str.replace("NSE_", "", regex=False)
+        .str.replace("NSE:", "", regex=False)
     )
 
-    # -----------------------
-    # SAVE
-    # -----------------------
+    # ── Save FULL OOS history for backtest ────────────────────────────────────
+    history_file = OUT_DIR / "signals_history.parquet"
+    df.to_parquet(history_file, index=False)
+    logger.info("Full signal history saved -> %s  (%d rows)", history_file, len(df))
 
-    latest_date = df["date"].max()
-
-    date_str = pd.to_datetime(latest_date).date()
-
-    out_file = OUT_DIR / f"signals_{date_str}.parquet"
-
+    # ── Save LATEST date file for orders ──────────────────────────────────────
+    latest_date = pd.to_datetime(df["date"]).max()
+    date_str    = latest_date.date()
+    out_file    = OUT_DIR / f"signals_{date_str}.parquet"
     df.to_parquet(out_file, index=False)
+    logger.info("Latest signals saved -> %s", out_file)
 
-    print(f"✅ Signals saved to: {out_file}")
-    print(df[["date", "symbol", "probability", "signal"]].tail(20))
+    display_cols = [c for c in ["date", "symbol", "probability", "signal"] if c in df.columns]
+    latest_rows  = df[df["date"] == latest_date][display_cols].sort_values("probability", ascending=False)
+    print("\n-- Latest signals --")
+    print(latest_rows.to_string(index=False))
+    print("--------------------\n")
 
 
 if __name__ == "__main__":
