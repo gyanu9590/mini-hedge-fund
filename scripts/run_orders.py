@@ -1,8 +1,9 @@
 """
 scripts/run_orders.py
 
-Converts latest signals into sized orders using the portfolio optimizer.
-Gets close prices directly from data/prices/ (raw parquet) — never from features.
+Converts latest signals into sized orders.
+Fix: handles both 'probability' and 'prob' column names from different signal formats.
+Reads close prices directly from data/prices/ parquets.
 """
 
 import logging
@@ -23,17 +24,16 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
 
 
-def _load_cfg() -> dict:
+def _load_cfg():
     with open("configs/settings.yaml") as f:
         return yaml.safe_load(f)
 
 
-def _get_latest_price(symbol: str, prices_dir: Path) -> float | None:
-    """Get the most recent close price for a symbol from data/prices/."""
+def _get_latest_price(symbol: str, prices_dir: Path):
     for fname in [f"{symbol}.parquet", f"NSE_{symbol}.parquet"]:
         f = prices_dir / fname
         if f.exists():
-            px = pd.read_parquet(f)[["date", "close"]].sort_values("date")
+            px = pd.read_parquet(f)[["date","close"]].sort_values("date")
             if not px.empty:
                 return float(px["close"].iloc[-1])
     return None
@@ -41,27 +41,26 @@ def _get_latest_price(symbol: str, prices_dir: Path) -> float | None:
 
 def main():
     cfg             = _load_cfg()
-    port_cfg        = cfg.get("portfolio", {})
-    risk_cfg        = cfg.get("risk", {})
-    PORTFOLIO_VALUE = port_cfg.get("initial_capital", 1_000_000)
-    ROUND_LOT       = port_cfg.get("round_lot", 1)
-    MAX_WEIGHT      = risk_cfg.get("max_weight_per_stock", 0.20)
+    PORTFOLIO_VALUE = cfg["portfolio"]["initial_capital"]
+    ROUND_LOT       = cfg["portfolio"]["round_lot"]
+    MAX_WEIGHT      = cfg["risk"]["max_weight_per_stock"]
 
-    # ── Load latest dated signal file (not history) ───────────────────────────
     signals_dir  = Path("data/signals")
-    signal_files = sorted(
-        [f for f in signals_dir.glob("signals_*.parquet") if "history" not in f.name]
-    )
+    signal_files = sorted([
+        f for f in signals_dir.glob("signals_*.parquet")
+        if "history" not in f.name
+    ])
+
     if not signal_files:
-        logger.error("No signals files found in data/signals/")
+        logger.error("No signals_YYYY-MM-DD.parquet found in data/signals/")
         return
 
     df = pd.read_parquet(signal_files[-1])
-    df["symbol"] = (
-        df["symbol"].astype(str)
-        .str.replace("NSE_", "", regex=False)
-        .str.replace("NSE:", "", regex=False)
-    )
+    df["symbol"] = df["symbol"].astype(str).str.replace("NSE_","",regex=False).str.replace("NSE:","",regex=False)
+
+    # Normalize probability column - handle both 'prob' and 'probability'
+    if "prob" in df.columns and "probability" not in df.columns:
+        df = df.rename(columns={"prob": "probability"})
 
     latest_date = pd.to_datetime(df["date"]).max()
     df["date"]  = pd.to_datetime(df["date"])
@@ -69,20 +68,18 @@ def main():
     latest      = latest[latest["signal"] != 0].drop_duplicates(subset=["symbol"])
 
     if latest.empty:
-        logger.warning("No active signals on %s - no orders generated.", latest_date.date())
+        logger.warning("No active signals on %s", latest_date.date())
         return
 
     logger.info("Active signals on %s: %d", latest_date.date(), len(latest))
 
-    prices_dir = Path("data/prices")
-
-    # ── Load historical returns for covariance-based sizing ───────────────────
+    prices_dir     = Path("data/prices")
     returns_frames = {}
     for sym in latest["symbol"].unique():
         for fname in [f"{sym}.parquet", f"NSE_{sym}.parquet"]:
             f = prices_dir / fname
             if f.exists():
-                px = pd.read_parquet(f)[["date", "close"]].sort_values("date")
+                px = pd.read_parquet(f)[["date","close"]].sort_values("date")
                 returns_frames[sym] = px["close"].pct_change().dropna()
                 break
 
@@ -92,23 +89,20 @@ def main():
     else:
         aligned = None
 
-    # ── Size using optimizer ──────────────────────────────────────────────────
     signal_series = latest.set_index("symbol")["signal"]
     weights       = size_from_signal(signal_series, returns=aligned, cap=MAX_WEIGHT)
 
-    # ── Volatility targeting ──────────────────────────────────────────────────
     if aligned is not None and len(aligned) > 20:
         port_rets  = aligned.mean(axis=1)
         vol_scalar = volatility_target(port_rets)
         weights    = (weights * vol_scalar).clip(-MAX_WEIGHT, MAX_WEIGHT)
         logger.info("Vol-target scalar: %.2f", vol_scalar)
 
-    # ── Generate orders using latest price from data/prices/ ─────────────────
     orders = []
     for sym, weight in weights.items():
         price = _get_latest_price(sym, prices_dir)
         if price is None or price <= 0:
-            logger.warning("No price data for %s - skipping.", sym)
+            logger.warning("No price for %s - skipping.", sym)
             continue
 
         target_value = PORTFOLIO_VALUE * abs(weight)
@@ -116,8 +110,8 @@ def main():
         if qty <= 0:
             continue
 
-        prob = float(latest[latest["symbol"] == sym]["probability"].iloc[0]) \
-               if not latest[latest["symbol"] == sym].empty else 0.0
+        prob_col = latest[latest["symbol"] == sym]["probability"] if "probability" in latest.columns else pd.Series([0.0])
+        prob = float(prob_col.iloc[0]) if not prob_col.empty else 0.0
 
         orders.append({
             "date":         str(latest_date.date()),
@@ -131,7 +125,7 @@ def main():
         })
 
     if not orders:
-        logger.warning("All orders filtered out.")
+        logger.warning("No orders generated.")
         return
 
     orders_df = pd.DataFrame(orders)
@@ -140,7 +134,7 @@ def main():
     out_file  = out_dir / f"orders_{latest_date.date()}.parquet"
     orders_df.to_parquet(out_file, index=False)
 
-    logger.info("Saved %d orders to %s", len(orders_df), out_file)
+    logger.info("Saved %d orders -> %s", len(orders_df), out_file)
     print(orders_df.to_string(index=False))
 
 

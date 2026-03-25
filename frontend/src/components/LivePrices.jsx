@@ -8,7 +8,7 @@ const [lastUpdate,setLastUpdate] = useState("")
 
 function fetchPrices(){
 
-axios.get("http://localhost:8001/live-prices")
+axios.get("http://127.0.0.1:8000/live_prices")
 .then(res=>{
 
 setPrices(res.data)
@@ -67,7 +67,7 @@ Last Updated: {lastUpdate}
 <td className="py-2">{p.symbol}</td>
 
 <td className="py-2 text-right text-green-400 font-semibold">
-₹{p.price}
+₹ {p.price?.toFixed(2)}
 </td>
 
 </tr>

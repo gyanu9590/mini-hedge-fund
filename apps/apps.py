@@ -23,6 +23,123 @@ st.title("QuantEdge Machine Learning Based Trading System")
 # ---------------------------------------------------
 # LOAD LATEST PARQUET UTILITY
 # ---------------------------------------------------
+# =========================
+# 🔥 REAL-TIME ENGINE (ADD THIS)
+# =========================
+
+import yfinance as yf
+
+@st.cache_data(ttl=5)
+def get_live_stock_prices(symbols):
+
+    tickers = [s + ".NS" for s in symbols]
+
+    try:
+        data = yf.download(
+            tickers,
+            period="1d",
+            interval="1m",
+            progress=False
+        )
+    except:
+        return pd.DataFrame()
+
+    prices = []
+
+    for sym in symbols:
+        try:
+            price = data["Close"][sym + ".NS"].dropna().iloc[-1]
+            prices.append({
+                "symbol": sym,
+                "price": round(float(price), 2)
+            })
+        except:
+            continue
+
+    return pd.DataFrame(prices)
+
+
+# =========================
+# 🔥 LIVE TRADING LAYER
+# =========================
+
+def render_live_trading(signals_df):
+
+    if signals_df is None or len(signals_df) == 0:
+        st.warning("No signals available for live trading")
+        return
+
+    st.subheader("⚡ Live Trading Terminal")
+
+    symbols = signals_df["symbol"].unique().tolist()
+
+    live_prices = get_live_stock_prices(symbols)
+
+    if live_prices.empty:
+        st.warning("Live price fetch failed")
+        return
+
+    # Merge signals + live prices
+    merged = signals_df.merge(live_prices, on="symbol", how="left")
+
+    # Entry price fix
+    if "close" in merged.columns:
+        merged["entry_price"] = merged["close"]
+    else:
+        merged["entry_price"] = merged["price"]
+
+    # PnL calculation
+    merged["pnl_pct"] = (
+        (merged["price"] - merged["entry_price"]) / merged["entry_price"]
+    ) * 100
+
+    # Display table
+    st.dataframe(
+        merged[["symbol","signal","entry_price","price","pnl_pct"]]
+    )
+
+    # =========================
+    # PAPER TRADING ENGINE
+    # =========================
+
+    if "positions" not in st.session_state:
+        st.session_state.positions = {}
+
+    if st.button("🚀 Execute Signals (Paper Trade)"):
+
+        for _, row in merged.iterrows():
+            sym = row["symbol"]
+
+            st.session_state.positions[sym] = {
+                "entry_price": row["entry_price"],
+                "qty": 10
+            }
+
+        st.success("Trades Executed")
+
+    # =========================
+    # LIVE PORTFOLIO VALUE
+    # =========================
+
+    if st.session_state.positions:
+
+        total_value = 0
+
+        for sym, pos in st.session_state.positions.items():
+
+            price_row = live_prices[
+                live_prices["symbol"] == sym
+            ]
+
+            if len(price_row) == 0:
+                continue
+
+            price = price_row["price"].values[0]
+
+            total_value += price * pos["qty"]
+
+        st.metric("💼 Live Portfolio Value", f"₹ {total_value:,.0f}")
+
 
 def load_latest_parquet(folder_path):
 
@@ -217,13 +334,35 @@ if os.path.exists(equity_file):
 
     df = pd.read_csv(equity_file)
 
-    df["date"] = pd.to_datetime(df["date"])
-    df = df.sort_values("date")
+    df = pd.read_csv(equity_file)
 
-else:
+# =========================
+# 🔥 CLEAN DATE HANDLING
+# =========================
 
-    st.warning("Run pipeline first to generate backtest results")
-    st.stop()
+def ensure_date_column(df):
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"])
+    else:
+        df = df.reset_index()
+        if "date" in df.columns:
+            df["date"] = pd.to_datetime(df["date"])
+        else:
+            df["date"] = pd.date_range(start="2023-01-01", periods=len(df))
+    return df
+
+df = ensure_date_column(df)
+
+# =========================
+# FIX EQUITY COLUMN
+# =========================
+
+if "equity" not in df.columns and "portfolio_value" in df.columns:
+    df["equity"] = df["portfolio_value"]
+
+df = df.sort_values("date")
+
+    
 
 
 df["returns"] = df["equity"].pct_change().fillna(0)

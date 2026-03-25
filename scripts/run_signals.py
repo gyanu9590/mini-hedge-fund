@@ -1,106 +1,86 @@
+"""
+scripts/run_signals.py
+
+Loads features → generates ML signals via src/model/ml_model.py
+Saves TWO files:
+  - signals_history.parquet : full OOS history (for backtest)
+  - signals_YYYY-MM-DD.parquet : latest date only (for orders)
+
+Key fix: calls ml_model.generate_signals() instead of inline XGBoost.
+"""
+
+import logging
+import os
+import sys
+from pathlib import Path
+
 import pandas as pd
-import numpy as np
-from xgboost import XGBClassifier
 
-# =========================
-# LOAD DATA
-# =========================
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(ROOT)
 
-df = pd.read_parquet("data/features/features.parquet")
-df = df.sort_values(["date", "symbol"]).dropna()
+from src.model.ml_model import generate_signals
 
-features = [
-    "returns", "momentum_5", "momentum_10",
-    "volatility", "rsi", "ma_20", "ma_50"
-]
+logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
+logger = logging.getLogger(__name__)
 
-# =========================
-# TIME-BASED SPLIT
-# =========================
+OUT_DIR = Path("data/signals")
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-split_date = df["date"].quantile(0.8)
 
-train = df[df["date"] <= split_date]
-test = df[df["date"] > split_date].copy()
+def main():
+    feature_file = Path("data/features/features.parquet")
+    if not feature_file.exists():
+        logger.error("features.parquet not found. Run run_features.py first.")
+        return
 
-X_train = train[features]
-y_train = train["target"]
+    df = pd.read_parquet(feature_file)
 
-X_test = test[features]
+    # Normalize symbol names
+    df["symbol"] = (
+        df["symbol"].astype(str)
+        .str.replace("NSE_", "", regex=False)
+        .str.replace("NSE:", "", regex=False)
+    )
 
-# =========================
-# MODEL (STRONGER)
-# =========================
+    logger.info("Loaded features: %s rows, %s cols, date range %s to %s",
+                len(df), len(df.columns),
+                df["date"].min(), df["date"].max())
 
-model = XGBClassifier(
-    n_estimators=200,
-    max_depth=6,
-    learning_rate=0.05,
-    subsample=0.8,
-    colsample_bytree=0.8,
-    random_state=42,
-    n_jobs=-1
-)
+    result = generate_signals(df)
 
-model.fit(X_train, y_train)
+    if result is None or len(result) == 0:
+        logger.error("Signal generation returned nothing.")
+        return
 
-# Predictions
-test["prob"] = model.predict_proba(X_test)[:, 1]
+    # Normalize symbol names in output
+    result["symbol"] = (
+        result["symbol"].astype(str)
+        .str.replace("NSE_", "", regex=False)
+        .str.replace("NSE:", "", regex=False)
+    )
 
-# =========================
-# 🔥 ADVANCED SIGNAL LOGIC
-# =========================
+    # Save full OOS history for backtest
+    history_file = OUT_DIR / "signals_history.parquet"
+    result.to_parquet(history_file, index=False)
+    logger.info("Signal history: %d rows -> %s", len(result), history_file)
 
-def generate_signals(df):
-    signals = []
+    # Save latest-date file for orders
+    latest_date = pd.to_datetime(result["date"]).max()
+    out_file    = OUT_DIR / f"signals_{latest_date.date()}.parquet"
+    result.to_parquet(out_file, index=False)
+    logger.info("Latest signals -> %s", out_file)
 
-    for date, group in df.groupby("date"):
+    # Print latest signals table
+    display_cols = [c for c in ["date","symbol","probability","signal"] if c in result.columns]
+    latest_rows  = (
+        result[result["date"] == latest_date][display_cols]
+        .sort_values("probability", ascending=False)
+    )
+    print("\n-- Today's Signals --")
+    print(latest_rows.to_string(index=False))
+    print("---------------------\n")
 
-        # 🧠 TREND FILTER
-        group = group.copy()
-        group["trend"] = group["close"] > group["ma_50"]
 
-        # LONG: strong prob + uptrend
-        longs = group[
-            (group["prob"] > 0.65) &
-            (group["trend"] == True)
-        ].sort_values("prob", ascending=False).head(3)
-
-        # SHORT: strong negative + downtrend
-        shorts = group[
-            (group["prob"] < 0.35) &
-            (group["trend"] == False)
-        ].sort_values("prob").head(3)
-
-        if not longs.empty:
-            longs["signal"] = 1
-
-        if not shorts.empty:
-            shorts["signal"] = -1
-
-        daily = pd.concat([longs, shorts])
-
-        if not daily.empty:
-            signals.append(daily)
-
-    if len(signals) == 0:
-        return pd.DataFrame()
-
-    return pd.concat(signals)
-
-# Generate signals
-signals = generate_signals(test)
-
-# =========================
-# SAFETY CHECK
-# =========================
-
-if signals.empty:
-    raise ValueError("❌ No signals generated — adjust thresholds")
-
-signals = signals[["date", "symbol", "prob", "signal"]]
-
-signals.to_parquet("data/signals/signals.parquet")
-
-print("✅ Signals generated")
-print(signals.head())
+if __name__ == "__main__":
+    main()

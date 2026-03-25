@@ -1,47 +1,40 @@
-import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-import axios from "axios";
+import { useEffect, useState } from "react"
+import axios from "axios"
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer
+} from "recharts"
 
-function EquityChart() {
+function EquityChart(){
 
-  const [data, setData] = useState([]);
+const [data,setData] = useState([])
 
-  useEffect(() => {
+useEffect(()=>{
 
-    axios.get("http://localhost:8001/performance")
-      .then(res => {
-        setData(res.data);
-      })
-      .catch(err => {
-        console.error("Error loading performance data:", err);
-      });
+axios.get("http://127.0.0.1:8000/performance")
+.then(res=>{
+setData(res.data)
+})
 
-  }, []);
+},[])
 
-  return (
+return(
 
-    <div style={{marginTop:"40px"}}>
+<div className="bg-slate-800 p-4 rounded-lg">
+<h2 className="mb-4">Portfolio Equity Curve</h2>
 
-      <h2>Portfolio Equity Curve</h2>
+<ResponsiveContainer width="100%" height={300}>
+<LineChart data={data}>
+<XAxis dataKey="index" />
+<YAxis />
+<Tooltip />
+<Line type="monotone" dataKey="portfolio_value" stroke="#22c55e" />
+</LineChart>
+</ResponsiveContainer>
 
-      <LineChart width={650} height={300} data={data}>
+</div>
 
-        <CartesianGrid strokeDasharray="3 3" />
-
-        <XAxis dataKey="date" />
-
-        <YAxis />
-
-        <Tooltip />
-
-        <Line type="monotone" dataKey="equity" stroke="#2aa3d7" strokeWidth={2} />
-
-      </LineChart>
-
-    </div>
-
-  );
+)
 
 }
 
-export default EquityChart;
+export default EquityChart

@@ -7,7 +7,7 @@ const [signals,setSignals] = useState([])
 
 function fetchSignals(){
 
-axios.get("http://localhost:8001/signals")
+axios.get("http://127.0.0.1:8000/signals")
 .then(res=>{
 setSignals(res.data)
 })

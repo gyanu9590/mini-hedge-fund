@@ -1,8 +1,6 @@
 """
-scripts/run_all.py
-
-Orchestrates the full pipeline:
-  ETL -> Features -> Signals -> Orders -> Backtest
+scripts/run_all.py  —  Full pipeline runner.
+ETL -> Features -> Signals -> Orders -> Backtest
 """
 
 import io
@@ -15,7 +13,7 @@ sys.path.append(ROOT)
 
 os.makedirs("logs", exist_ok=True)
 
-# Force UTF-8 on Windows so special characters do not crash the console
+# UTF-8 on Windows (prevents emoji crash on cp1252 terminal)
 if hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "buffer"):
@@ -29,7 +27,6 @@ logging.basicConfig(
         logging.FileHandler("logs/system.log", mode="a", encoding="utf-8"),
     ],
 )
-
 logger = logging.getLogger(__name__)
 
 import scripts.run_etl      as etl_mod
@@ -47,7 +44,6 @@ def run():
         ("Orders",   ord_mod.main),
         ("Backtest", bt_mod.main),
     ]
-
     for name, fn in steps:
         logger.info("=== Starting: %s ===", name)
         try:
@@ -56,7 +52,6 @@ def run():
         except Exception as e:
             logger.exception("Step %s failed: %s", name, e)
             continue
-
     logger.info("Pipeline finished.")
 
 

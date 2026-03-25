@@ -1,59 +1,88 @@
+"""
+scripts/run_features.py
+
+Reads per-symbol price parquets → generates 54 features via src/research/features.py
+→ saves data/features/features.parquet and per-symbol files.
+
+Key fix vs old version: calls src/research/features.py (rich 54-feature set)
+instead of computing 7 basic features inline.
+"""
+
+import logging
+import os
+import sys
+from pathlib import Path
+
 import pandas as pd
-import numpy as np
-import glob
 
-def compute_rsi(series, window=14):
-    delta = series.diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window).mean()
-    rs = gain / (loss + 1e-9)
-    return 100 - (100 / (1 + rs))
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(ROOT)
 
-def load_prices():
-    files = glob.glob("data/prices/*.parquet")
-    dfs = []
-    for f in files:
+from src.research.features import add_features
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
+logger = logging.getLogger(__name__)
+
+DATA_DIR = Path("data/prices")
+OUT_DIR  = Path("data/features")
+
+
+def main():
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    price_files = sorted(DATA_DIR.glob("*.parquet"))
+    if not price_files:
+        logger.error("No price parquet files found in data/prices/. Run run_etl.py first.")
+        return
+
+    all_frames = []
+
+    for f in price_files:
+        sym = f.stem  # filename without extension = symbol name
+
         df = pd.read_parquet(f)
-        symbol = f.split("\\")[-1].replace(".parquet", "")
-        df["symbol"] = symbol
-        dfs.append(df)
-    return pd.concat(dfs)
 
-df = load_prices()
-df = df.sort_values(["symbol", "date"])
+        # Ensure required columns exist
+        if "close" not in df.columns or "date" not in df.columns:
+            logger.warning("Skipping %s - missing date/close columns", sym)
+            continue
 
-# =========================
-# FEATURE ENGINEERING
-# =========================
+        df["symbol"] = sym
+        df = df.sort_values("date").reset_index(drop=True)
 
-# Returns
-df["returns"] = df.groupby("symbol")["close"].pct_change()
+        try:
+            feat_df = add_features(df)
+        except Exception as e:
+            logger.warning("Feature generation failed for %s: %s", sym, e)
+            continue
 
-# Momentum
-df["momentum_5"] = df.groupby("symbol")["close"].pct_change(5)
-df["momentum_10"] = df.groupby("symbol")["close"].pct_change(10)
+        # Re-attach symbol (add_features may drop it)
+        feat_df["symbol"] = sym
 
-# Volatility
-df["volatility"] = df.groupby("symbol")["returns"].rolling(10).std().reset_index(0, drop=True)
+        # Save per-symbol feature file
+        sym_out = OUT_DIR / f"{sym}_features.parquet"
+        feat_df.to_parquet(sym_out, index=False)
 
-# RSI
-df["rsi"] = df.groupby("symbol")["close"].transform(lambda x: compute_rsi(x))
+        all_frames.append(feat_df)
+        logger.info("%s: %d rows, %d features", sym, len(feat_df), len(feat_df.columns))
 
-# Moving averages
-df["ma_20"] = df.groupby("symbol")["close"].transform(lambda x: x.rolling(20).mean())
-df["ma_50"] = df.groupby("symbol")["close"].transform(lambda x: x.rolling(50).mean())
+    if not all_frames:
+        logger.error("No features generated. Check data/prices/ contents.")
+        return
 
-# =========================
-# 🔥 IMPORTANT: NEW TARGET
-# =========================
+    combined = (
+        pd.concat(all_frames, ignore_index=True)
+        .sort_values(["symbol", "date"])
+        .reset_index(drop=True)
+    )
+    combined.to_parquet(OUT_DIR / "features.parquet", index=False)
 
-# Future return (5 days ahead)
-df["future_return"] = df.groupby("symbol")["close"].shift(-5) / df["close"] - 1
+    logger.info(
+        "Combined features: %d rows x %d cols | date range %s to %s",
+        len(combined), len(combined.columns),
+        combined["date"].min(), combined["date"].max(),
+    )
 
-# Only consider meaningful moves (>2%)
-df["target"] = (df["future_return"] > 0.02).astype(int)
 
-df = df.dropna()
-
-df.to_parquet("data/features/features.parquet")
-print("✅ Features saved")
+if __name__ == "__main__":
+    main()

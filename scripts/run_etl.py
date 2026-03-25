@@ -2,12 +2,14 @@
 scripts/run_etl.py
 
 Downloads OHLCV for every symbol in configs/settings.yaml.
-Reads start_date / end_date from config - does NOT hardcode dates.
+end_date defaults to TODAY so data is always current.
+Deletes old stale feature/signal files to force a clean rebuild.
 """
 
 import logging
 import os
 import sys
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -30,15 +32,26 @@ def main():
 
     symbols    = cfg["universe"]
     start_date = cfg["data"]["start_date"]
-    end_date   = cfg["data"]["end_date"]
+    end_date   = cfg["data"].get("end_date", "today")
 
-    logger.info("ETL: %d symbols from %s to %s", len(symbols), start_date, end_date)
+    # Always use today as end date for real-time data
+    if end_date == "today" or not end_date:
+        end_date = str(date.today())
 
+    logger.info("ETL: %d symbols | %s to %s", len(symbols), start_date, end_date)
+
+    # Delete stale feature/signal files so downstream steps rebuild cleanly
+    for stale_dir in ["data/features", "data/signals"]:
+        for f in Path(stale_dir).glob("*.parquet"):
+            f.unlink()
+            logger.info("Deleted stale file: %s", f)
+
+    success = 0
     for symbol in symbols:
         clean_sym = symbol.replace("NSE:", "").strip()
         yf_sym    = clean_sym + ".NS"
 
-        logger.info("Downloading %s  (%s to %s)...", yf_sym, start_date, end_date)
+        logger.info("Downloading %s ...", yf_sym)
 
         try:
             df = yf.download(yf_sym, start=start_date, end=end_date, progress=False)
@@ -47,9 +60,10 @@ def main():
             continue
 
         if df.empty:
-            logger.warning("No data returned for %s.", yf_sym)
+            logger.warning("No data for %s", yf_sym)
             continue
 
+        # Flatten MultiIndex columns (yfinance quirk)
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
 
@@ -62,11 +76,18 @@ def main():
         df   = df[cols].copy()
         df["symbol"] = clean_sym
 
-        out = DATA_DIR / f"{clean_sym}.parquet"
-        df.to_parquet(out, index=False)
-        logger.info("  Saved %d rows -> %s", len(df), out)
+        # Save parquet (primary)
+        out_pq = DATA_DIR / f"{clean_sym}.parquet"
+        df.to_parquet(out_pq, index=False)
 
-    logger.info("ETL complete. Files in %s", DATA_DIR)
+        # Save CSV (for dashboard candlestick chart)
+        out_csv = DATA_DIR / f"{clean_sym}.csv"
+        df.to_csv(out_csv, index=False)
+
+        logger.info("  Saved %d rows -> %s", len(df), clean_sym)
+        success += 1
+
+    logger.info("ETL complete: %d/%d symbols downloaded.", success, len(symbols))
 
 
 if __name__ == "__main__":
