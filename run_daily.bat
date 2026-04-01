@@ -1,23 +1,22 @@
 @echo off
-title Mini Hedge Fund - Daily Pipeline
+title Mini Hedge Fund - Smart Pipeline
 cd /d %~dp0
 echo ============================================
-echo  Mini Hedge Fund - Daily Pipeline Runner
+echo  QuantEdge ML Trading System
 echo ============================================
 echo.
 
 call .venv\Scripts\activate
 
 echo [1/5] Cleaning stale data...
-del /q data\prices\*.parquet 2>nul
-del /q data\prices\*.csv 2>nul
 del /q data\features\*.parquet 2>nul
 del /q data\signals\*.parquet 2>nul
 del /q data\orders\*.parquet 2>nul
 echo Done.
 
 echo.
-echo [2/5] Running ML Pipeline...
+echo [2/5] Running Smart Pipeline...
+echo (Auto-detects market hours - works any time)
 python scripts/run_all.py
 
 echo.
@@ -44,4 +43,9 @@ echo  FastAPI:    http://localhost:8000/docs
 echo  Streamlit:  http://localhost:8501
 echo  React:      http://localhost:5173
 echo ============================================
+echo.
+echo Want live signals every 15 min during market hours?
+echo Open a new terminal and run:
+echo   python scripts/run_live.py
+echo.
 pause

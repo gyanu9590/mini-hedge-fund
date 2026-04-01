@@ -1,9 +1,9 @@
 """
 scripts/run_etl.py
 
-Downloads OHLCV for every symbol in configs/settings.yaml.
-end_date defaults to TODAY so data is always current.
-Deletes old stale feature/signal files to force a clean rebuild.
+Smart ETL that works at ANY time of day.
+- Market open  (9:15–3:30 IST): uses 5-min live intraday bars
+- Market closed (after 3:30 IST): uses daily close as normal
 """
 
 import logging
@@ -14,10 +14,11 @@ from pathlib import Path
 
 import pandas as pd
 import yaml
-import yfinance as yf
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(ROOT)
+
+from src.data.live_market import fetch_symbol, is_market_open, is_market_closed_today
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -32,62 +33,50 @@ def main():
 
     symbols    = cfg["universe"]
     start_date = cfg["data"]["start_date"]
-    end_date   = cfg["data"].get("end_date", "today")
 
-    # Always use today as end date for real-time data
-    if end_date == "today" or not end_date:
-        end_date = str(date.today())
+    # Determine mode
+    if is_market_open():
+        mode = "LIVE (market open — using 5-min intraday bars)"
+    elif is_market_closed_today():
+        mode = "DAILY (market closed — using today's final close)"
+    else:
+        mode = "PRE-MARKET (using yesterday's close)"
 
-    logger.info("ETL: %d symbols | %s to %s", len(symbols), start_date, end_date)
+    logger.info("ETL mode: %s", mode)
+    logger.info("Universe: %d symbols | history from %s", len(symbols), start_date)
 
-    # Delete stale feature/signal files so downstream steps rebuild cleanly
+    # Delete stale feature/signal files so downstream rebuilds cleanly
     for stale_dir in ["data/features", "data/signals"]:
         for f in Path(stale_dir).glob("*.parquet"):
             f.unlink()
-            logger.info("Deleted stale file: %s", f)
 
     success = 0
+    failed  = []
+
     for symbol in symbols:
         clean_sym = symbol.replace("NSE:", "").strip()
-        yf_sym    = clean_sym + ".NS"
+        logger.info("Fetching %s ...", clean_sym)
 
-        logger.info("Downloading %s ...", yf_sym)
+        df = fetch_symbol(clean_sym, start_date, DATA_DIR)
 
-        try:
-            df = yf.download(yf_sym, start=start_date, end=end_date, progress=False)
-        except Exception as e:
-            logger.warning("Download failed for %s: %s", yf_sym, e)
+        if df is None or df.empty:
+            logger.warning("  FAILED: %s", clean_sym)
+            failed.append(clean_sym)
             continue
 
-        if df.empty:
-            logger.warning("No data for %s", yf_sym)
-            continue
+        # Save parquet + CSV
+        df.to_parquet(DATA_DIR / f"{clean_sym}.parquet", index=False)
+        df.to_csv(DATA_DIR / f"{clean_sym}.csv", index=False)
 
-        # Flatten MultiIndex columns (yfinance quirk)
-        if isinstance(df.columns, pd.MultiIndex):
-            df.columns = df.columns.get_level_values(0)
-
-        df = df.reset_index().rename(columns={
-            "Date": "date", "Open": "open", "High": "high",
-            "Low": "low", "Close": "close", "Volume": "volume",
-        })
-
-        cols = [c for c in ["date","open","high","low","close","volume"] if c in df.columns]
-        df   = df[cols].copy()
-        df["symbol"] = clean_sym
-
-        # Save parquet (primary)
-        out_pq = DATA_DIR / f"{clean_sym}.parquet"
-        df.to_parquet(out_pq, index=False)
-
-        # Save CSV (for dashboard candlestick chart)
-        out_csv = DATA_DIR / f"{clean_sym}.csv"
-        df.to_csv(out_csv, index=False)
-
-        logger.info("  Saved %d rows -> %s", len(df), clean_sym)
+        logger.info("  Saved %d rows -> %s (latest: %s @ %.2f)",
+                    len(df), clean_sym,
+                    str(df["date"].iloc[-1])[:10],
+                    float(df["close"].iloc[-1]))
         success += 1
 
-    logger.info("ETL complete: %d/%d symbols downloaded.", success, len(symbols))
+    logger.info("ETL complete: %d/%d symbols.", success, len(symbols))
+    if failed:
+        logger.warning("Failed: %s", ", ".join(failed))
 
 
 if __name__ == "__main__":

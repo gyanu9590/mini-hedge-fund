@@ -1,13 +1,3 @@
-"""
-scripts/run_features.py
-
-Reads per-symbol price parquets → generates 54 features via src/research/features.py
-→ saves data/features/features.parquet and per-symbol files.
-
-Key fix vs old version: calls src/research/features.py (rich 54-feature set)
-instead of computing 7 basic features inline.
-"""
-
 import logging
 import os
 import sys
@@ -38,11 +28,10 @@ def main():
     all_frames = []
 
     for f in price_files:
-        sym = f.stem  # filename without extension = symbol name
+        sym = f.stem
 
         df = pd.read_parquet(f)
 
-        # Ensure required columns exist
         if "close" not in df.columns or "date" not in df.columns:
             logger.warning("Skipping %s - missing date/close columns", sym)
             continue
@@ -56,10 +45,17 @@ def main():
             logger.warning("Feature generation failed for %s: %s", sym, e)
             continue
 
-        # Re-attach symbol (add_features may drop it)
+        # =========================
+        # 🔥 ADD ALPHA FEATURES
+        # =========================
+        feat_df["momentum_20"] = feat_df["close"] / feat_df["close"].shift(20) - 1
+        feat_df["volatility_20"] = feat_df["close"].pct_change().rolling(20).std()
+        feat_df["return_skew_20"] = feat_df["close"].pct_change().rolling(20).skew()
+
+        feat_df = feat_df.dropna().reset_index(drop=True)
+
         feat_df["symbol"] = sym
 
-        # Save per-symbol feature file
         sym_out = OUT_DIR / f"{sym}_features.parquet"
         feat_df.to_parquet(sym_out, index=False)
 
@@ -67,7 +63,7 @@ def main():
         logger.info("%s: %d rows, %d features", sym, len(feat_df), len(feat_df.columns))
 
     if not all_frames:
-        logger.error("No features generated. Check data/prices/ contents.")
+        logger.error("No features generated.")
         return
 
     combined = (
@@ -75,12 +71,12 @@ def main():
         .sort_values(["symbol", "date"])
         .reset_index(drop=True)
     )
+
     combined.to_parquet(OUT_DIR / "features.parquet", index=False)
 
     logger.info(
-        "Combined features: %d rows x %d cols | date range %s to %s",
-        len(combined), len(combined.columns),
-        combined["date"].min(), combined["date"].max(),
+        "Combined features: %d rows x %d cols",
+        len(combined), len(combined.columns)
     )
 
 

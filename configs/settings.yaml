@@ -1,64 +1,54 @@
-data:
-  start_date: "2019-01-01"
-  # end_date is read dynamically as today in run_etl.py - this value is a fallback only
-  end_date: "today"
-
-portfolio:
-  initial_capital: 1_000_000
-  round_lot: 1
-
-universe:
-  - NSE:TCS
-  - NSE:INFY
-  - NSE:RELIANCE
-  - NSE:HDFCBANK
-  - NSE:ICICIBANK
-  - NSE:SBIN
-  - NSE:AXISBANK
-  - NSE:LT
-  - NSE:ITC
-  - NSE:HINDUNILVR
-  - NSE:MARUTI
-  - NSE:BAJFINANCE
-  - NSE:ASIANPAINT
-  - NSE:WIPRO
-  - NSE:TITAN
-  - NSE:ULTRACEMCO
-  - NSE:POWERGRID
-  - NSE:NTPC
-  - NSE:ADANIENT
-  - NSE:ADANIPORTS
-
-model:
-  target_horizon_days: 5
-  target_threshold: 0.02
-  train_window_days: 252
-  step_days: 21
-  min_train_rows: 120
-
-  ensemble_weights:
-    xgb: 0.50
-    rf:  0.30
-    lr:  0.20
-
-  signal:
-    top_n: 5        # long top 5 ranked stocks each day
-    bottom_n: 0     # 0 = long-only mode (no shorts)
-
+api:
+  api_key: changeme
 backtest:
   fees_bps: 10
   slippage_bps: 5
-
-risk:
-  stop_loss_pct: 0.07
-  max_weight_per_stock: 0.20
-  portfolio_optimizer: "erc"
-  volatility_target_annual: 0.15
-  volatility_lookback_days: 20
-
-api:
-  api_key: "changeme"
-
+data:
+  end_date: today
+  start_date: '2019-01-01'
 logging:
-  level: "INFO"
-  file: "logs/system.log"
+  file: logs/system.log
+  level: INFO
+model:
+  ensemble_weights:
+    lr: 0.2
+    rf: 0.3
+    xgb: 0.5
+  min_train_rows: 120
+  signal:
+    bottom_n: 0
+    top_n: 7
+  step_days: 21
+  target_horizon_days: 5
+  target_threshold: 0.02
+  train_window_days: 252
+portfolio:
+  initial_capital: 200000
+  round_lot: 1
+risk:
+  max_weight_per_stock: 0.2
+  portfolio_optimizer: erc
+  stop_loss_pct: 0.06
+  volatility_lookback_days: 20
+  volatility_target_annual: 0.15
+universe:
+- NSE:TCS
+- NSE:INFY
+- NSE:RELIANCE
+- NSE:HDFCBANK
+- NSE:ICICIBANK
+- NSE:SBIN
+- NSE:AXISBANK
+- NSE:LT
+- NSE:ITC
+- NSE:HINDUNILVR
+- NSE:MARUTI
+- NSE:BAJFINANCE
+- NSE:ASIANPAINT
+- NSE:WIPRO
+- NSE:TITAN
+- NSE:ULTRACEMCO
+- NSE:POWERGRID
+- NSE:NTPC
+- NSE:ADANIENT
+- NSE:ADANIPORTS
