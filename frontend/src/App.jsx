@@ -1,36 +1,69 @@
-import Signals from "./components/Signals"
-import EquityChart from "./components/EquityChart"
-import Metrics from "./components/Metrics"
-import LivePrices from "./components/LivePrices"
+import { useState } from "react";
+import Dashboard   from "./pages/Dashboard";
+import Signals     from "./pages/Signals";
+import Orders      from "./pages/Orders";
+import Portfolio  from "./pages/portfolio";
+import RiskPage    from "./pages/RiskPage";
+import MarketPage  from "./pages/MarketPage";
+import SystemPage  from "./pages/SystemPage";
+import { useWebSocket } from "./hooks/useWeb";
+import "./App.css";
 
-function App() {
+const NAV = [
+  { id: "dashboard", label: "Dashboard"  },
+  { id: "signals",   label: "Signals"    },
+  { id: "orders",    label: "Orders"     },
+  { id: "risk",      label: "Risk"       },
+  { id: "market",    label: "Market"     },
+  { id: "system",    label: "System"     },
+  { id: "portfolio",  label: "Portfolio"   },
+];
 
-return (
+export default function App() {
+  const [page, setPage] = useState("dashboard");
+  const { prices, connected } = useWebSocket();
 
-<div className="min-h-screen bg-slate-900 text-white p-10">
+  const pages = {
+    dashboard: <Dashboard livePrices={prices} />,
+    signals:   <Signals />,
+    orders:    <Orders  livePrices={prices} />,
+    Portfolio:  <Portfolio />,
+    risk:      <RiskPage />,
+    market:    <MarketPage livePrices={prices} />,
+    system:    <SystemPage />,
+  };
 
-<h1 className="text-4xl font-bold mb-8">
-Quant Edge ML Trading System
-</h1>
+  return (
+    <div className="app">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="sidebar-brand">
+          <span className="brand-dot" />
+          QuantEdge
+        </div>
 
-<Metrics/>
+        <nav className="sidebar-nav">
+          {NAV.map(n => (
+            <button
+              key={n.id}
+              className={`nav-item ${page === n.id ? "active" : ""}`}
+              onClick={() => setPage(n.id)}
+            >
+              {n.label}
+            </button>
+          ))}
+        </nav>
 
-<div className="grid grid-cols-2 gap-8">
+        <div className="sidebar-footer">
+          <span className={`ws-dot ${connected ? "on" : "off"}`} />
+          {connected ? "Live" : "Reconnecting…"}
+        </div>
+      </aside>
 
-<div className="bg-slate-800 p-6 rounded-xl">
-<Signals/>
-</div>
-
-<div className="bg-slate-800 p-6 rounded-xl">
-<EquityChart/>
-</div>
-
-</div>
-<LivePrices/>
-</div>
-
-)
-
+      {/* Main content */}
+      <main className="main">
+        {pages[page]}
+      </main>
+    </div>
+  );
 }
-
-export default App
