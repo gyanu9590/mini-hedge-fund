@@ -1,10 +1,6 @@
 """
-src/backtest/walkforward.py
-
-TRUE rolling walk-forward with 3-class target and calibrated thresholds.
-
-Key fix: uses a symmetric threshold so long/short classes are balanced.
-Returns only OOS rows - zero leakage.
+src/backtest/walkforward.py  —  True rolling walk-forward (unchanged).
+3-class target, balanced classes, zero leakage.
 """
 
 import logging
@@ -26,27 +22,21 @@ def walk_forward_training(
 
     df = df.sort_values("date").copy().reset_index(drop=True)
 
-    # ── 3-class target: +1 (strong up), -1 (strong down), 0 (neutral) ─────────
-    # This fixes the imbalanced binary target problem.
-    # long_threshold  = top X% of returns = class +1
-    # short_threshold = bottom X% of returns = class -1
+    # 3-class cross-sectional target
     df["future_return"] = df.groupby("symbol")["close"].transform(
         lambda s: s.shift(-target_horizon) / s - 1
     )
-
-    # Use rolling per-date quantiles so thresholds adapt to market regime
     upper = df.groupby("date")["future_return"].transform(lambda x: x.quantile(0.65))
     lower = df.groupby("date")["future_return"].transform(lambda x: x.quantile(0.35))
-
     df["target"] = 0
     df.loc[df["future_return"] >= upper, "target"] = 1
     df.loc[df["future_return"] <= lower, "target"] = -1
 
     feature_cols = [
         c for c in df.columns
-        if c not in ["date", "symbol", "target", "future_return",
-                     "future_return_5d", "future_return_10d",
-                     "close", "open", "high", "low", "volume", "probability"]
+        if c not in ["date","symbol","target","future_return",
+                     "future_return_5d","future_return_10d",
+                     "close","open","high","low","volume","probability","regime"]
     ]
 
     df["probability"] = np.nan
@@ -75,30 +65,22 @@ def walk_forward_training(
             step_start += step_days
             continue
 
-        # Only train on strong signal rows (exclude neutral class 0)
         train_strong = train_df[train_df["target"] != 0]
         if len(train_strong) < 30:
             step_start += step_days
             continue
 
         X_train = train_strong[feature_cols]
-        y_train = (train_strong["target"] == 1).astype(int)  # binary: 1=up, 0=down
+        y_train = (train_strong["target"] == 1).astype(int)
         X_test  = test_df[feature_cols]
 
         model = RandomForestClassifier(
-            n_estimators=200,
-            max_depth=7,
-            min_samples_leaf=8,
-            max_features="sqrt",
-            random_state=42,
-            n_jobs=-1,
+            n_estimators=200, max_depth=7, min_samples_leaf=8,
+            max_features="sqrt", random_state=42, n_jobs=-1,
             class_weight="balanced",
         )
         model.fit(X_train, y_train)
-
-        # probability = P(stock will be in top 35% of returns)
-        probs = model.predict_proba(X_test)[:, 1]
-        df.loc[test_df.index, "probability"] = probs
+        df.loc[test_df.index, "probability"] = model.predict_proba(X_test)[:, 1]
 
         folds_run += 1
         step_start += step_days

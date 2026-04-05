@@ -4383,3 +4383,845 @@
 2026-04-01 20:20:33,780  INFO  Saved equity_curve.csv and metrics.json
 2026-04-01 20:20:33,780  INFO  === Done:     Backtest ===
 2026-04-01 20:20:33,780  INFO  Pipeline finished.
+2026-04-02 10:03:15,157  INFO  === Starting: ETL ===
+2026-04-02 10:03:15,163  INFO  ETL mode: LIVE (market open — using 5-min intraday bars)
+2026-04-02 10:03:15,165  INFO  Universe: 20 symbols | history from 2019-01-01
+2026-04-02 10:03:15,165  INFO  Fetching TCS ...
+2026-04-02 10:03:20,537  INFO    Live price for TCS: 2406.70 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:20,590  INFO    Saved 1792 rows -> TCS (latest: 2026-04-02 @ 2406.70)
+2026-04-02 10:03:20,591  INFO  Fetching INFY ...
+2026-04-02 10:03:20,951  INFO    Live price for INFY: 1265.50 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:20,999  INFO    Saved 1792 rows -> INFY (latest: 2026-04-02 @ 1265.50)
+2026-04-02 10:03:21,000  INFO  Fetching RELIANCE ...
+2026-04-02 10:03:21,386  INFO    Live price for RELIANCE: 1337.60 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:21,410  INFO    Saved 1792 rows -> RELIANCE (latest: 2026-04-02 @ 1337.60)
+2026-04-02 10:03:21,410  INFO  Fetching HDFCBANK ...
+2026-04-02 10:03:21,818  INFO    Live price for HDFCBANK: 732.25 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:21,838  INFO    Saved 1792 rows -> HDFCBANK (latest: 2026-04-02 @ 732.25)
+2026-04-02 10:03:21,838  INFO  Fetching ICICIBANK ...
+2026-04-02 10:03:22,219  INFO    Live price for ICICIBANK: 1197.60 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:22,248  INFO    Saved 1792 rows -> ICICIBANK (latest: 2026-04-02 @ 1197.60)
+2026-04-02 10:03:22,248  INFO  Fetching SBIN ...
+2026-04-02 10:03:22,600  INFO    Live price for SBIN: 983.20 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:22,619  INFO    Saved 1792 rows -> SBIN (latest: 2026-04-02 @ 983.20)
+2026-04-02 10:03:22,620  INFO  Fetching AXISBANK ...
+2026-04-02 10:03:22,995  INFO    Live price for AXISBANK: 1163.80 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:23,018  INFO    Saved 1792 rows -> AXISBANK (latest: 2026-04-02 @ 1163.80)
+2026-04-02 10:03:23,019  INFO  Fetching LT ...
+2026-04-02 10:03:23,404  INFO    Live price for LT: 3486.00 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:23,412  INFO    Saved 1792 rows -> LT (latest: 2026-04-02 @ 3486.00)
+2026-04-02 10:03:23,412  INFO  Fetching ITC ...
+2026-04-02 10:03:23,808  INFO    Live price for ITC: 289.25 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:23,834  INFO    Saved 1792 rows -> ITC (latest: 2026-04-02 @ 289.25)
+2026-04-02 10:03:23,834  INFO  Fetching HINDUNILVR ...
+2026-04-02 10:03:24,260  INFO    Live price for HINDUNILVR: 2034.00 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:24,289  INFO    Saved 1792 rows -> HINDUNILVR (latest: 2026-04-02 @ 2034.00)
+2026-04-02 10:03:24,289  INFO  Fetching MARUTI ...
+2026-04-02 10:03:24,638  INFO    Live price for MARUTI: 12371.00 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:24,663  INFO    Saved 1792 rows -> MARUTI (latest: 2026-04-02 @ 12371.00)
+2026-04-02 10:03:24,663  INFO  Fetching BAJFINANCE ...
+2026-04-02 10:03:25,055  INFO    Live price for BAJFINANCE: 797.70 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:25,079  INFO    Saved 1792 rows -> BAJFINANCE (latest: 2026-04-02 @ 797.70)
+2026-04-02 10:03:25,079  INFO  Fetching ASIANPAINT ...
+2026-04-02 10:03:25,456  INFO    Live price for ASIANPAINT: 2169.90 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:25,479  INFO    Saved 1792 rows -> ASIANPAINT (latest: 2026-04-02 @ 2169.90)
+2026-04-02 10:03:25,479  INFO  Fetching WIPRO ...
+2026-04-02 10:03:25,859  INFO    Live price for WIPRO: 189.25 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:25,884  INFO    Saved 1792 rows -> WIPRO (latest: 2026-04-02 @ 189.25)
+2026-04-02 10:03:25,884  INFO  Fetching TITAN ...
+2026-04-02 10:03:26,322  INFO    Live price for TITAN: 3978.60 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:26,348  INFO    Saved 1792 rows -> TITAN (latest: 2026-04-02 @ 3978.60)
+2026-04-02 10:03:26,349  INFO  Fetching ULTRACEMCO ...
+2026-04-02 10:03:26,691  INFO    Live price for ULTRACEMCO: 10443.00 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:26,715  INFO    Saved 1792 rows -> ULTRACEMCO (latest: 2026-04-02 @ 10443.00)
+2026-04-02 10:03:26,715  INFO  Fetching POWERGRID ...
+2026-04-02 10:03:27,082  INFO    Live price for POWERGRID: 286.30 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:27,123  INFO    Saved 1792 rows -> POWERGRID (latest: 2026-04-02 @ 286.30)
+2026-04-02 10:03:27,123  INFO  Fetching NTPC ...
+2026-04-02 10:03:27,515  INFO    Live price for NTPC: 355.15 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:27,540  INFO    Saved 1792 rows -> NTPC (latest: 2026-04-02 @ 355.15)
+2026-04-02 10:03:27,540  INFO  Fetching ADANIENT ...
+2026-04-02 10:03:27,920  INFO    Live price for ADANIENT: 1791.90 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:27,947  INFO    Saved 1792 rows -> ADANIENT (latest: 2026-04-02 @ 1791.90)
+2026-04-02 10:03:27,947  INFO  Fetching ADANIPORTS ...
+2026-04-02 10:03:28,304  INFO    Live price for ADANIPORTS: 1340.30 (as of 10:03 IST, 10 5-min bars)
+2026-04-02 10:03:28,327  INFO    Saved 1792 rows -> ADANIPORTS (latest: 2026-04-02 @ 1340.30)
+2026-04-02 10:03:28,327  INFO  ETL complete: 20/20 symbols.
+2026-04-02 10:03:28,327  INFO  === Done:     ETL ===
+2026-04-02 10:03:28,327  INFO  === Starting: Features ===
+2026-04-02 10:03:28,404  INFO  ADANIENT: 1563 rows, 55 features
+2026-04-02 10:03:28,481  INFO  ADANIPORTS: 1563 rows, 55 features
+2026-04-02 10:03:28,546  INFO  ASIANPAINT: 1563 rows, 55 features
+2026-04-02 10:03:28,604  INFO  AXISBANK: 1563 rows, 55 features
+2026-04-02 10:03:28,659  INFO  BAJFINANCE: 1563 rows, 55 features
+2026-04-02 10:03:28,717  INFO  HDFCBANK: 1563 rows, 55 features
+2026-04-02 10:03:28,778  INFO  HINDUNILVR: 1563 rows, 55 features
+2026-04-02 10:03:28,840  INFO  ICICIBANK: 1563 rows, 55 features
+2026-04-02 10:03:28,906  INFO  INFY: 1563 rows, 55 features
+2026-04-02 10:03:28,962  INFO  ITC: 1563 rows, 55 features
+2026-04-02 10:03:29,016  INFO  LT: 1563 rows, 55 features
+2026-04-02 10:03:29,087  INFO  MARUTI: 1563 rows, 55 features
+2026-04-02 10:03:29,155  INFO  NTPC: 1563 rows, 55 features
+2026-04-02 10:03:29,227  INFO  POWERGRID: 1563 rows, 55 features
+2026-04-02 10:03:29,303  INFO  RELIANCE: 1563 rows, 55 features
+2026-04-02 10:03:29,376  INFO  SBIN: 1563 rows, 55 features
+2026-04-02 10:03:29,450  INFO  TCS: 1563 rows, 55 features
+2026-04-02 10:03:29,514  INFO  TITAN: 1563 rows, 55 features
+2026-04-02 10:03:29,586  INFO  ULTRACEMCO: 1563 rows, 55 features
+2026-04-02 10:03:29,649  INFO  WIPRO: 1563 rows, 55 features
+2026-04-02 10:03:30,036  INFO  Combined features: 31260 rows x 55 cols
+2026-04-02 10:03:30,044  INFO  === Done:     Features ===
+2026-04-02 10:03:30,044  INFO  === Starting: Signals ===
+2026-04-02 10:03:30,111  INFO  Loaded features: 31260 rows
+2026-04-02 10:03:30,116  INFO  Signal config: top_n=7  bottom_n=0
+2026-04-02 10:04:05,814  INFO  Walk-forward complete: 63 folds trained.
+2026-04-02 10:04:09,448  INFO  Final signals: 17036 rows | mean=0.011 std=1.190
+2026-04-02 10:04:11,728  INFO  Signals saved: data\signals\signals_2026-03-17.parquet
+2026-04-02 10:04:11,732  INFO  === Done:     Signals ===
+2026-04-02 10:04:11,732  INFO  === Starting: Orders ===
+2026-04-02 10:04:11,799  INFO  Orders saved: data\orders\orders_2026-03-17.parquet
+2026-04-02 10:04:11,808  INFO  === Done:     Orders ===
+2026-04-02 10:04:11,809  INFO  === Starting: Backtest ===
+2026-04-02 10:04:11,918  INFO  Backtest: 7688 signal rows | 35840 price rows | 2020-12-01 to 2026-03-17
+2026-04-02 10:04:11,939  INFO  STOP-LOSS triggered: ADANIENT  entry=1712.94  current=1541.20
+2026-04-02 10:04:11,940  INFO  STOP-LOSS triggered: ADANIENT  entry=1615.82  current=1402.93
+2026-04-02 10:04:11,940  INFO  STOP-LOSS triggered: ADANIENT  entry=1380.76  current=1191.87
+2026-04-02 10:04:11,942  INFO  STOP-LOSS triggered: ADANIENT  entry=2470.26  current=2306.60
+2026-04-02 10:04:11,943  INFO  STOP-LOSS triggered: ADANIENT  entry=2255.00  current=2114.10
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIENT  entry=2128.79  current=1864.20
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIENT  entry=2184.60  current=2039.90
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=821.95  current=745.95
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=712.85  current=640.13
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=873.41  current=772.42
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=774.14  current=701.95
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1345.65  current=1258.43
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1193.74  current=1106.82
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2549.81  current=2332.24
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2937.29  current=2733.17
+2026-04-02 10:04:11,945  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2735.19  current=2552.64
+2026-04-02 10:04:11,952  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3217.12  current=3023.54
+2026-04-02 10:04:11,953  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3196.13  current=2987.98
+2026-04-02 10:04:11,953  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2933.93  current=2733.31
+2026-04-02 10:04:11,954  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2899.31  current=2511.62
+2026-04-02 10:04:11,954  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2444.21  current=2267.36
+2026-04-02 10:04:11,954  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2257.96  current=2109.32
+2026-04-02 10:04:11,956  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2410.50  current=2220.80
+2026-04-02 10:04:11,956  INFO  STOP-LOSS triggered: AXISBANK  entry=748.82  current=686.04
+2026-04-02 10:04:11,957  INFO  STOP-LOSS triggered: AXISBANK  entry=901.46  current=830.25
+2026-04-02 10:04:11,958  INFO  STOP-LOSS triggered: BAJFINANCE  entry=697.67  current=556.06
+2026-04-02 10:04:11,960  INFO  STOP-LOSS triggered: BAJFINANCE  entry=641.14  current=563.03
+2026-04-02 10:04:11,960  INFO  STOP-LOSS triggered: BAJFINANCE  entry=592.23  current=546.60
+2026-04-02 10:04:11,963  INFO  STOP-LOSS triggered: HDFCBANK  entry=749.10  current=686.51
+2026-04-02 10:04:11,963  INFO  STOP-LOSS triggered: HDFCBANK  entry=722.23  current=619.29
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HDFCBANK  entry=783.98  current=718.59
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2155.51  current=2019.55
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2274.75  current=2078.48
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2103.97  current=1882.08
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2313.74  current=2169.03
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2453.68  current=2302.45
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2346.78  current=2201.02
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2360.40  current=2194.60
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: INFY  entry=1603.03  current=1402.22
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: INFY  entry=1334.56  current=1249.28
+2026-04-02 10:04:11,964  INFO  STOP-LOSS triggered: INFY  entry=1453.69  current=1163.74
+2026-04-02 10:04:11,970  INFO  STOP-LOSS triggered: INFY  entry=1400.64  current=1293.18
+2026-04-02 10:04:11,971  INFO  STOP-LOSS triggered: INFY  entry=1505.59  current=1409.92
+2026-04-02 10:04:11,972  INFO  STOP-LOSS triggered: ITC  entry=400.53  current=366.58
+2026-04-02 10:04:11,972  INFO  STOP-LOSS triggered: ITC  entry=429.55  current=396.05
+2026-04-02 10:04:11,973  INFO  STOP-LOSS triggered: ITC  entry=407.80  current=318.25
+2026-04-02 10:04:11,975  INFO  STOP-LOSS triggered: LT  entry=3615.63  current=3295.66
+2026-04-02 10:04:11,976  INFO  STOP-LOSS triggered: LT  entry=3320.09  current=3040.15
+2026-04-02 10:04:11,978  INFO  STOP-LOSS triggered: MARUTI  entry=7296.49  current=6791.92
+2026-04-02 10:04:11,978  INFO  STOP-LOSS triggered: MARUTI  entry=6818.09  current=6249.59
+2026-04-02 10:04:11,979  INFO  STOP-LOSS triggered: MARUTI  entry=8548.86  current=7980.40
+2026-04-02 10:04:11,982  INFO  STOP-LOSS triggered: NTPC  entry=395.30  current=341.16
+2026-04-02 10:04:11,982  INFO  STOP-LOSS triggered: NTPC  entry=337.44  current=303.25
+2026-04-02 10:04:11,982  INFO  STOP-LOSS triggered: NTPC  entry=354.64  current=329.85
+2026-04-02 10:04:11,983  INFO  STOP-LOSS triggered: POWERGRID  entry=100.08  current=90.87
+2026-04-02 10:04:11,985  INFO  STOP-LOSS triggered: POWERGRID  entry=278.21  current=257.46
+2026-04-02 10:04:11,985  INFO  STOP-LOSS triggered: RELIANCE  entry=987.89  current=910.99
+2026-04-02 10:04:11,986  INFO  STOP-LOSS triggered: SBIN  entry=476.61  current=446.67
+2026-04-02 10:04:11,987  INFO  STOP-LOSS triggered: SBIN  entry=448.86  current=421.67
+2026-04-02 10:04:11,987  INFO  STOP-LOSS triggered: SBIN  entry=568.08  current=510.67
+2026-04-02 10:04:11,987  INFO  STOP-LOSS triggered: SBIN  entry=576.99  current=541.37
+2026-04-02 10:04:11,990  INFO  STOP-LOSS triggered: TCS  entry=3985.11  current=3653.15
+2026-04-02 10:04:11,991  INFO  STOP-LOSS triggered: TCS  entry=3659.53  current=3366.89
+2026-04-02 10:04:11,992  INFO  STOP-LOSS triggered: TCS  entry=3458.57  current=3189.18
+2026-04-02 10:04:11,992  INFO  STOP-LOSS triggered: TCS  entry=3164.68  current=2971.50
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: TCS  entry=2938.42  current=2750.10
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: TCS  entry=2692.20  current=2527.40
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: TITAN  entry=2585.50  current=2414.34
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: TITAN  entry=3578.09  current=3259.64
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: TITAN  entry=3306.95  current=3068.02
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6426.05  current=5927.73
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=7408.60  current=6940.31
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6942.61  current=6275.55
+2026-04-02 10:04:11,993  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6423.97  current=5847.55
+2026-04-02 10:04:11,998  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6402.66  current=5878.93
+2026-04-02 10:04:11,998  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5971.77  current=5552.42
+2026-04-02 10:04:11,999  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5457.09  current=5062.03
+2026-04-02 10:04:12,000  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=11473.72  current=10381.84
+2026-04-02 10:04:12,001  INFO  STOP-LOSS triggered: WIPRO  entry=322.65  current=272.18
+2026-04-02 10:04:12,002  INFO  STOP-LOSS triggered: WIPRO  entry=271.24  current=189.26
+2026-04-02 10:04:12,092  INFO  Backtest complete: CAGR=83.6%  Sharpe=3.18  MaxDD=-23.0%
+2026-04-02 10:04:12,097  INFO  Saved equity_curve.csv and metrics.json
+2026-04-02 10:04:12,097  INFO  === Done:     Backtest ===
+2026-04-02 10:04:12,097  INFO  Pipeline finished.
+2026-04-03 15:06:36,615  INFO  === Starting: ETL ===
+2026-04-03 15:06:36,631  INFO  ETL mode: LIVE (market open — using 5-min intraday bars)
+2026-04-03 15:06:36,632  INFO  Universe: 20 symbols | history from 2019-01-01
+2026-04-03 15:06:36,639  INFO  Fetching TCS ...
+2026-04-03 15:06:41,040  INFO    Live price for TCS: 2445.80 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:41,079  INFO    Saved 1793 rows -> TCS (latest: 2026-04-03 @ 2445.80)
+2026-04-03 15:06:41,079  INFO  Fetching INFY ...
+2026-04-03 15:06:41,464  INFO    Live price for INFY: 1298.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:41,478  INFO    Saved 1793 rows -> INFY (latest: 2026-04-03 @ 1298.00)
+2026-04-03 15:06:41,485  INFO  Fetching RELIANCE ...
+2026-04-03 15:06:41,895  INFO    Live price for RELIANCE: 1350.90 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:41,921  INFO    Saved 1793 rows -> RELIANCE (latest: 2026-04-03 @ 1350.90)
+2026-04-03 15:06:41,922  INFO  Fetching HDFCBANK ...
+2026-04-03 15:06:42,339  INFO    Live price for HDFCBANK: 751.50 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:42,361  INFO    Saved 1793 rows -> HDFCBANK (latest: 2026-04-03 @ 751.50)
+2026-04-03 15:06:42,361  INFO  Fetching ICICIBANK ...
+2026-04-03 15:06:42,732  INFO    Live price for ICICIBANK: 1216.50 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:42,752  INFO    Saved 1793 rows -> ICICIBANK (latest: 2026-04-03 @ 1216.50)
+2026-04-03 15:06:42,752  INFO  Fetching SBIN ...
+2026-04-03 15:06:43,119  INFO    Live price for SBIN: 1018.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:43,140  INFO    Saved 1793 rows -> SBIN (latest: 2026-04-03 @ 1018.00)
+2026-04-03 15:06:43,140  INFO  Fetching AXISBANK ...
+2026-04-03 15:06:43,532  INFO    Live price for AXISBANK: 1197.90 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:43,557  INFO    Saved 1793 rows -> AXISBANK (latest: 2026-04-03 @ 1197.90)
+2026-04-03 15:06:43,558  INFO  Fetching LT ...
+2026-04-03 15:06:43,939  INFO    Live price for LT: 3610.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:43,955  INFO    Saved 1793 rows -> LT (latest: 2026-04-03 @ 3610.00)
+2026-04-03 15:06:43,955  INFO  Fetching ITC ...
+2026-04-03 15:06:44,338  INFO    Live price for ITC: 292.30 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:44,362  INFO    Saved 1793 rows -> ITC (latest: 2026-04-03 @ 292.30)
+2026-04-03 15:06:44,363  INFO  Fetching HINDUNILVR ...
+2026-04-03 15:06:44,732  INFO    Live price for HINDUNILVR: 2065.10 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:44,752  INFO    Saved 1793 rows -> HINDUNILVR (latest: 2026-04-03 @ 2065.10)
+2026-04-03 15:06:44,752  INFO  Fetching MARUTI ...
+2026-04-03 15:06:45,139  INFO    Live price for MARUTI: 12570.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:45,162  INFO    Saved 1793 rows -> MARUTI (latest: 2026-04-03 @ 12570.00)
+2026-04-03 15:06:45,162  INFO  Fetching BAJFINANCE ...
+2026-04-03 15:06:45,569  INFO    Live price for BAJFINANCE: 826.85 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:45,588  INFO    Saved 1793 rows -> BAJFINANCE (latest: 2026-04-03 @ 826.85)
+2026-04-03 15:06:45,588  INFO  Fetching ASIANPAINT ...
+2026-04-03 15:06:45,951  INFO    Live price for ASIANPAINT: 2170.40 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:45,969  INFO    Saved 1793 rows -> ASIANPAINT (latest: 2026-04-03 @ 2170.40)
+2026-04-03 15:06:45,969  INFO  Fetching WIPRO ...
+2026-04-03 15:06:46,494  INFO    Live price for WIPRO: 194.80 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:46,512  INFO    Saved 1793 rows -> WIPRO (latest: 2026-04-03 @ 194.80)
+2026-04-03 15:06:46,513  INFO  Fetching TITAN ...
+2026-04-03 15:06:46,909  INFO    Live price for TITAN: 4080.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:46,931  INFO    Saved 1793 rows -> TITAN (latest: 2026-04-03 @ 4080.00)
+2026-04-03 15:06:46,931  INFO  Fetching ULTRACEMCO ...
+2026-04-03 15:06:47,295  INFO    Live price for ULTRACEMCO: 10600.00 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:47,319  INFO    Saved 1793 rows -> ULTRACEMCO (latest: 2026-04-03 @ 10600.00)
+2026-04-03 15:06:47,319  INFO  Fetching POWERGRID ...
+2026-04-03 15:06:47,695  INFO    Live price for POWERGRID: 289.95 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:47,702  INFO    Saved 1793 rows -> POWERGRID (latest: 2026-04-03 @ 289.95)
+2026-04-03 15:06:47,702  INFO  Fetching NTPC ...
+2026-04-03 15:06:48,110  INFO    Live price for NTPC: 359.65 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:48,128  INFO    Saved 1793 rows -> NTPC (latest: 2026-04-03 @ 359.65)
+2026-04-03 15:06:48,128  INFO  Fetching ADANIENT ...
+2026-04-03 15:06:48,509  INFO    Live price for ADANIENT: 1834.20 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:48,532  INFO    Saved 1793 rows -> ADANIENT (latest: 2026-04-03 @ 1834.20)
+2026-04-03 15:06:48,532  INFO  Fetching ADANIPORTS ...
+2026-04-03 15:06:48,943  INFO    Live price for ADANIPORTS: 1377.60 (as of 15:06 IST, 75 5-min bars)
+2026-04-03 15:06:48,956  INFO    Saved 1793 rows -> ADANIPORTS (latest: 2026-04-03 @ 1377.60)
+2026-04-03 15:06:48,960  INFO  ETL complete: 20/20 symbols.
+2026-04-03 15:06:48,960  INFO  === Done:     ETL ===
+2026-04-03 15:06:48,960  INFO  === Starting: Features ===
+2026-04-03 15:06:49,004  INFO  ADANIENT: 1564 rows, 55 features
+2026-04-03 15:06:49,045  INFO  ADANIPORTS: 1564 rows, 55 features
+2026-04-03 15:06:49,079  INFO  ASIANPAINT: 1564 rows, 55 features
+2026-04-03 15:06:49,128  INFO  AXISBANK: 1564 rows, 55 features
+2026-04-03 15:06:49,162  INFO  BAJFINANCE: 1564 rows, 55 features
+2026-04-03 15:06:49,200  INFO  HDFCBANK: 1564 rows, 55 features
+2026-04-03 15:06:49,245  INFO  HINDUNILVR: 1564 rows, 55 features
+2026-04-03 15:06:49,310  INFO  ICICIBANK: 1564 rows, 55 features
+2026-04-03 15:06:49,345  INFO  INFY: 1564 rows, 55 features
+2026-04-03 15:06:49,379  INFO  ITC: 1564 rows, 55 features
+2026-04-03 15:06:49,418  INFO  LT: 1564 rows, 55 features
+2026-04-03 15:06:49,462  INFO  MARUTI: 1564 rows, 55 features
+2026-04-03 15:06:49,510  INFO  NTPC: 1564 rows, 55 features
+2026-04-03 15:06:49,551  INFO  POWERGRID: 1564 rows, 55 features
+2026-04-03 15:06:49,578  INFO  RELIANCE: 1564 rows, 55 features
+2026-04-03 15:06:49,628  INFO  SBIN: 1564 rows, 55 features
+2026-04-03 15:06:49,679  INFO  TCS: 1564 rows, 55 features
+2026-04-03 15:06:49,727  INFO  TITAN: 1564 rows, 55 features
+2026-04-03 15:06:49,768  INFO  ULTRACEMCO: 1564 rows, 55 features
+2026-04-03 15:06:49,810  INFO  WIPRO: 1564 rows, 55 features
+2026-04-03 15:06:50,002  INFO  Combined features: 31280 rows x 55 cols
+2026-04-03 15:06:50,002  INFO  === Done:     Features ===
+2026-04-03 15:06:50,002  INFO  === Starting: Signals ===
+2026-04-03 15:06:50,046  INFO  Loaded features: 31280 rows
+2026-04-03 15:07:25,619  INFO  Walk-forward complete: 63 folds trained.
+2026-04-03 15:07:29,101  INFO  Ensemble on 26240 OOS rows. Prob mean=0.455 std=0.127
+2026-04-03 15:07:29,101  INFO  Computing historical regime series from 2019-01-01...
+2026-04-03 15:07:31,441  INFO  Regime series computed: 1588 dates, Bull=1258, Bear=226, Sideways=104
+2026-04-03 15:07:33,775  INFO  Long-Short signals across 1312 dates | BULL=1086 BEAR=175 SIDEWAYS=51 | Avg/day: 4.9 long, 0.4 short
+2026-04-03 15:07:33,780  INFO  Latest date 2026-03-18 00:00:00 | Regime: BEAR | 5 long, 3 short
+2026-04-03 15:07:34,369  INFO  Signals saved: data\signals\signals_2026-03-18.parquet
+2026-04-03 15:07:34,373  INFO  === Done:     Signals ===
+2026-04-03 15:07:34,373  INFO  === Starting: Orders ===
+2026-04-03 15:07:34,433  INFO  Orders saved: data\orders\orders_2026-03-18.parquet
+2026-04-03 15:07:34,439  INFO  === Done:     Orders ===
+2026-04-03 15:07:34,439  INFO  === Starting: Backtest ===
+2026-04-03 15:07:34,525  INFO  Backtest: 5935 signal rows | 35860 price rows | 2020-11-27 to 2026-03-18
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=1733.21  current=1541.20
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=3642.20  current=3384.31
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2757.67  current=1563.11
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=1568.95  current=1402.93
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=1380.76  current=1191.87
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=3024.27  current=2764.20
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2794.77  current=2182.57
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2553.58  current=2373.22
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2368.63  current=2178.10
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2481.00  current=2298.36
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2294.58  current=2055.10
+2026-04-03 15:07:34,543  INFO  STOP-LOSS triggered: ADANIENT  entry=2032.20  current=1864.20
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=754.84  current=695.11
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=867.16  current=793.11
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=774.14  current=701.95
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=587.57  current=487.37
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=644.22  current=584.08
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1411.60  current=1300.30
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3057.33  current=2765.77
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2985.54  current=2733.17
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2713.33  current=2499.17
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3244.55  current=2995.28
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3023.62  current=2780.15
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2735.17  current=2511.62
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2443.01  current=2267.36
+2026-04-03 15:07:34,548  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2511.80  current=2307.10
+2026-04-03 15:07:34,556  INFO  STOP-LOSS triggered: AXISBANK  entry=774.52  current=713.22
+2026-04-03 15:07:34,558  INFO  STOP-LOSS triggered: BAJFINANCE  entry=752.62  current=687.92
+2026-04-03 15:07:34,558  INFO  STOP-LOSS triggered: BAJFINANCE  entry=700.35  current=541.18
+2026-04-03 15:07:34,558  INFO  STOP-LOSS triggered: BAJFINANCE  entry=691.84  current=642.70
+2026-04-03 15:07:34,560  INFO  STOP-LOSS triggered: BAJFINANCE  entry=639.15  current=577.08
+2026-04-03 15:07:34,560  INFO  STOP-LOSS triggered: BAJFINANCE  entry=713.15  current=649.85
+2026-04-03 15:07:34,562  INFO  STOP-LOSS triggered: HDFCBANK  entry=749.10  current=686.51
+2026-04-03 15:07:34,562  INFO  STOP-LOSS triggered: HDFCBANK  entry=785.70  current=712.22
+2026-04-03 15:07:34,563  INFO  STOP-LOSS triggered: HDFCBANK  entry=951.00  current=840.70
+2026-04-03 15:07:34,563  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2334.28  current=2155.00
+2026-04-03 15:07:34,565  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2490.22  current=2314.00
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: ICICIBANK  entry=572.04  current=520.88
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: INFY  entry=1522.90  current=1333.43
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: ITC  entry=401.10  current=365.51
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: ITC  entry=407.80  current=356.38
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: LT  entry=1746.91  current=1568.55
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: LT  entry=1709.68  current=1568.07
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: MARUTI  entry=6680.79  current=6187.34
+2026-04-03 15:07:34,566  INFO  STOP-LOSS triggered: MARUTI  entry=8615.52  current=7904.67
+2026-04-03 15:07:34,573  INFO  STOP-LOSS triggered: MARUTI  entry=15245.00  current=14158.00
+2026-04-03 15:07:34,573  INFO  STOP-LOSS triggered: MARUTI  entry=14415.00  current=13011.00
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: POWERGRID  entry=299.22  current=276.46
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: POWERGRID  entry=282.86  current=257.46
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: RELIANCE  entry=1171.59  current=1074.52
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: RELIANCE  entry=1401.38  current=1300.11
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: SBIN  entry=275.52  current=254.35
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: SBIN  entry=364.29  current=338.73
+2026-04-03 15:07:34,577  INFO  STOP-LOSS triggered: SBIN  entry=342.47  current=303.44
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=3061.19  current=2833.61
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=2922.58  current=2689.61
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=4057.03  current=3762.50
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=3653.15  current=3366.89
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=3316.39  current=3080.31
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TCS  entry=2975.41  current=2750.10
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TITAN  entry=2460.07  current=2260.29
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TITAN  entry=2112.53  current=1911.37
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TITAN  entry=2572.97  current=2383.09
+2026-04-03 15:07:34,581  INFO  STOP-LOSS triggered: TITAN  entry=3536.90  current=3259.64
+2026-04-03 15:07:34,587  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=7389.68  current=6762.61
+2026-04-03 15:07:34,589  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6661.76  current=5847.55
+2026-04-03 15:07:34,589  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5915.60  current=5457.09
+2026-04-03 15:07:34,590  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=10973.09  current=10064.65
+2026-04-03 15:07:34,591  INFO  STOP-LOSS triggered: WIPRO  entry=316.74  current=259.78
+2026-04-03 15:07:34,593  INFO  STOP-LOSS triggered: WIPRO  entry=251.20  current=231.30
+2026-04-03 15:07:34,675  INFO  Backtest complete: CAGR=115.1%  Sharpe=3.22  MaxDD=-21.7%
+2026-04-03 15:07:34,675  INFO  Saved equity_curve.csv and metrics.json
+2026-04-03 15:07:34,675  INFO  === Done:     Backtest ===
+2026-04-03 15:07:34,675  INFO  Pipeline finished.
+2026-04-03 15:26:19,626  INFO  === Starting: ETL ===
+2026-04-03 15:26:19,634  INFO  ETL mode: LIVE (market open — using 5-min intraday bars)
+2026-04-03 15:26:19,634  INFO  Universe: 20 symbols | history from 2019-01-01
+2026-04-03 15:26:19,634  INFO  Fetching TCS ...
+2026-04-03 15:26:20,737  INFO    Live price for TCS: 2445.80 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:20,766  INFO    Saved 1793 rows -> TCS (latest: 2026-04-03 @ 2445.80)
+2026-04-03 15:26:20,766  INFO  Fetching INFY ...
+2026-04-03 15:26:21,136  INFO    Live price for INFY: 1298.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:21,156  INFO    Saved 1793 rows -> INFY (latest: 2026-04-03 @ 1298.00)
+2026-04-03 15:26:21,156  INFO  Fetching RELIANCE ...
+2026-04-03 15:26:21,517  INFO    Live price for RELIANCE: 1350.90 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:21,537  INFO    Saved 1793 rows -> RELIANCE (latest: 2026-04-03 @ 1350.90)
+2026-04-03 15:26:21,537  INFO  Fetching HDFCBANK ...
+2026-04-03 15:26:21,958  INFO    Live price for HDFCBANK: 751.50 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:21,966  INFO    Saved 1793 rows -> HDFCBANK (latest: 2026-04-03 @ 751.50)
+2026-04-03 15:26:21,966  INFO  Fetching ICICIBANK ...
+2026-04-03 15:26:22,336  INFO    Live price for ICICIBANK: 1216.50 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:22,356  INFO    Saved 1793 rows -> ICICIBANK (latest: 2026-04-03 @ 1216.50)
+2026-04-03 15:26:22,356  INFO  Fetching SBIN ...
+2026-04-03 15:26:22,712  INFO    Live price for SBIN: 1018.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:22,729  INFO    Saved 1793 rows -> SBIN (latest: 2026-04-03 @ 1018.00)
+2026-04-03 15:26:22,729  INFO  Fetching AXISBANK ...
+2026-04-03 15:26:23,179  INFO    Live price for AXISBANK: 1197.90 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:23,198  INFO    Saved 1793 rows -> AXISBANK (latest: 2026-04-03 @ 1197.90)
+2026-04-03 15:26:23,200  INFO  Fetching LT ...
+2026-04-03 15:26:23,679  INFO    Live price for LT: 3610.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:23,701  INFO    Saved 1793 rows -> LT (latest: 2026-04-03 @ 3610.00)
+2026-04-03 15:26:23,701  INFO  Fetching ITC ...
+2026-04-03 15:26:24,065  INFO    Live price for ITC: 292.30 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:24,088  INFO    Saved 1793 rows -> ITC (latest: 2026-04-03 @ 292.30)
+2026-04-03 15:26:24,088  INFO  Fetching HINDUNILVR ...
+2026-04-03 15:26:24,507  INFO    Live price for HINDUNILVR: 2065.10 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:24,520  INFO    Saved 1793 rows -> HINDUNILVR (latest: 2026-04-03 @ 2065.10)
+2026-04-03 15:26:24,520  INFO  Fetching MARUTI ...
+2026-04-03 15:26:24,918  INFO    Live price for MARUTI: 12570.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:24,937  INFO    Saved 1793 rows -> MARUTI (latest: 2026-04-03 @ 12570.00)
+2026-04-03 15:26:24,937  INFO  Fetching BAJFINANCE ...
+2026-04-03 15:26:25,292  INFO    Live price for BAJFINANCE: 826.85 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:25,307  INFO    Saved 1793 rows -> BAJFINANCE (latest: 2026-04-03 @ 826.85)
+2026-04-03 15:26:25,307  INFO  Fetching ASIANPAINT ...
+2026-04-03 15:26:25,830  INFO    Live price for ASIANPAINT: 2170.40 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:25,848  INFO    Saved 1793 rows -> ASIANPAINT (latest: 2026-04-03 @ 2170.40)
+2026-04-03 15:26:25,850  INFO  Fetching WIPRO ...
+2026-04-03 15:26:26,204  INFO    Live price for WIPRO: 194.80 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:26,223  INFO    Saved 1793 rows -> WIPRO (latest: 2026-04-03 @ 194.80)
+2026-04-03 15:26:26,223  INFO  Fetching TITAN ...
+2026-04-03 15:26:26,672  INFO    Live price for TITAN: 4080.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:26,692  INFO    Saved 1793 rows -> TITAN (latest: 2026-04-03 @ 4080.00)
+2026-04-03 15:26:26,692  INFO  Fetching ULTRACEMCO ...
+2026-04-03 15:26:27,079  INFO    Live price for ULTRACEMCO: 10600.00 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:27,081  INFO    Saved 1793 rows -> ULTRACEMCO (latest: 2026-04-03 @ 10600.00)
+2026-04-03 15:26:27,081  INFO  Fetching POWERGRID ...
+2026-04-03 15:26:27,458  INFO    Live price for POWERGRID: 289.95 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:27,478  INFO    Saved 1793 rows -> POWERGRID (latest: 2026-04-03 @ 289.95)
+2026-04-03 15:26:27,478  INFO  Fetching NTPC ...
+2026-04-03 15:26:27,909  INFO    Live price for NTPC: 359.65 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:27,924  INFO    Saved 1793 rows -> NTPC (latest: 2026-04-03 @ 359.65)
+2026-04-03 15:26:27,924  INFO  Fetching ADANIENT ...
+2026-04-03 15:26:28,320  INFO    Live price for ADANIENT: 1834.20 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:28,339  INFO    Saved 1793 rows -> ADANIENT (latest: 2026-04-03 @ 1834.20)
+2026-04-03 15:26:28,339  INFO  Fetching ADANIPORTS ...
+2026-04-03 15:26:28,811  INFO    Live price for ADANIPORTS: 1377.60 (as of 15:26 IST, 75 5-min bars)
+2026-04-03 15:26:28,823  INFO    Saved 1793 rows -> ADANIPORTS (latest: 2026-04-03 @ 1377.60)
+2026-04-03 15:26:28,823  INFO  ETL complete: 20/20 symbols.
+2026-04-03 15:26:28,823  INFO  === Done:     ETL ===
+2026-04-03 15:26:28,823  INFO  === Starting: Features ===
+2026-04-03 15:26:28,883  INFO  ADANIENT: 1564 rows, 55 features
+2026-04-03 15:26:28,921  INFO  ADANIPORTS: 1564 rows, 55 features
+2026-04-03 15:26:28,950  INFO  ASIANPAINT: 1564 rows, 55 features
+2026-04-03 15:26:28,999  INFO  AXISBANK: 1564 rows, 55 features
+2026-04-03 15:26:29,029  INFO  BAJFINANCE: 1564 rows, 55 features
+2026-04-03 15:26:29,076  INFO  HDFCBANK: 1564 rows, 55 features
+2026-04-03 15:26:29,109  INFO  HINDUNILVR: 1564 rows, 55 features
+2026-04-03 15:26:29,155  INFO  ICICIBANK: 1564 rows, 55 features
+2026-04-03 15:26:29,188  INFO  INFY: 1564 rows, 55 features
+2026-04-03 15:26:29,221  INFO  ITC: 1564 rows, 55 features
+2026-04-03 15:26:29,268  INFO  LT: 1564 rows, 55 features
+2026-04-03 15:26:29,302  INFO  MARUTI: 1564 rows, 55 features
+2026-04-03 15:26:29,347  INFO  NTPC: 1564 rows, 55 features
+2026-04-03 15:26:29,383  INFO  POWERGRID: 1564 rows, 55 features
+2026-04-03 15:26:29,427  INFO  RELIANCE: 1564 rows, 55 features
+2026-04-03 15:26:29,461  INFO  SBIN: 1564 rows, 55 features
+2026-04-03 15:26:29,507  INFO  TCS: 1564 rows, 55 features
+2026-04-03 15:26:29,545  INFO  TITAN: 1564 rows, 55 features
+2026-04-03 15:26:29,586  INFO  ULTRACEMCO: 1564 rows, 55 features
+2026-04-03 15:26:29,624  INFO  WIPRO: 1564 rows, 55 features
+2026-04-03 15:26:29,793  INFO  Combined features: 31280 rows x 55 cols
+2026-04-03 15:26:29,793  INFO  === Done:     Features ===
+2026-04-03 15:26:29,793  INFO  === Starting: Signals ===
+2026-04-03 15:26:29,841  INFO  Loaded features: 31280 rows
+2026-04-03 15:26:58,711  INFO  Walk-forward complete: 63 folds trained.
+2026-04-03 15:27:01,947  INFO  Ensemble on 26240 OOS rows. Prob mean=0.455 std=0.127
+2026-04-03 15:27:01,949  INFO  Computing historical regime series from 2019-01-01...
+2026-04-03 15:27:04,240  INFO  Regime series computed: 1588 dates, Bull=1258, Bear=226, Sideways=104
+2026-04-03 15:27:06,205  INFO  Long-Short signals across 1312 dates | BULL=1086 BEAR=175 SIDEWAYS=51 | Avg/day: 4.9 long, 0.4 short
+2026-04-03 15:27:06,205  INFO  Latest date 2026-03-18 00:00:00 | Regime: BEAR | 5 long, 3 short
+2026-04-03 15:27:06,750  INFO  Signals saved: data\signals\signals_2026-03-18.parquet
+2026-04-03 15:27:06,750  INFO  === Done:     Signals ===
+2026-04-03 15:27:06,750  INFO  === Starting: Orders ===
+2026-04-03 15:27:06,816  INFO  Orders saved: data\orders\orders_2026-03-18.parquet
+2026-04-03 15:27:06,816  INFO  === Done:     Orders ===
+2026-04-03 15:27:06,816  INFO  === Starting: Backtest ===
+2026-04-03 15:27:06,893  INFO  Backtest: 5935 signal rows | 35860 price rows | 2020-11-27 to 2026-03-18
+2026-04-03 15:27:06,917  INFO  STOP-LOSS triggered: ADANIENT  entry=1733.21  current=1541.20
+2026-04-03 15:27:06,917  INFO  STOP-LOSS triggered: ADANIENT  entry=3642.20  current=3384.31
+2026-04-03 15:27:06,917  INFO  STOP-LOSS triggered: ADANIENT  entry=2757.67  current=1563.11
+2026-04-03 15:27:06,917  INFO  STOP-LOSS triggered: ADANIENT  entry=1568.95  current=1402.93
+2026-04-03 15:27:06,917  INFO  STOP-LOSS triggered: ADANIENT  entry=1380.76  current=1191.87
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=3024.27  current=2764.20
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2794.77  current=2182.57
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2553.58  current=2373.22
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2368.63  current=2178.10
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2481.00  current=2298.36
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2294.58  current=2055.10
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIENT  entry=2032.20  current=1864.20
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=754.84  current=695.11
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=867.16  current=793.11
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=774.14  current=701.95
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=587.57  current=487.37
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=644.22  current=584.08
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1411.60  current=1300.30
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3057.33  current=2765.77
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2985.54  current=2733.17
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2713.33  current=2499.17
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3244.55  current=2995.28
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3023.62  current=2780.15
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2735.17  current=2511.62
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2443.01  current=2267.36
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2511.80  current=2307.10
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: AXISBANK  entry=774.52  current=713.22
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: BAJFINANCE  entry=752.62  current=687.92
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: BAJFINANCE  entry=700.35  current=541.18
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: BAJFINANCE  entry=691.84  current=642.70
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: BAJFINANCE  entry=639.15  current=577.08
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: BAJFINANCE  entry=713.15  current=649.85
+2026-04-03 15:27:06,925  INFO  STOP-LOSS triggered: HDFCBANK  entry=749.10  current=686.51
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: HDFCBANK  entry=785.70  current=712.22
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: HDFCBANK  entry=951.00  current=840.70
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2334.28  current=2155.00
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2490.22  current=2314.00
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: ICICIBANK  entry=572.04  current=520.88
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: INFY  entry=1522.90  current=1333.43
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: ITC  entry=401.10  current=365.51
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: ITC  entry=407.80  current=356.38
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: LT  entry=1746.91  current=1568.55
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: LT  entry=1709.68  current=1568.07
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: MARUTI  entry=6680.79  current=6187.34
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: MARUTI  entry=8615.52  current=7904.67
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: MARUTI  entry=15245.00  current=14158.00
+2026-04-03 15:27:06,941  INFO  STOP-LOSS triggered: MARUTI  entry=14415.00  current=13011.00
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: POWERGRID  entry=299.22  current=276.46
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: POWERGRID  entry=282.86  current=257.46
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: RELIANCE  entry=1171.59  current=1074.52
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: RELIANCE  entry=1401.38  current=1300.11
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: SBIN  entry=275.52  current=254.35
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: SBIN  entry=364.29  current=338.73
+2026-04-03 15:27:06,954  INFO  STOP-LOSS triggered: SBIN  entry=342.47  current=303.44
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=3061.19  current=2833.61
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=2922.58  current=2689.61
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=4057.03  current=3762.50
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=3653.15  current=3366.89
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=3316.39  current=3080.31
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TCS  entry=2975.41  current=2750.10
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TITAN  entry=2460.07  current=2260.29
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TITAN  entry=2112.53  current=1911.37
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TITAN  entry=2572.97  current=2383.09
+2026-04-03 15:27:06,956  INFO  STOP-LOSS triggered: TITAN  entry=3536.90  current=3259.64
+2026-04-03 15:27:06,964  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=7389.68  current=6762.61
+2026-04-03 15:27:06,964  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6661.76  current=5847.55
+2026-04-03 15:27:06,965  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5915.60  current=5457.09
+2026-04-03 15:27:06,965  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=10973.09  current=10064.65
+2026-04-03 15:27:06,965  INFO  STOP-LOSS triggered: WIPRO  entry=316.74  current=259.78
+2026-04-03 15:27:06,965  INFO  STOP-LOSS triggered: WIPRO  entry=251.20  current=231.30
+2026-04-03 15:27:07,052  INFO  Backtest complete: CAGR=115.1%  Sharpe=3.22  MaxDD=-21.7%
+2026-04-03 15:27:07,052  INFO  Saved equity_curve.csv and metrics.json
+2026-04-03 15:27:07,052  INFO  === Done:     Backtest ===
+2026-04-03 15:27:07,052  INFO  Pipeline finished.
+2026-04-03 17:51:15,085  INFO  === Starting: ETL ===
+2026-04-03 17:51:15,101  INFO  ETL mode: DAILY (market closed — using today's final close)
+2026-04-03 17:51:15,101  INFO  Universe: 20 symbols | history from 2019-01-01
+2026-04-03 17:51:15,101  INFO  Fetching TCS ...
+2026-04-03 17:51:18,343  INFO    Saved 1792 rows -> TCS (latest: 2026-04-02 @ 2450.70)
+2026-04-03 17:51:18,343  INFO  Fetching INFY ...
+2026-04-03 17:51:19,174  INFO    Saved 1792 rows -> INFY (latest: 2026-04-02 @ 1300.80)
+2026-04-03 17:51:19,174  INFO  Fetching RELIANCE ...
+2026-04-03 17:51:19,792  INFO    Saved 1792 rows -> RELIANCE (latest: 2026-04-02 @ 1350.50)
+2026-04-03 17:51:19,792  INFO  Fetching HDFCBANK ...
+2026-04-03 17:51:20,381  INFO    Saved 1792 rows -> HDFCBANK (latest: 2026-04-02 @ 750.90)
+2026-04-03 17:51:20,383  INFO  Fetching ICICIBANK ...
+2026-04-03 17:51:20,941  INFO    Saved 1792 rows -> ICICIBANK (latest: 2026-04-02 @ 1215.80)
+2026-04-03 17:51:20,941  INFO  Fetching SBIN ...
+2026-04-03 17:51:21,508  INFO    Saved 1792 rows -> SBIN (latest: 2026-04-02 @ 1018.40)
+2026-04-03 17:51:21,508  INFO  Fetching AXISBANK ...
+2026-04-03 17:51:22,123  INFO    Saved 1792 rows -> AXISBANK (latest: 2026-04-02 @ 1197.90)
+2026-04-03 17:51:22,123  INFO  Fetching LT ...
+2026-04-03 17:51:22,706  INFO    Saved 1792 rows -> LT (latest: 2026-04-02 @ 3613.10)
+2026-04-03 17:51:22,706  INFO  Fetching ITC ...
+2026-04-03 17:51:23,295  INFO    Saved 1792 rows -> ITC (latest: 2026-04-02 @ 292.85)
+2026-04-03 17:51:23,295  INFO  Fetching HINDUNILVR ...
+2026-04-03 17:51:23,804  INFO    Saved 1792 rows -> HINDUNILVR (latest: 2026-04-02 @ 2065.30)
+2026-04-03 17:51:23,804  INFO  Fetching MARUTI ...
+2026-04-03 17:51:24,380  INFO    Saved 1792 rows -> MARUTI (latest: 2026-04-02 @ 12631.00)
+2026-04-03 17:51:24,380  INFO  Fetching BAJFINANCE ...
+2026-04-03 17:51:25,004  INFO    Saved 1792 rows -> BAJFINANCE (latest: 2026-04-02 @ 826.85)
+2026-04-03 17:51:25,004  INFO  Fetching ASIANPAINT ...
+2026-04-03 17:51:25,538  INFO    Saved 1792 rows -> ASIANPAINT (latest: 2026-04-02 @ 2169.00)
+2026-04-03 17:51:25,538  INFO  Fetching WIPRO ...
+2026-04-03 17:51:26,094  INFO    Saved 1792 rows -> WIPRO (latest: 2026-04-02 @ 194.91)
+2026-04-03 17:51:26,094  INFO  Fetching TITAN ...
+2026-04-03 17:51:26,732  INFO    Saved 1792 rows -> TITAN (latest: 2026-04-02 @ 4097.20)
+2026-04-03 17:51:26,732  INFO  Fetching ULTRACEMCO ...
+2026-04-03 17:51:27,481  INFO    Saved 1792 rows -> ULTRACEMCO (latest: 2026-04-02 @ 10620.00)
+2026-04-03 17:51:27,483  INFO  Fetching POWERGRID ...
+2026-04-03 17:51:28,044  INFO    Saved 1792 rows -> POWERGRID (latest: 2026-04-02 @ 289.95)
+2026-04-03 17:51:28,044  INFO  Fetching NTPC ...
+2026-04-03 17:51:28,673  INFO    Saved 1792 rows -> NTPC (latest: 2026-04-02 @ 359.65)
+2026-04-03 17:51:28,673  INFO  Fetching ADANIENT ...
+2026-04-03 17:51:29,347  INFO    Saved 1792 rows -> ADANIENT (latest: 2026-04-02 @ 1834.20)
+2026-04-03 17:51:29,347  INFO  Fetching ADANIPORTS ...
+2026-04-03 17:51:29,858  INFO    Saved 1792 rows -> ADANIPORTS (latest: 2026-04-02 @ 1377.60)
+2026-04-03 17:51:29,858  INFO  ETL complete: 20/20 symbols.
+2026-04-03 17:51:29,858  INFO  === Done:     ETL ===
+2026-04-03 17:51:29,858  INFO  === Starting: Features ===
+2026-04-03 17:51:30,262  INFO  ADANIENT: 1563 rows, 55 features
+2026-04-03 17:51:30,300  INFO  ADANIPORTS: 1563 rows, 55 features
+2026-04-03 17:51:30,332  INFO  ASIANPAINT: 1563 rows, 55 features
+2026-04-03 17:51:30,369  INFO  AXISBANK: 1563 rows, 55 features
+2026-04-03 17:51:30,447  INFO  BAJFINANCE: 1563 rows, 55 features
+2026-04-03 17:51:30,492  INFO  HDFCBANK: 1563 rows, 55 features
+2026-04-03 17:51:30,524  INFO  HINDUNILVR: 1563 rows, 55 features
+2026-04-03 17:51:30,558  INFO  ICICIBANK: 1563 rows, 55 features
+2026-04-03 17:51:30,588  INFO  INFY: 1563 rows, 55 features
+2026-04-03 17:51:30,636  INFO  ITC: 1563 rows, 55 features
+2026-04-03 17:51:30,668  INFO  LT: 1563 rows, 55 features
+2026-04-03 17:51:30,700  INFO  MARUTI: 1563 rows, 55 features
+2026-04-03 17:51:30,740  INFO  NTPC: 1563 rows, 55 features
+2026-04-03 17:51:30,780  INFO  POWERGRID: 1563 rows, 55 features
+2026-04-03 17:51:30,814  INFO  RELIANCE: 1563 rows, 55 features
+2026-04-03 17:51:30,850  INFO  SBIN: 1563 rows, 55 features
+2026-04-03 17:51:30,891  INFO  TCS: 1563 rows, 55 features
+2026-04-03 17:51:30,923  INFO  TITAN: 1563 rows, 55 features
+2026-04-03 17:51:30,954  INFO  ULTRACEMCO: 1563 rows, 55 features
+2026-04-03 17:51:31,002  INFO  WIPRO: 1563 rows, 55 features
+2026-04-03 17:51:31,113  INFO  Combined features: 31260 rows x 55 cols
+2026-04-03 17:51:31,127  INFO  === Done:     Features ===
+2026-04-03 17:51:31,127  INFO  === Starting: Signals ===
+2026-04-03 17:51:31,160  INFO  Loaded features: 31260 rows
+2026-04-03 17:51:58,767  INFO  Walk-forward complete: 63 folds trained.
+2026-04-03 17:52:01,813  INFO  Ensemble on 26220 OOS rows. Prob mean=0.455 std=0.126
+2026-04-03 17:52:01,813  INFO  Computing historical regime series from 2019-01-01...
+2026-04-03 17:52:03,763  INFO  Regime series computed: 1588 dates, Bull=1258, Bear=226, Sideways=104
+2026-04-03 17:52:05,669  INFO  Long-Short signals across 1311 dates | BULL=1086 BEAR=174 SIDEWAYS=51 | Avg/day: 4.9 long, 0.4 short
+2026-04-03 17:52:05,669  INFO  Latest date 2026-03-17 00:00:00 | Regime: BEAR | 5 long, 3 short
+2026-04-03 17:52:06,125  INFO  Signals saved: data\signals\signals_2026-03-17.parquet
+2026-04-03 17:52:06,125  INFO  === Done:     Signals ===
+2026-04-03 17:52:06,125  INFO  === Starting: Orders ===
+2026-04-03 17:52:06,188  INFO  Orders saved: data\orders\orders_2026-03-17.parquet
+2026-04-03 17:52:06,188  INFO  === Done:     Orders ===
+2026-04-03 17:52:06,188  INFO  === Starting: Backtest ===
+2026-04-03 17:52:06,268  INFO  Backtest: 5866 signal rows | 35840 price rows | 2020-11-27 to 2026-03-17
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=1664.73  current=1541.20
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=3711.66  current=3451.42
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=3431.64  current=2757.67
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=1584.63  current=1402.93
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=1380.76  current=1191.87
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=1720.69  current=1598.66
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=3016.62  current=2764.20
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=3152.19  current=2822.40
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=2834.15  current=2182.57
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=2553.58  current=2373.22
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=2320.25  current=2153.70
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=2171.60  current=1864.20
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIENT  entry=2236.60  current=2076.50
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIPORTS  entry=874.94  current=780.49
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIPORTS  entry=763.86  current=701.95
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIPORTS  entry=587.62  current=487.37
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIPORTS  entry=644.22  current=584.08
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1468.90  current=1348.64
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3145.16  current=2917.02
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2985.54  current=2733.17
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3244.55  current=2995.28
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3023.62  current=2780.15
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2735.17  current=2511.62
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2443.01  current=2267.36
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2366.40  current=2196.80
+2026-04-03 17:52:06,283  INFO  STOP-LOSS triggered: AXISBANK  entry=780.79  current=648.39
+2026-04-03 17:52:06,299  INFO  STOP-LOSS triggered: BAJFINANCE  entry=501.37  current=463.78
+2026-04-03 17:52:06,299  INFO  STOP-LOSS triggered: BAJFINANCE  entry=697.67  current=541.18
+2026-04-03 17:52:06,299  INFO  STOP-LOSS triggered: BAJFINANCE  entry=678.97  current=627.72
+2026-04-03 17:52:06,299  INFO  STOP-LOSS triggered: BAJFINANCE  entry=640.53  current=572.83
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2351.27  current=2179.03
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2470.18  current=2260.60
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: ICICIBANK  entry=597.09  current=554.63
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: ICICIBANK  entry=572.04  current=520.88
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: ITC  entry=408.29  current=356.38
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: LT  entry=1709.68  current=1568.07
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: MARUTI  entry=7018.64  current=6504.77
+2026-04-03 17:52:06,301  INFO  STOP-LOSS triggered: MARUTI  entry=8571.24  current=7904.67
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: POWERGRID  entry=279.81  current=257.46
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: SBIN  entry=275.52  current=254.35
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: SBIN  entry=364.29  current=338.73
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: SBIN  entry=342.47  current=303.44
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: SBIN  entry=455.05  current=418.31
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TCS  entry=2922.58  current=2689.61
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TCS  entry=2890.02  current=2674.63
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TCS  entry=3653.15  current=3366.89
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TCS  entry=3203.68  current=2971.50
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TCS  entry=2938.42  current=2692.20
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TITAN  entry=2480.15  current=2260.29
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TITAN  entry=2086.02  current=1911.37
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TITAN  entry=2461.14  current=2286.26
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TITAN  entry=3536.90  current=3259.64
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: TITAN  entry=3414.52  current=3170.36
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=7177.17  current=6661.76
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6599.28  current=5847.55
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5915.60  current=5457.09
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=10973.09  current=10064.65
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: WIPRO  entry=322.65  current=261.38
+2026-04-03 17:52:06,315  INFO  STOP-LOSS triggered: WIPRO  entry=254.50  current=231.30
+2026-04-03 17:52:06,393  INFO  Backtest complete: CAGR=133.6%  Sharpe=3.67  MaxDD=-20.0%
+2026-04-03 17:52:06,409  INFO  Saved equity_curve.csv and metrics.json
+2026-04-03 17:52:06,409  INFO  === Done:     Backtest ===
+2026-04-03 17:52:06,409  INFO  Pipeline finished.
+2026-04-04 16:21:47,605  INFO  === Starting: ETL ===
+2026-04-04 16:21:47,624  INFO  ETL mode: DAILY (market closed — using today's final close)
+2026-04-04 16:21:47,624  INFO  Universe: 20 symbols | history from 2019-01-01
+2026-04-04 16:21:47,624  INFO  Fetching TCS ...
+2026-04-04 16:21:51,083  INFO    Saved 1792 rows -> TCS (latest: 2026-04-02 @ 2450.70)
+2026-04-04 16:21:51,083  INFO  Fetching INFY ...
+2026-04-04 16:21:51,660  INFO    Saved 1792 rows -> INFY (latest: 2026-04-02 @ 1300.80)
+2026-04-04 16:21:51,660  INFO  Fetching RELIANCE ...
+2026-04-04 16:21:52,280  INFO    Saved 1792 rows -> RELIANCE (latest: 2026-04-02 @ 1350.50)
+2026-04-04 16:21:52,280  INFO  Fetching HDFCBANK ...
+2026-04-04 16:21:52,856  INFO    Saved 1792 rows -> HDFCBANK (latest: 2026-04-02 @ 750.90)
+2026-04-04 16:21:52,856  INFO  Fetching ICICIBANK ...
+2026-04-04 16:21:53,419  INFO    Saved 1792 rows -> ICICIBANK (latest: 2026-04-02 @ 1215.80)
+2026-04-04 16:21:53,419  INFO  Fetching SBIN ...
+2026-04-04 16:21:54,001  INFO    Saved 1792 rows -> SBIN (latest: 2026-04-02 @ 1018.40)
+2026-04-04 16:21:54,001  INFO  Fetching AXISBANK ...
+2026-04-04 16:21:54,589  INFO    Saved 1792 rows -> AXISBANK (latest: 2026-04-02 @ 1197.90)
+2026-04-04 16:21:54,589  INFO  Fetching LT ...
+2026-04-04 16:21:55,165  INFO    Saved 1792 rows -> LT (latest: 2026-04-02 @ 3613.10)
+2026-04-04 16:21:55,165  INFO  Fetching ITC ...
+2026-04-04 16:21:55,791  INFO    Saved 1792 rows -> ITC (latest: 2026-04-02 @ 292.85)
+2026-04-04 16:21:55,791  INFO  Fetching HINDUNILVR ...
+2026-04-04 16:21:56,338  INFO    Saved 1792 rows -> HINDUNILVR (latest: 2026-04-02 @ 2065.30)
+2026-04-04 16:21:56,338  INFO  Fetching MARUTI ...
+2026-04-04 16:21:56,896  INFO    Saved 1792 rows -> MARUTI (latest: 2026-04-02 @ 12631.00)
+2026-04-04 16:21:56,896  INFO  Fetching BAJFINANCE ...
+2026-04-04 16:21:57,521  INFO    Saved 1792 rows -> BAJFINANCE (latest: 2026-04-02 @ 826.85)
+2026-04-04 16:21:57,521  INFO  Fetching ASIANPAINT ...
+2026-04-04 16:21:58,103  INFO    Saved 1792 rows -> ASIANPAINT (latest: 2026-04-02 @ 2169.00)
+2026-04-04 16:21:58,103  INFO  Fetching WIPRO ...
+2026-04-04 16:21:58,648  INFO    Saved 1792 rows -> WIPRO (latest: 2026-04-02 @ 194.91)
+2026-04-04 16:21:58,648  INFO  Fetching TITAN ...
+2026-04-04 16:21:59,210  INFO    Saved 1792 rows -> TITAN (latest: 2026-04-02 @ 4097.20)
+2026-04-04 16:21:59,210  INFO  Fetching ULTRACEMCO ...
+2026-04-04 16:21:59,754  INFO    Saved 1792 rows -> ULTRACEMCO (latest: 2026-04-02 @ 10620.00)
+2026-04-04 16:21:59,754  INFO  Fetching POWERGRID ...
+2026-04-04 16:22:00,367  INFO    Saved 1792 rows -> POWERGRID (latest: 2026-04-02 @ 289.95)
+2026-04-04 16:22:00,367  INFO  Fetching NTPC ...
+2026-04-04 16:22:00,914  INFO    Saved 1792 rows -> NTPC (latest: 2026-04-02 @ 359.65)
+2026-04-04 16:22:00,914  INFO  Fetching ADANIENT ...
+2026-04-04 16:22:01,470  INFO    Saved 1792 rows -> ADANIENT (latest: 2026-04-02 @ 1834.20)
+2026-04-04 16:22:01,470  INFO  Fetching ADANIPORTS ...
+2026-04-04 16:22:02,035  INFO    Saved 1792 rows -> ADANIPORTS (latest: 2026-04-02 @ 1377.60)
+2026-04-04 16:22:02,035  INFO  ETL complete: 20/20 symbols.
+2026-04-04 16:22:02,035  INFO  === Done:     ETL ===
+2026-04-04 16:22:02,035  INFO  === Starting: Features ===
+2026-04-04 16:22:02,426  INFO  ADANIENT: 1563 rows, 55 features
+2026-04-04 16:22:02,469  INFO  ADANIPORTS: 1563 rows, 55 features
+2026-04-04 16:22:02,509  INFO  ASIANPAINT: 1563 rows, 55 features
+2026-04-04 16:22:02,543  INFO  AXISBANK: 1563 rows, 55 features
+2026-04-04 16:22:02,624  INFO  BAJFINANCE: 1563 rows, 55 features
+2026-04-04 16:22:02,649  INFO  HDFCBANK: 1563 rows, 55 features
+2026-04-04 16:22:02,696  INFO  HINDUNILVR: 1563 rows, 55 features
+2026-04-04 16:22:02,732  INFO  ICICIBANK: 1563 rows, 55 features
+2026-04-04 16:22:02,770  INFO  INFY: 1563 rows, 55 features
+2026-04-04 16:22:02,804  INFO  ITC: 1563 rows, 55 features
+2026-04-04 16:22:02,841  INFO  LT: 1563 rows, 55 features
+2026-04-04 16:22:02,868  INFO  MARUTI: 1563 rows, 55 features
+2026-04-04 16:22:02,911  INFO  NTPC: 1563 rows, 55 features
+2026-04-04 16:22:02,948  INFO  POWERGRID: 1563 rows, 55 features
+2026-04-04 16:22:02,984  INFO  RELIANCE: 1563 rows, 55 features
+2026-04-04 16:22:03,018  INFO  SBIN: 1563 rows, 55 features
+2026-04-04 16:22:03,054  INFO  TCS: 1563 rows, 55 features
+2026-04-04 16:22:03,090  INFO  TITAN: 1563 rows, 55 features
+2026-04-04 16:22:03,122  INFO  ULTRACEMCO: 1563 rows, 55 features
+2026-04-04 16:22:03,163  INFO  WIPRO: 1563 rows, 55 features
+2026-04-04 16:22:03,281  INFO  Combined features: 31260 rows x 55 cols
+2026-04-04 16:22:03,281  INFO  === Done:     Features ===
+2026-04-04 16:22:03,281  INFO  === Starting: Signals ===
+2026-04-04 16:22:03,328  INFO  Loaded features: 31260 rows
+2026-04-04 16:22:29,942  INFO  Walk-forward complete: 63 folds trained.
+2026-04-04 16:22:32,580  INFO  Ensemble on 26220 OOS rows. Prob mean=0.452 std=0.126
+2026-04-04 16:22:32,580  INFO  Computing historical regime series from 2019-01-01...
+2026-04-04 16:22:34,505  INFO  Regime series computed: 1588 dates, Bull=1258, Bear=226, Sideways=104
+2026-04-04 16:22:36,399  INFO  Long-Short signals across 1311 dates | BULL=1086 BEAR=174 SIDEWAYS=51 | Avg/day: 4.9 long, 0.4 short
+2026-04-04 16:22:36,399  INFO  Latest date 2026-03-17 00:00:00 | Regime: BEAR | 5 long, 3 short
+2026-04-04 16:22:36,838  INFO  Signals saved: data\signals\signals_2026-03-17.parquet
+2026-04-04 16:22:36,838  INFO  === Done:     Signals ===
+2026-04-04 16:22:36,838  INFO  === Starting: Orders ===
+2026-04-04 16:22:36,882  INFO  Orders saved: data\orders\orders_2026-03-17.parquet
+2026-04-04 16:22:36,901  INFO  === Done:     Orders ===
+2026-04-04 16:22:36,901  INFO  === Starting: Backtest ===
+2026-04-04 16:22:36,975  INFO  Backtest: 5704 signal rows | 35840 price rows | 2020-11-27 to 2026-03-17
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=1733.21  current=1541.20
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=3642.20  current=3384.31
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=2757.67  current=1563.11
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=1619.23  current=1402.93
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=1380.76  current=1191.86
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=1720.69  current=1598.66
+2026-04-04 16:22:36,988  INFO  STOP-LOSS triggered: ADANIENT  entry=3024.27  current=2764.20
+2026-04-04 16:22:36,991  INFO  STOP-LOSS triggered: ADANIENT  entry=3152.19  current=2822.40
+2026-04-04 16:22:36,991  INFO  STOP-LOSS triggered: ADANIENT  entry=2834.15  current=2182.57
+2026-04-04 16:22:36,991  INFO  STOP-LOSS triggered: ADANIENT  entry=2553.58  current=2373.22
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIENT  entry=2353.13  current=2178.10
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIENT  entry=2283.40  current=2055.10
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIENT  entry=2032.20  current=1864.20
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=719.01  current=668.48
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=867.16  current=794.53
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=787.78  current=701.95
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=644.22  current=584.08
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1468.90  current=1348.64
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ADANIPORTS  entry=1411.60  current=1300.30
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3056.80  current=2806.90
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3145.16  current=2917.02
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=3272.74  current=3042.26
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2995.28  current=2780.15
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2735.17  current=2511.62
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: ASIANPAINT  entry=2426.00  current=2254.84
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: AXISBANK  entry=780.79  current=648.39
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: AXISBANK  entry=1165.30  current=1070.00
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=498.49  current=462.34
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=700.35  current=541.18
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=691.84  current=642.70
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=639.15  current=577.08
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=704.05  current=649.83
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: BAJFINANCE  entry=1010.30  current=935.15
+2026-04-04 16:22:36,992  INFO  STOP-LOSS triggered: HDFCBANK  entry=782.44  current=712.22
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2022.99  current=1811.67
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2325.80  current=2155.00
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: HINDUNILVR  entry=2490.22  current=2314.00
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: ICICIBANK  entry=563.00  current=520.88
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: ITC  entry=410.79  current=356.38
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: LT  entry=1770.09  current=1642.74
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: LT  entry=1709.68  current=1568.07
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: MARUTI  entry=7336.55  current=6680.79
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: MARUTI  entry=6663.97  current=6187.34
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: MARUTI  entry=8607.21  current=7904.67
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: NTPC  entry=124.57  current=113.65
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: POWERGRID  entry=299.22  current=276.46
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: POWERGRID  entry=279.51  current=257.46
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: SBIN  entry=280.37  current=259.24
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: SBIN  entry=364.29  current=338.73
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: SBIN  entry=342.47  current=303.44
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: SBIN  entry=557.86  current=510.67
+2026-04-04 16:22:37,007  INFO  STOP-LOSS triggered: TCS  entry=2921.10  current=2689.61
+2026-04-04 16:22:37,023  INFO  STOP-LOSS triggered: TCS  entry=3653.15  current=3366.89
+2026-04-04 16:22:37,023  INFO  STOP-LOSS triggered: TCS  entry=3338.91  current=3090.29
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TCS  entry=2984.60  current=2750.10
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TITAN  entry=1547.23  current=1422.28
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TITAN  entry=2480.65  current=2260.29
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TITAN  entry=2114.20  current=1911.37
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TITAN  entry=2507.55  current=2309.19
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: TITAN  entry=3414.52  current=3170.36
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=7177.17  current=6661.76
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6599.28  current=5847.55
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6522.04  current=6062.16
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=6086.02  current=5552.42
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=5457.09  current=5062.03
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=10973.09  current=10064.65
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=12082.41  current=11167.21
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=12288.00  current=11378.00
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: ULTRACEMCO  entry=11654.00  current=10616.00
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: WIPRO  entry=251.20  current=231.30
+2026-04-04 16:22:37,024  INFO  STOP-LOSS triggered: WIPRO  entry=254.82  current=195.55
+2026-04-04 16:22:37,102  INFO  Backtest complete: CAGR=157.3%  Sharpe=3.95  MaxDD=-25.9%
+2026-04-04 16:22:37,102  INFO  Saved equity_curve.csv and metrics.json
+2026-04-04 16:22:37,117  INFO  === Done:     Backtest ===
+2026-04-04 16:22:37,118  INFO  Pipeline finished.
